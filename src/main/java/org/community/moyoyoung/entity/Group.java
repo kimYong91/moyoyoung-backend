@@ -26,7 +26,7 @@ public class Group {
     private String country;
     private String category;
     private String title;
-    private String contents;
+    private String content;
     private LocalDate dueDate;
 
 
