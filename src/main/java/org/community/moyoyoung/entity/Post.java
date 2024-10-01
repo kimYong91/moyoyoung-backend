@@ -18,20 +18,17 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String content;
     private LocalDate dueDate;
 
 
     @OneToOne
-    private Meeting meetingList;
+    private PostImage postImage;
 
 
-    @OneToOne
-    private PostImage boardImage;
-
-
-    @OneToMany(mappedBy = "comment_list", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
 

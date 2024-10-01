@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -18,6 +21,7 @@ public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String username;
     @Column(unique = true)
@@ -27,8 +31,8 @@ public class MyUser {
     private String phoneNumber;
 
     @OneToMany
-    private Group ownGroup;
+    private List<Group> ownGroup = new ArrayList<>();
 
     @OneToMany
-    private Group group;
+    private List<Group> group = new ArrayList<>();
 }
