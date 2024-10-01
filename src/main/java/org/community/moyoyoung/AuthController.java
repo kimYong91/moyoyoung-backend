@@ -2,13 +2,18 @@ package org.community.moyoyoung;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,20 +29,30 @@ public class AuthController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) throws JsonProcessingException {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-            if (new BCryptPasswordEncoder().matches(authRequest.getPassword(),
-                    userDetails.getPassword())) {
+            if (new BCryptPasswordEncoder().matches(authRequest.getPassword(), userDetails.getPassword())) {
                 String token = jwtTokenProvider.generateToken(userDetails.getUsername());
-                return ResponseEntity.ok(new AuthResponse(token));
+                AuthResponse response = new AuthResponse(true, token);
+                return ResponseEntity.ok(objectMapper.writeValueAsString(response));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+                AuthResponse response = new AuthResponse(false, "Invalid username or password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(objectMapper.writeValueAsString(response));
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        } catch (UsernameNotFoundException | BadCredentialsException e) {
+            AuthResponse response = new AuthResponse(false, "Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(objectMapper.writeValueAsString(response));
+        } catch (RuntimeException e) {
+            log.error("Unexpected error occurred: {}", e.getMessage());
+            AuthResponse response = new AuthResponse(false, "An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(objectMapper.writeValueAsString(response));
         }
     }
 
@@ -53,6 +68,7 @@ public class AuthController {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AuthResponse {
-        private String token;
+        private boolean success;
+        private String message;
     }
 }
