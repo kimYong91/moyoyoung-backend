@@ -2,6 +2,7 @@ package org.community.moyoyoung;
 
 import java.io.IOException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String token = getJwtFromRequest(request);
+        String requestURI = request.getRequestURI();
+
+        if (requestURI.equals("/auth/login")) {
+            filterChain.doFilter(request, response);
+        }
 
         if (token != null && tokenProvider.validateToken(token)) {
             String username = tokenProvider.getUsernameFromJWT(token);
@@ -38,10 +44,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid username or password");
             }
         }
 
         filterChain.doFilter(request, response);
+
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
