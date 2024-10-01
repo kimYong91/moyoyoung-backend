@@ -1,11 +1,13 @@
 package org.community.moyoyoung.entity;
 
 
-import jakarta.persistence.OneToOne;
+
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @ToString
 @Builder
@@ -13,6 +15,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 // 게시판 첨부 이미지
 public class PostImage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String fileName;
     private String upLoadFileName;

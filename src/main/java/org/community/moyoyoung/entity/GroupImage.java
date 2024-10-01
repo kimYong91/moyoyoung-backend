@@ -1,11 +1,12 @@
 package org.community.moyoyoung.entity;
 
-import jakarta.persistence.OneToOne;
+
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
-
+@Entity
 @Getter
 @ToString
 @Builder
@@ -13,6 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 // 소모임 프로필 사진
 public class GroupImage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String fileName;
     private String upLoadFileName;

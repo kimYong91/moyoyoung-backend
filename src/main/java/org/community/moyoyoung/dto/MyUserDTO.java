@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.Group;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +23,9 @@ public class MyUserDTO {
     private String name;
     private String phoneNumber;
 
+    @Builder.Default
+    private List<Group> ownGroup = new ArrayList<>();
 
-    private Group ownGroup;
-
-    private Group group;
+    @Builder.Default
+    private List<Group> group = new ArrayList<>();
 }

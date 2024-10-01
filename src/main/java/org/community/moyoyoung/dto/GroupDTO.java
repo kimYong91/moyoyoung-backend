@@ -1,12 +1,10 @@
 package org.community.moyoyoung.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.entity.Meeting;
 import org.community.moyoyoung.entity.MyUser;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,9 +29,15 @@ public class GroupDTO {
 
     private GroupImage groupImage;
 
+    @Builder.Default
     private List<MyUser> member = new ArrayList<>();
 
     private MyUser ownUser;
+
+    @Builder.Default
+    private List<MultipartFile> files = new ArrayList<>();
+    @Builder.Default
+    private List<String> uploadFileName = new ArrayList<>();
 
 }
 
