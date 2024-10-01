@@ -26,7 +26,7 @@ public class PostDTO {
 
     private Meeting meetingList;
 
-    private PostImage boardImage;
+    private PostImage postImage;
 
     private List<Comment> commentList;
 

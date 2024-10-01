@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Setter
 @Table(name = "tbl_post")
 // 게시판
 public class Post {
@@ -18,7 +19,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String content;
     private LocalDate dueDate;
@@ -26,7 +26,6 @@ public class Post {
 
     @OneToOne
     private PostImage postImage;
-
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
