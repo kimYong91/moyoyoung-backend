@@ -37,7 +37,7 @@ public class AuthController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
             if (new BCryptPasswordEncoder().matches(authRequest.getPassword(), userDetails.getPassword())) {
                 String token = jwtTokenProvider.generateToken(userDetails.getUsername());
-                AuthResponse response = new AuthResponse(true, token);
+                TokenResponse response = new TokenResponse(true, token);
                 return ResponseEntity.ok(objectMapper.writeValueAsString(response));
             } else {
                 AuthResponse response = new AuthResponse(false, "Invalid username or password");
@@ -54,6 +54,14 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(objectMapper.writeValueAsString(response));
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TokenResponse {
+        private boolean success;
+        private String token;
     }
 
     @Data
