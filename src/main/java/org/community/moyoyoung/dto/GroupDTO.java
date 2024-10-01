@@ -1,26 +1,23 @@
-package org.community.moyoyoung.entity;
+package org.community.moyoyoung.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.community.moyoyoung.entity.GroupImage;
+import org.community.moyoyoung.entity.Meeting;
+import org.community.moyoyoung.entity.MyUser;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Table(name = "tbl_group")
-// 소모임
-public class Group {
+@Builder
+public class GroupDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private boolean checkOnline;
     private String country;
@@ -30,17 +27,13 @@ public class Group {
     private LocalDate dueDate;
 
 
-    @OneToOne
     private Meeting meetingList;
 
-
-    @OneToOne
     private GroupImage groupImage;
 
-
-    @ManyToOne
     private List<MyUser> member = new ArrayList<>();
 
-    @OneToOne
     private MyUser ownUser;
+
 }
+
