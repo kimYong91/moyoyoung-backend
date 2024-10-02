@@ -1,4 +1,4 @@
-package org.community.moyoyoung;
+package org.community.moyoyoung.security;
 
 import java.util.List;
 
@@ -36,7 +36,8 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/auth/**").permitAll()
-                                                .anyRequest().authenticated())
+                                                // .anyRequest().authenticated())
+                                                .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(authenticationEntryPoint))
                                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),

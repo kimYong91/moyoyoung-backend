@@ -1,4 +1,4 @@
-package org.community.moyoyoung;
+package org.community.moyoyoung.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

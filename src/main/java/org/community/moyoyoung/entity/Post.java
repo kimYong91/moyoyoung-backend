@@ -26,6 +26,7 @@ public class Post {
     private String content;
     private LocalDateTime dueDate;
     private LocalDateTime modifiedDate; // 수정일자
+    private boolean delFlag;
 
 
     @OneToOne
