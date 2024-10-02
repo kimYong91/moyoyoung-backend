@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class JwtTokenProvider {
 
-    // 상수 선언
     public static final String CLAIM_TOKEN_TYPE = "token_type";
 
     private final SecretKey key;
