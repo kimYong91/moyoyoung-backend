@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "tbl_member")
+@Table(name = "tbl_user")
 // 유저
 public class MyUser {
 
