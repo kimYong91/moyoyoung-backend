@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @ToString
 @Table(name = "tbl_meeting")
 @Builder
+@Setter
 // 정기 모임
 public class Meeting {
 
@@ -19,13 +20,15 @@ public class Meeting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
-    private String meetingDate;
+    @Column(nullable = false)
     private String content;
+    private String meetingDate;
     private LocalDate dueDate;
-    private String nickname;
+
 
     @OneToOne
-    private Post post;
+    private Group group;
 
 }

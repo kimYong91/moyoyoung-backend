@@ -22,12 +22,15 @@ public class MyUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String nickName;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String phoneNumber;
 
     @OneToMany
