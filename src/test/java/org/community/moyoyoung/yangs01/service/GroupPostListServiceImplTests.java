@@ -17,15 +17,16 @@ public class GroupPostListServiceImplTests {
     private GroupPostListService groupPostListService;
 
     @Test
-    @DisplayName("서비스 호출 테스트")
+    @DisplayName("게시글 등록 서비스 호출 테스트")
     public void testRegister() {
 
+        // PostDTO 객체 생성
         PostDTO postDTO = PostDTO.builder()
                 .title("게시글 테스트")
                 .contents("게시글 내용")
                 .id(1L)
                 .dueDate(LocalDate.of(2024, 10, 01))
                 .build();
-    }
 
+    }
 }

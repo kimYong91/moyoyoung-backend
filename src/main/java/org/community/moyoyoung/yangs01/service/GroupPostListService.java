@@ -8,7 +8,7 @@ public interface GroupPostListService {
 
     Long register(PostDTO postDTO);
 
-    PostDTO get (Long id);
+    PostDTO getPostById(Long postId);
 
     void modify(PostDTO postDTO);
 

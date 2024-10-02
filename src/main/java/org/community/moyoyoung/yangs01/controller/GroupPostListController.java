@@ -19,8 +19,8 @@ public class GroupPostListController {
     private final GroupPostListService service;
 
     @GetMapping("/{id}")
-    public PostDTO get(@PathVariable(name = "id") Long id) {
-        return service.get(id);
+    public PostDTO get(@PathVariable(name = "id") Long postId) {
+        return service.getPostById(postId);
     }
 
     @GetMapping("/list")

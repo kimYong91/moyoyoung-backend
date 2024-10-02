@@ -41,8 +41,8 @@ public class GroupPostListServiceImpl implements GroupPostListService {
 
     // 해당 아이디에 해당하는 게시글을 조회
     @Override
-    public PostDTO get(Long id) {
-        java.util.Optional<Post> result = postRepository.findById(id);
+    public PostDTO getPostById(Long postId) {
+        java.util.Optional<Post> result = postRepository.findById(postId);
 
         Post post = result.orElseThrow();
 
@@ -50,6 +50,7 @@ public class GroupPostListServiceImpl implements GroupPostListService {
 
         return dto;
     }
+
 
     @Override
     public void modify(PostDTO postDTO) {
