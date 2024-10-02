@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.MyUser;
-import org.community.moyoyoung.entity.Post;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
