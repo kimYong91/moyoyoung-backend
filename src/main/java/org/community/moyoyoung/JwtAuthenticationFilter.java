@@ -1,6 +1,8 @@
 package org.community.moyoyoung;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -9,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,36 +28,70 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final List<String> excludedUrls = Arrays.asList(
+            "/auth/token",
+            "/auth/token/refresh");
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+
+        if ("".equals("")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String token = getJwtFromRequest(request);
         String requestURI = request.getRequestURI();
 
-        if (requestURI.equals("/auth/login")) {
+        if (excludedUrls.contains(requestURI)) {
             filterChain.doFilter(request, response);
+            return;
         }
 
-        if (token != null && tokenProvider.validateToken(token)) {
-            String username = tokenProvider.getUsernameFromJWT(token);
+        try {
+            if (token != null && tokenProvider.validateToken(token)) {
+                JwtTokenProvider.TokenType tokenType = tokenProvider.getTokenType(token);
+                if (tokenType == JwtTokenProvider.TokenType.REFRESH_TOKEN) {
+                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALID_TOKEN",
+                            "Only access tokens are allowed for this request");
+                    return;
+                }
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                String username = tokenProvider.getUsernameFromJWT(token);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (userDetails != null) {
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                AuthResponse authResponse = new AuthResponse(false, "Invalid username or password");
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), objectMapper.writeValueAsString(authResponse));
+                if (userDetails != null) {
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "LOGIN_FAILED",
+                            "Invalid username or password");
+                    return;
+                }
             }
+        } catch (JwtTokenProvider.TokenExpiredException ex) {
+            setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, JwtTokenProvider.TokenExpiredException.CODE,
+                    "Token has expired");
+            return;
+        } catch (JwtTokenProvider.InvalidTokenException ex) {
+            setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, JwtTokenProvider.InvalidTokenException.CODE,
+                    "Invalid token");
+            return;
         }
 
         filterChain.doFilter(request, response);
+    }
 
+    private void setAuthErrorResponse(HttpServletResponse response, HttpStatus status, String errorCode, String message)
+            throws IOException {
+        response.setStatus(status.value());
+        response.setContentType("application/json");
+        AuthResponse authResponse = new AuthResponse(false, errorCode, message);
+        response.getWriter().write(authResponse.toJsonString());
+        response.getWriter().flush();
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
@@ -73,6 +107,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @AllArgsConstructor
     public static class AuthResponse {
         private boolean success;
+        private String code;
         private String message;
+
+        public String toJsonString() {
+            return String.format(
+                    "{\n  \"success\": %b,\n  \"code\": \"%s\",\n  \"message\": \"%s\"\n}",
+                    success, code, message);
+        }
+
     }
 }
