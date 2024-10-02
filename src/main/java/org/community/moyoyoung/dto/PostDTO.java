@@ -19,12 +19,13 @@ import java.util.List;
 @Builder
 public class PostDTO {
 
-    private Long id; // 글번호
-    private String userNickname;
+    private Long id;
+    private String title;
+    private String content;
+    private String nickName;
     private String name;
-    private String title; // 글제목
-    private String content; // 글내용
     private LocalDateTime dueDate; // 작성일자
+
 
     private PostImage postImage;
 

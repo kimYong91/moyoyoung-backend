@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.community.moyoyoung.entity.Post;
+import org.community.moyoyoung.entity.MyUser;
 
 import java.time.LocalDate;
 
@@ -12,15 +12,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MeetingDTO {
+public class PostMiniDTO {
 
     private Long id;
     private String title;
-    private String meetingDate;
-    private String content;
     private LocalDate dueDate;
-    private String nickname;
+    private String userNickName;
     private String name;
 
-    private Post post;
 }

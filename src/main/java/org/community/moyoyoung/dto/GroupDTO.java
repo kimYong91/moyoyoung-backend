@@ -21,8 +21,12 @@ public class GroupDTO {
     private String country;
     private String category;
     private String title;
-    private String contents;
+    private String content;
     private LocalDate dueDate;
+    private String userNickName;
+    private String name;
+
+    private List<PostDTO> posts;  // 최신 포스트 리스트 필드
 
 
     private Meeting meetingList;
