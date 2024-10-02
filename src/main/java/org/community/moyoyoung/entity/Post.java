@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,8 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String content;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
+    private LocalDateTime modifiedDate; // 수정일자
 
 
     @OneToOne
