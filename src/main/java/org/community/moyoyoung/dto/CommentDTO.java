@@ -8,6 +8,7 @@ import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.Post;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,10 +18,6 @@ public class CommentDTO {
 
     private Long id;
     private String contents;
-    private LocalDate dueDate;
-
-
-    private Post post;
-
+    private LocalDateTime dueDate;
     private MyUser myUser;
 }

@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -22,7 +24,8 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String content;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
+    private LocalDateTime modifiedDate; // 수정일자
     private boolean delFlag;
 
 
@@ -36,8 +39,4 @@ public class Post {
 
     @ManyToOne
     private MyUser myUser;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
 }
