@@ -1,4 +1,4 @@
-package org.community.moyoyoung;
+package org.community.moyoyoung.security;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
