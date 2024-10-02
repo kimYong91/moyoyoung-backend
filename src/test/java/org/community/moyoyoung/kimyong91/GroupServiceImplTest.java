@@ -30,7 +30,7 @@ class GroupServiceImplTest {
                 .country("부산")
                 .category("운동")
                 .title("서비스 테스트")
-                .contents("서비스 테스트 내용")
+                .content("서비스 테스트 내용")
                 .build();
         groupService.register(groupDTO);
     }
@@ -44,7 +44,7 @@ class GroupServiceImplTest {
                 .country("서울 수정")
                 .category("여행 수정")
                 .title("수정 테스트")
-                .contents("내용 수정 테스트")
+                .content("내용 수정 테스트")
                 .dueDate(LocalDate.now())
                 .build();
         groupService.modify(groupDTO);
