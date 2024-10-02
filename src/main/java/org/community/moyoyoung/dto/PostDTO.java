@@ -10,6 +10,7 @@ import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.PostImage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,15 +19,14 @@ import java.util.List;
 @Builder
 public class PostDTO {
 
-    private Long id;
-    private String title;
-    private String contents;
-    private LocalDate dueDate;
+    private Long id; // 글번호
+    private String userNickname;
+    private String name;
+    private String title; // 글제목
+    private String content; // 글내용
+    private LocalDateTime dueDate; // 작성일자
 
-
-    private Meeting meetingList;
-
-    private PostImage boardImage;
+    private PostImage postImage;
 
     private List<Comment> commentList;
 
