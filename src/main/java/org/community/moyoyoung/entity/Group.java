@@ -21,10 +21,15 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private boolean checkOnline;
+    @Column(nullable = false)
     private String country;
+    @Column(nullable = false)
     private String category;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String content;
     private LocalDate dueDate;
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
