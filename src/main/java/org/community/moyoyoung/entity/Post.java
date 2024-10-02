@@ -23,6 +23,7 @@ public class Post {
     @Column(nullable = false)
     private String content;
     private LocalDate dueDate;
+    private boolean delFlag;
 
 
     @OneToOne
