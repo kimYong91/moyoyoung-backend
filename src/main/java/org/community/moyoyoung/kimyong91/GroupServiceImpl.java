@@ -46,7 +46,7 @@ public class GroupServiceImpl implements GroupService{
         group.setCategory(groupDTO.getCategory());
         group.setGroupImage(groupDTO.getGroupImage());
         group.setTitle(groupDTO.getTitle());
-        group.setContent(groupDTO.getContents());
+        group.setContent(groupDTO.getContent());
         group.setGroupImage(groupDTO.getGroupImage());
 
         groupRepository.save(group);

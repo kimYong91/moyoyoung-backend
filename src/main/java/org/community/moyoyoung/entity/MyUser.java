@@ -2,18 +2,21 @@ package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
+import lombok.AccessLevel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import lombok.Data;
+
 @Entity
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Table(name = "tbl_user")
 // 유저
 public class MyUser {
@@ -26,12 +29,18 @@ public class MyUser {
     private String username;
     @Column(unique = true, nullable = false)
     private String nickName;
+
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String phoneNumber;
+
+    public void setPassword(String password, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
 
     @OneToMany
     private List<Group> ownGroup = new ArrayList<>();

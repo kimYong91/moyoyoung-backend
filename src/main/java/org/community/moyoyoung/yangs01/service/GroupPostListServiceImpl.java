@@ -60,7 +60,7 @@ public class GroupPostListServiceImpl implements GroupPostListService {
 
         post.setTitle(postDTO.getTitle());
         post.setPostImage(postDTO.getPostImage());
-        post.setContent(postDTO.getContents());
+        post.setContent(postDTO.getContent());
 
         postRepository.save(post);
     }

@@ -5,11 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.Comment;
-import org.community.moyoyoung.entity.Meeting;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.PostImage;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
