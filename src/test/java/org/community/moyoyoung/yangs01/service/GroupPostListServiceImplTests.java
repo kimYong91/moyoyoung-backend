@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDateTime;
 
 @SpringBootTest
 public class GroupPostListServiceImplTests {
@@ -23,9 +21,9 @@ public class GroupPostListServiceImplTests {
         // PostDTO 객체 생성
         PostDTO postDTO = PostDTO.builder()
                 .title("게시글 테스트")
-                .contents("게시글 내용")
+                .content("게시글 내용")
                 .id(1L)
-                .dueDate(LocalDate.of(2024, 10, 01))
+                .dueDate(LocalDateTime.of(2024, 10, 1, 0, 0))
                 .build();
 
     }
