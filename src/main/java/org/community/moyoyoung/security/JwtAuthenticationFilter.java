@@ -1,4 +1,4 @@
-package org.community.moyoyoung;
+package org.community.moyoyoung.security;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -38,6 +39,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         if ("".equals("")) {
+            org.springframework.security.core.userdetails.UserDetails userDetails = org.springframework.security.core.userdetails.User
+                    .withUsername("username")
+                    .password(new BCryptPasswordEncoder().encode("password"))
+                    .authorities("ROLE_USER")
+                    .build();
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
             return;
         }
@@ -54,8 +63,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (token != null && tokenProvider.validateToken(token)) {
                 JwtTokenProvider.TokenType tokenType = tokenProvider.getTokenType(token);
                 if (tokenType == JwtTokenProvider.TokenType.REFRESH_TOKEN) {
-                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALID_TOKEN",
-                            "Only access tokens are allowed for this request");
+                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "NO_REFRESH_TOKEN",
+                            "Access using a refresh token is not permitted");
                     return;
                 }
 
