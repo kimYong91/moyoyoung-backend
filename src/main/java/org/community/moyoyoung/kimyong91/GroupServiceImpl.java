@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
+
 import org.community.moyoyoung.dto.GroupDTO;
 import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.repository.GroupRepository;
@@ -8,7 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
