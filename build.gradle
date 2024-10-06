@@ -46,6 +46,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter'
 
+	implementation 'jakarta.validation:jakarta.validation-api'
+
+
 }
 
 test {
