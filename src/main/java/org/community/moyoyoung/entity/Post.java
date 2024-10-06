@@ -23,12 +23,15 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String content;
-    private LocalDateTime dueDate;
+    private LocalDateTime createDate;
     private LocalDateTime modifiedDate; // 수정일자
     private boolean delFlag;
+    private boolean checkOnline;
 
 
-    @OneToOne
+
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PostImage postImage;
 
 

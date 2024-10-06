@@ -1,4 +1,4 @@
-package org.community.moyoyoung.yangs01.service;
+package org.community.moyoyoung.yangs01;
 
 import org.community.moyoyoung.dto.PageRequestDTO;
 import org.community.moyoyoung.dto.PageResponseDTO;

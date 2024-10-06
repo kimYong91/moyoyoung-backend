@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -21,7 +23,7 @@ public class Comment {
 
     @Column(length = 200)
     private String content;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     @ManyToOne
     private Post post;

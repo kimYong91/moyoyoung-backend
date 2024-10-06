@@ -1,4 +1,4 @@
-package org.community.moyoyoung.yangs01.service;
+package org.community.moyoyoung.yangs01;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,10 +32,11 @@ public class GroupPostListServiceImpl implements GroupPostListService {
     @Override
     public Long register(PostDTO postDTO) {
         //Post 엔디디로 변환하고 저장한 후 Id 반환
+        log.info(".........");
         Post post = modelMapper.map(postDTO, Post.class);
 
         Post savedPost = postRepository.save(post);
-
+        log.info(post.toString());
         return savedPost.getId();
     }
 

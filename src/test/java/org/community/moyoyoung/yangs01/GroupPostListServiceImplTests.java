@@ -1,4 +1,5 @@
-package org.community.moyoyoung.yangs01.service;
+package org.community.moyoyoung.yangs01;
+
 
 import org.community.moyoyoung.dto.PostDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -10,13 +11,15 @@ import java.time.LocalDateTime;
 
 @SpringBootTest
 public class GroupPostListServiceImplTests {
-
+    @Test
+    void contextLoads() {
+    }
     @Autowired
     private GroupPostListService groupPostListService;
 
     @Test
     @DisplayName("게시글 등록 서비스 호출 테스트")
-    public void testRegister() {
+     public void testRegister() {
 
         // PostDTO 객체 생성
         PostDTO postDTO = PostDTO.builder()
@@ -27,4 +30,6 @@ public class GroupPostListServiceImplTests {
                 .build();
 
     }
+
+
 }

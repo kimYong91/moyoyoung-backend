@@ -1,5 +1,6 @@
 package org.community.moyoyoung.dto;
 
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,6 @@ public class PostDTO {
     private String nickName;
     private String name;
     private LocalDateTime dueDate; // 작성일자
-
 
     private PostImage postImage;
 

@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.MyUser;
+import org.community.moyoyoung.entity.Post;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,8 +16,11 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentDTO {
 
-    private Long id;
-    private String contents;
+    private Long Id;
+    private String content;
     private LocalDateTime dueDate;
     private MyUser myUser;
+
+    public CommentDTO(Long id, String content, LocalDateTime dueDate) {
+    }
 }
