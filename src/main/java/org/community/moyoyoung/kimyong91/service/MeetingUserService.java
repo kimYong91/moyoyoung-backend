@@ -11,7 +11,7 @@ public interface MeetingUserService {
 
     Long register(MeetingUserDTO meetingUserDTO);
 
-    void remove(MeetingUserDTO meetingUserDTO);
+    void remove(Long id);
 
-    List<MeetingUser> getListAll();
+    List<MeetingUserDTO> getListAll();
 }

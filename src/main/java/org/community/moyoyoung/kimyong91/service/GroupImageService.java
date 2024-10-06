@@ -2,6 +2,7 @@ package org.community.moyoyoung.kimyong91.service;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.entity.GroupImage;
+import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 public class GroupImageService {
 
     private final GroupImageRepository groupImageRepository;
+    private final CustomFileUtil customFileUtil;
 
     public List<GroupImage> saveImages(List<String> savedNames, List<MultipartFile> files) throws IOException {
         List<GroupImage> groupImages = new ArrayList<>();
@@ -26,18 +28,24 @@ public class GroupImageService {
             String originalFilename = files.get(i).getOriginalFilename();
             String savedName = savedNames.get(i);
 
-            // MIME 타입과 파일 정보 저장
             GroupImage groupImage = GroupImage.builder()
                     .fileName(savedName)
                     .upLoadFileName(originalFilename)
                     .mimeType(files.get(i).getContentType())
-                    .dueDate(LocalDate.now().plusDays(30)) // 유효기간 30일 설정
+                    .dueDate(LocalDate.now())
                     .build();
 
-            // 데이터베이스에 저장
             groupImages.add(groupImageRepository.save(groupImage));
         }
 
         return groupImages;
+    }
+
+    public void removeImage(Long id) {
+        GroupImage groupImage = groupImageRepository.findById(id).orElseThrow();
+
+        customFileUtil.removeFile(groupImage.getFileName());
+
+        groupImageRepository.deleteById(id);
     }
 }

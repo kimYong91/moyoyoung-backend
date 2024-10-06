@@ -41,23 +41,25 @@ public class CustomFileUtil {
         List<String> uploadNames = new ArrayList<>();
 
         if (files == null || files.isEmpty()) {
-            return null;
+            throw new RuntimeException("파일이 업로드되지 않았습니다.");
         }
 
         for (MultipartFile file : files) {
             String contentType = file.getContentType();
 
-            // MIME 타입이 이미지인지 확인 (image/jpeg, image/png 등)
-            if (contentType != null && (contentType.equals("image/jpeg")
-                    || (contentType.equals("image/png")))
-                    || (contentType.equals("image/gif"))) {
+
+            if (contentType != null && (contentType.equals("image/"))) {
                 String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
                 Path savePath = Paths.get(uploadPath, savedName);
 
+                if (Files.exists(savePath)) {
+                    throw new RuntimeException("파일이 이미 존재합니다.");
+                }
+
                 try {
-                    // 파일을 지정된 경로에 복사하여 저장
+
                     Files.copy(file.getInputStream(), savePath);
-                    // 저장된 파일명을 리스트에 추가
+
                     uploadNames.add(savedName);
                 } catch (IOException e) {
                     throw new RuntimeException(e.getMessage());
@@ -68,5 +70,14 @@ public class CustomFileUtil {
         }
 
         return uploadNames;
+    }
+
+    public void removeFile(String fileName) {
+        Path filePath = Paths.get(uploadPath, fileName);
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("파일 삭제 중 오류 발생: " + e.getMessage());
+        }
     }
 }

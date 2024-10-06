@@ -5,6 +5,7 @@ import org.community.moyoyoung.dto.MeetingUserDTO;
 import org.community.moyoyoung.entity.MeetingUser;
 import org.community.moyoyoung.repository.MeetingUserRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,12 +31,16 @@ public class MeetingUserServiceImpl implements MeetingUserService{
     }
 
     @Override
-    public void remove(MeetingUserDTO meetingUserDTO) {
-        meetingUserRepository.deleteById(meetingUserDTO.getId());
+    public void remove(Long id) {
+        meetingUserRepository.deleteById(id);
     }
 
     @Override
-    public List<MeetingUser> getListAll() {
-        return meetingUserRepository.findAll();
+    public List<MeetingUserDTO> getListAll() {
+
+        List<MeetingUser> all = meetingUserRepository.findAll();
+
+        List<MeetingUserDTO> map = modelMapper.map(all, new TypeToken<List<MeetingUserDTO>>() {}.getType());
+        return map;
     }
 }
