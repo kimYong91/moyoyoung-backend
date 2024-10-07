@@ -32,13 +32,12 @@ public class CommentDTO {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.myUser = comment.getMyUser();
+        this.createdDate = comment.getCreateDate();
 
         // 작성자가 온라인 상태라면 MyUser의 name 필드를 null로 설정
-        if (comment.isCheckOnline()) {
+        if (this.myUser != null && comment.isCheckOnline()) {
             this.myUser.setName(null);
         }
-
-        this.createdDate = comment.getCreateDate();
     }
 
     public Long getId() {

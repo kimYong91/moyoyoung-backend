@@ -1,4 +1,4 @@
-package org.community.moyoyoung.yangs01;
+package org.community.moyoyoung.yangs01.service;
 
 import org.community.moyoyoung.dto.CommentDTO;
 import org.community.moyoyoung.entity.MyUser;

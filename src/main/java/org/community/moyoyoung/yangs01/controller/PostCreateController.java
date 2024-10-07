@@ -1,7 +1,7 @@
 package org.community.moyoyoung.yangs01.controller;
 
 import org.community.moyoyoung.dto.PostCreateDTO;
-import org.community.moyoyoung.yangs01.PostCreateService;
+import org.community.moyoyoung.yangs01.service.PostCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

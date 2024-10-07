@@ -2,19 +2,29 @@ package org.community.moyoyoung.yangs01;
 
 
 import lombok.extern.log4j.Log4j2;
-import org.community.moyoyoung.dto.PostListDTO;
+import org.community.moyoyoung.entity.Post;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @SpringBootTest
 @Log4j2
 public class PostListServiceImplTests {
     @Autowired
-    private PostListService PostListService;
+    private org.community.moyoyoung.yangs01.service.PostListService postListService;
+
+
+
+
+
+
+
+
+
+
+
 //
 //    @Test
 //    public void testRegister() {

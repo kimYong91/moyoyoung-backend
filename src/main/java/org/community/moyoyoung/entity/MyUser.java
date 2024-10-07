@@ -25,6 +25,8 @@ import jakarta.validation.constraints.Size;
 @Table(name = "tbl_user")
 public class MyUser {
 
+    public interface RegistrationGroup {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,10 +39,10 @@ public class MyUser {
 
     @NotNull(message = "Nickname is required.")
     @Size(min = 2, max = 9, message = "Nickname must be between 2 and 9 characters long.")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String nickname;
 
-    @NotNull(message = "Password is required.")
+    @NotNull(groups = RegistrationGroup.class, message = "Password is required.")
     @Column(nullable = false)
     private String password;
 
@@ -48,10 +50,11 @@ public class MyUser {
     @Column(nullable = false)
     private String name;
 
-    @NotNull(message = "Phone number is required.")
+    @NotNull(groups = RegistrationGroup.class, message = "Phone number is required.")
     @Pattern(regexp = "^\\d{10,11}$", message = "Phone number must be 10 or 11 digits long.")
     @Column(nullable = false)
     private String phoneNumber;
+
     private boolean checkOnline;
 
     @Column(nullable = false)

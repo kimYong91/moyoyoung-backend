@@ -28,8 +28,6 @@ public class PostDTO {
     private String title;
     private String content;
 
-    private LocalDateTime createDate; // 작성일자
-
     private PostImage postImage;
 
     private List<Comment> commentList;
@@ -37,5 +35,5 @@ public class PostDTO {
     private MyUser myUser;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate dueDate;
+    private LocalDate createDate;
 }

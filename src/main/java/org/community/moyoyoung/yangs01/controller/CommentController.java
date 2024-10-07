@@ -3,7 +3,7 @@ package org.community.moyoyoung.yangs01.controller;
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.CommentDTO;
 import org.community.moyoyoung.entity.MyUser;
-import org.community.moyoyoung.yangs01.CommentService;
+import org.community.moyoyoung.yangs01.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

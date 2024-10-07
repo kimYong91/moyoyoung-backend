@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -25,7 +26,6 @@ public class Post {
     private String title;
 
     @Column(nullable = false)
-    @NotBlank
     private String content;
 
     private String nickName;
