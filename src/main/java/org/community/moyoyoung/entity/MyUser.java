@@ -53,6 +53,7 @@ public class MyUser {
     @Pattern(regexp = "^\\d{10,11}$", message = "Phone number must be 10 or 11 digits long.")
     @Column(nullable = false)
     private String phoneNumber;
+    private boolean checkOnline;
 
     @Column(nullable = false)
     private Boolean disabled;

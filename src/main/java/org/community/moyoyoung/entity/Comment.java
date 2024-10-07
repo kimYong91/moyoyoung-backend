@@ -3,11 +3,16 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
+
+
 // 김용
 // 댓글
+
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -21,7 +26,10 @@ public class Comment {
 
     @Column(length = 200)
     private String content;
-    private LocalDate dueDate;
+    private String userNickname;
+    private String username;
+    private LocalDateTime createDate;
+    private boolean checkOnline;
 
     @ManyToOne
     private Post post;

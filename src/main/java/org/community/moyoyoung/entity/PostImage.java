@@ -29,5 +29,10 @@ public class PostImage {
     @OneToOne
     private MyUser myUser;
 
+    public void setFileName(String originalFilename) {
+    }
+
+    public void setFilePath(String path) {
+    }
 }
 
