@@ -1,9 +1,10 @@
 package org.community.moyoyoung.security;
 
+import org.community.moyoyoung.entity.MyUser;
+import org.community.moyoyoung.repository.MyUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -15,16 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final MyUserRepository userRepository;
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (username.equals("user")) {
-            return org.springframework.security.core.userdetails.User
-                    .withUsername(username)
-                    .password(new BCryptPasswordEncoder().encode("password"))
-                    .authorities("ROLE_USER")
-                    .build();
-        } else {
-            throw new UsernameNotFoundException("User not found");
-        }
+        MyUser myUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return org.springframework.security.core.userdetails.User
+                .withUsername(myUser.getUsername())
+                .password(myUser.getPassword())
+                .authorities("ROLE_USER")
+                .build();
+        
     }
 }
