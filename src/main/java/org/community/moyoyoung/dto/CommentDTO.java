@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.MyUser;
 
 import java.time.LocalDateTime;
-
+// 김용
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

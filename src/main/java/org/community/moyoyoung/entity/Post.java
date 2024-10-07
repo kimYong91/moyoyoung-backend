@@ -5,7 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+// 김용
+// 게시판
 @Entity
 @Getter
 @Setter
@@ -13,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Table(name = "tbl_post")
-// 게시판
 public class Post {
 
     @Id

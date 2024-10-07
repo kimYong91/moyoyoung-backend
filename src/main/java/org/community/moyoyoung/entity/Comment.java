@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
+// 김용
+// 댓글
 @Entity
 @Getter
 @AllArgsConstructor
@@ -12,7 +13,6 @@ import java.time.LocalDate;
 @ToString
 @Table(name = "tbl_comment")
 @Builder
-// 댓글
 public class Comment {
 
     @Id

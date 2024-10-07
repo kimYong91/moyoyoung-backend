@@ -10,14 +10,20 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import lombok.Data;
+
 import jakarta.validation.constraints.Size;
 
+// 김용
+// 유저
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
-// 유저
 public class MyUser {
 
     @Id
@@ -51,8 +57,8 @@ public class MyUser {
     @Column(nullable = false)
     private Boolean disabled;
 
-    @OneToMany
-    private List<Group> ownGroup = new ArrayList<>();
+    @OneToOne
+    private Group ownGroup;
 
     @OneToMany
     private List<Group> group = new ArrayList<>();
