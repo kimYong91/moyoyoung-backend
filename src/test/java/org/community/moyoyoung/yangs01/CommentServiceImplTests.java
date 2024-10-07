@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommentServiceImplTests {
 
-    @Autowired
-    private CommentService commentService;
+    // @Autowired
+    // private CommentService commentService;
 
-    @Test
-    public void
+    // @Test
+    // public void
 
 }
