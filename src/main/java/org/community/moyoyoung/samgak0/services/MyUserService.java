@@ -11,4 +11,7 @@ public interface MyUserService {
     void updateUser(MyUser user);
     boolean deleteUser(Long id);
     boolean validatePassword(String password);
+
+    boolean checkByNickname(String nickname);
+    boolean checkByUsername(String username);
 }

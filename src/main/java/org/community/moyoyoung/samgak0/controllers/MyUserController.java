@@ -31,7 +31,7 @@ public class MyUserController {
     private final MyUserService userService;
     private final Validator validator;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody MyUser user) {
         return handleUserOperation(() -> {
             user.setDisabled(false);
@@ -115,6 +115,33 @@ public class MyUserController {
         });
     }
 
+    @GetMapping("/check/nickname")
+    public ResponseEntity<?> checkNickname(@RequestBody CheckNicknameRequest nicknameRequest) {
+        return handleUserOperation(() -> {
+            if (nicknameRequest == null) {
+                throw new IllegalArgumentException("nickname paramter is required.");
+            }
+            if (nicknameRequest.nickname == null) {
+                throw new IllegalArgumentException("nickname paramter is required.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByNickname(nicknameRequest.nickname)));
+        });
+    }
+
+    @GetMapping("/check/username")
+    public ResponseEntity<?> checkUsername(@RequestBody CheckUsernameRequest usernameRequest) {
+        return handleUserOperation(() -> {
+            
+            if (usernameRequest == null) {
+                throw new IllegalArgumentException("username paramter is required.");
+            }
+            if (usernameRequest.username == null) {
+                throw new IllegalArgumentException("username paramter is required.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByUsername(usernameRequest.username)));
+        });
+    }
+
 
     private void checkViolations(MyUser existingUser) {
         Set<ConstraintViolation<MyUser>> violations = validator.validate(existingUser);
@@ -147,6 +174,12 @@ public class MyUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponse(e.getMessage()));
         }
+    }
+
+    public record CheckUsernameRequest(String username) {
+    }
+
+    public record CheckNicknameRequest(String nickname) {
     }
 
     public record ErrorResponse(boolean success, String errorMessage) {
