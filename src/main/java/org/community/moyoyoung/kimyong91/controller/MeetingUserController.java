@@ -11,25 +11,25 @@ import java.util.Map;
 // 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test/meetingUser")
+@RequestMapping("/api/meetingUser")
 public class MeetingUserController {
 
     private final MeetingUserService meetingUserService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<MeetingUserDTO>> getList() {
+    public ResponseEntity<List<MeetingUserDTO>> getJoinUserList() {
         List<MeetingUserDTO> listAll = meetingUserService.getListAll();
         return ResponseEntity.ok(listAll);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, Long>> register(@RequestBody MeetingUserDTO meetingUserDTO) {
-        Long id = meetingUserService.register(meetingUserDTO);
+    @PostMapping("/join")
+    public ResponseEntity<Map<String, Long>> meetingJoin(@RequestBody MeetingUserDTO meetingUserDTO) {
+        Long id = meetingUserService.join(meetingUserDTO);
         return ResponseEntity.ok(Map.of("id", id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> remove(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Map<String, String>> meetingUserRemove(@PathVariable(name = "id") Long id) {
         meetingUserService.remove(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }

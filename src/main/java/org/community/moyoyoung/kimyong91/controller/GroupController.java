@@ -11,25 +11,25 @@ import java.util.Map;
 // 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test/group")
+@RequestMapping("/api/group")
 public class GroupController {
 
     private final GroupService groupService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupDTO> getOne(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<GroupDTO> getOneGroup(@PathVariable(name = "id") Long id) {
         GroupDTO response = groupService.getOne(id);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/postList")
     public ResponseEntity<PageResponseDTO<PostMiniDTO>> getPostMiniList(
-            @RequestParam GroupDTO groupDTO,
+            @RequestParam Long id,
             @RequestParam int page,
             @RequestParam int size) {
 
         PageRequestDTO pageRequestDTO = new PageRequestDTO(page, size);
-        PageResponseDTO<PostMiniDTO> response = groupService.getPostMiniUserList(groupDTO, pageRequestDTO);
+        PageResponseDTO<PostMiniDTO> response = groupService.getPostMiniList(id, pageRequestDTO);
         return ResponseEntity.ok(response);
     }
 
@@ -40,7 +40,7 @@ public class GroupController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Map<String, Long>> register(@RequestBody GroupDTO groupDTO) {
+    public ResponseEntity<Map<String, Long>> groupRegister(@RequestBody GroupDTO groupDTO) {
         Long id = groupService.register(groupDTO);
         return ResponseEntity.ok(Map.of("id", id));
     }
