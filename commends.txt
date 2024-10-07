@@ -1,11 +1,40 @@
  curl -X POST localhost:8080/auth/login \
  -H "Content-Type: application/json" \
- -d '{"username": "user", "password": "password"}'
-
- curl -X POST localhost:8080/auth/login \
- -H "Content-Type: application/json" \
  -d '{"username": "user", "password": "pssword"}'
 
  curl -X GET -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzI3NzUxMjk4LCJleHAiOjE3Mjc3NTQ4OTh9.uRnW4eF1aptO4xdG3OJpojsEZ4B0pxLcais4SI8-iUvjJqIuzlXDZIA1DgG9sgYoJAvZYDBfaDdeBjMiQIG3zA" http://localhost:8080/hello
 
  curl -X GET -v http://localhost:8080/hello
+
+ curl -X POST http://localhost:8080/users \
+-H "Content-Type: application/json" \
+-d '{
+    "username": "testUser1",
+    "nickname": "TestUser1",
+    "password": "Password123!",
+    "name": "Test Name",
+    "phoneNumber": "01012345678"
+}'
+
+curl -X PATCH http://localhost:8080/users/{id} \
+-H "Content-Type: application/json" \
+-d '{
+    "nickname": "Updated Nickname",
+    "password": "NewPassword123!"
+}'
+
+curl -X PATCH http://localhost:8080/users/{id} \
+-H "Content-Type: application/json" \
+-d '{
+    "password": "NewPassword123!"
+}'
+
+curl -X PATCH http://localhost:8080/users/{id} \
+-H "Content-Type: application/json" \
+-d '{
+    "nickname": "Updated Nickname",
+}'
+
+curl -X GET http://localhost:8080/users/1
+
+curl -X DELETE http://localhost:8080/users/1

@@ -1,7 +1,5 @@
 package org.community.moyoyoung.entity;
 
-
-
 import jakarta.persistence.*;
 import lombok.*;
 

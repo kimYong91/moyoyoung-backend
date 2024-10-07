@@ -24,7 +24,7 @@ public class Post {
     @Column(nullable = false)
     private String content;
     private LocalDateTime dueDate;
-    private LocalDateTime modifiedDate; // 수정일자
+    private LocalDateTime modifiedDate;
     private boolean delFlag;
 
 

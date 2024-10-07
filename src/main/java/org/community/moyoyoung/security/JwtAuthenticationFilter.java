@@ -10,7 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -23,12 +23,14 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+//Author : MinU Bak
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     private final List<String> excludedUrls = Arrays.asList(
             "/auth/token",
@@ -41,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if ("".equals("")) {
             org.springframework.security.core.userdetails.UserDetails userDetails = org.springframework.security.core.userdetails.User
                     .withUsername("username")
-                    .password(new BCryptPasswordEncoder().encode("password"))
+                    .password(passwordEncoder.encode("password"))
                     .authorities("ROLE_USER")
                     .build();
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
