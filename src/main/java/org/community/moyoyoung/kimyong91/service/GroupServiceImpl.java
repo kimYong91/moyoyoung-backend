@@ -68,7 +68,14 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public PageResponseDTO<PostMiniDTO> getPostMiniUserList(GroupDTO groupDTO, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PostMiniDTO> getPostMiniList(Long id, PageRequestDTO pageRequestDTO) {
+
+
+        Optional<Group> group = groupRepository.findById(id);
+
+        GroupDTO groupDTO = modelMapper.map(group, GroupDTO.class);
+
+
         List<PostMiniDTO> dtoList;
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
@@ -123,8 +130,8 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public MeetingDTO getMeeting(Long id) {
-        Optional<Meeting> result = meetingRepository.findById(id);
-        Meeting meeting = result.orElseThrow();
+        Optional<Group> result = groupRepository.findById(id);
+        Meeting meeting = result.get().getMeeting();
         MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
 
         return meetingDTO;
