@@ -88,7 +88,7 @@ public class GroupServiceImpl implements GroupService{
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getCreateDate())
+                                .createDate(post.getCreateDate())
                                 .name(name)
                                 .build();
                     }
@@ -102,7 +102,7 @@ public class GroupServiceImpl implements GroupService{
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getCreateDate())
+                                .createDate(post.getCreateDate())
                                 .userNickname(nickname)
                                 .build();
                     }

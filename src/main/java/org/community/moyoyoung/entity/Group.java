@@ -31,7 +31,7 @@ public class Group {
     private String title;
     @Column(nullable = false)
     private String content;
-    private LocalDate dueDate;
+    private LocalDate createDate;
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
     @OneToOne

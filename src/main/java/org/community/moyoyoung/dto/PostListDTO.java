@@ -26,7 +26,7 @@ public class PostListDTO {
     private MyUser myUser;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dueDate;
+    private LocalDateTime createDate;
 
     public String getUserName() {
         if (myUser != null) {

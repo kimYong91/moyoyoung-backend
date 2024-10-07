@@ -32,7 +32,7 @@ public class GroupImageService {
                     .fileName(savedName)
                     .upLoadFileName(originalImageName)
                     .mimeType(files.get(i).getContentType())
-                    .dueDate(LocalDate.now())
+                    .createDate(LocalDate.now())
                     .build();
 
             groupImages.add(groupImageRepository.save(groupImage));

@@ -22,7 +22,7 @@ public class GroupDTO {
     private String category;
     private String title;
     private String content;
-    private LocalDate dueDate;
+    private LocalDate createDate;
 
     private List<PostDTO> posts;  // 최신 포스트 리스트 필드
 

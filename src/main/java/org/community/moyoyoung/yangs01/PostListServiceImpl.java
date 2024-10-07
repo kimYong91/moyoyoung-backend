@@ -43,6 +43,7 @@ public class PostListServiceImpl implements PostListService {
                 .collect(Collectors.toList());
 
 //        return PageResponseDTO.<PostListDTO>withAll(postList, pageRequestDTO, result.getTotalElements());
+        return null;
     }
 
 }

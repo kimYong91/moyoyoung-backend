@@ -18,7 +18,7 @@ public class MeetingDTO {
     private String title;
     private String meetingDate;
     private String content;
-    private LocalDate dueDate;
+    private LocalDate createDate;
     private String nickname;
     private String name;
 
