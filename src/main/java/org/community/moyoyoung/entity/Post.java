@@ -6,7 +6,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+// 김용
+// 게시판
 @Entity
 @Getter
 @Setter
@@ -14,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Table(name = "tbl_post")
-// 게시판
 public class Post {
 
     @Id
@@ -32,6 +32,7 @@ public class Post {
     private String name;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate; // 수정일자
+
     private boolean delFlag;
     private boolean checkOnline;
 

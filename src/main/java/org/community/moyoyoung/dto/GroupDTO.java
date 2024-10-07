@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+// 김용
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,8 +23,6 @@ public class GroupDTO {
     private String title;
     private String content;
     private LocalDate dueDate;
-    private String userNickName;
-    private String name;
 
     private List<PostDTO> posts;  // 최신 포스트 리스트 필드
 

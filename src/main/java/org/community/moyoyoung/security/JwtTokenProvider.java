@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
+//Author : MinU Bak
 @Slf4j
 @Component
 public class JwtTokenProvider {

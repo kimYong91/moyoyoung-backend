@@ -3,8 +3,12 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
+
+
+// 김용
+// 댓글
 
 @Entity
 @Getter
@@ -14,7 +18,6 @@ import java.time.LocalDateTime;
 @ToString
 @Table(name = "tbl_comment")
 @Builder
-// 댓글
 public class Comment {
 
     @Id

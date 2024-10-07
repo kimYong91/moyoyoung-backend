@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+// 김용
+// 정기 모임
 @Entity
 @Getter
 @AllArgsConstructor
@@ -13,7 +15,6 @@ import java.time.LocalDate;
 @Table(name = "tbl_meeting")
 @Builder
 @Setter
-// 정기 모임
 public class Meeting {
 
     @Id
@@ -27,8 +28,6 @@ public class Meeting {
     private String meetingDate;
     private LocalDate dueDate;
 
-
     @OneToOne
     private Group group;
-
 }

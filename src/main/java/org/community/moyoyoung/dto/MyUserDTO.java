@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+// 김용
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +24,7 @@ public class MyUserDTO {
 
     private Long id;
     private String username;
-    private String nickName;
+    private String nickname;
     
     @JsonIgnore
     @ToString.Exclude

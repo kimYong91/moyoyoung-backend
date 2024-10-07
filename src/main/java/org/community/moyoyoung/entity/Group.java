@@ -6,7 +6,8 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+// 김용
+// 소모임
 @Entity
 @Getter
 @AllArgsConstructor
@@ -14,7 +15,6 @@ import java.util.List;
 @ToString
 @Setter
 @Table(name = "tbl_group")
-// 소모임
 public class Group {
 
     @Id
