@@ -1,6 +1,7 @@
 package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,10 +20,16 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false)
+    @NotBlank
     private String content;
+
+    private String nickName;
+    private String name;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate; // 수정일자
     private boolean delFlag;

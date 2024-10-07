@@ -1,7 +1,7 @@
+
 package org.community.moyoyoung.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +19,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostDTO {
+public class PostListDTO {
 
     private Long id;
-
     private String title;
-    private String content;
-
-    private LocalDateTime createDate; // 작성일자
-
-    private PostImage postImage;
-
-    private List<Comment> commentList;
-
     private MyUser myUser;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
+
+    public String getUserName() {
+        if (myUser != null) {
+            return myUser.isCheckOnline() ? myUser.getNickName() : myUser.getName();
+        }
+        return null; // MyUser가 null일 경우 처리
+    }
 }

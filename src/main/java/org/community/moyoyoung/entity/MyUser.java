@@ -37,6 +37,7 @@ public class MyUser {
     private String name;
     @Column(nullable = false)
     private String phoneNumber;
+    private boolean checkOnline;
 
     public void setPassword(String password, PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);

@@ -1,7 +1,5 @@
 package org.community.moyoyoung.yangs01;
 
-import org.community.moyoyoung.dto.PageRequestDTO;
-import org.community.moyoyoung.dto.PageResponseDTO;
 import org.community.moyoyoung.dto.PostCreateDTO;
 
 public interface PostCreateService {

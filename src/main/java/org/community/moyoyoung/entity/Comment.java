@@ -23,7 +23,10 @@ public class Comment {
 
     @Column(length = 200)
     private String content;
-    private LocalDateTime dueDate;
+    private String userNickname;
+    private String username;
+    private LocalDateTime createDate;
+    private boolean checkOnline;
 
     @ManyToOne
     private Post post;

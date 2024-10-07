@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// 양수연
 @Builder
 @Getter
 @Setter
@@ -30,6 +31,7 @@ public class PostCreateDTO {
 
     @Builder.Default
     private List<String> uploadFileNames = new ArrayList<>();
+}
 
 
 
