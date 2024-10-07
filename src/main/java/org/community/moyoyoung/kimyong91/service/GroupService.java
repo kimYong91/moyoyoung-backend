@@ -14,7 +14,7 @@ public interface GroupService{
 
     void remove(Long id);
 
-    PageResponseDTO<PostMiniDTO> getPostMiniUserList(GroupDTO groupDTO, PageRequestDTO pageRequestDTO);
+    PageResponseDTO<PostMiniDTO> getPostMiniList(Long id, PageRequestDTO pageRequestDTO);
 
     MeetingDTO getMeeting(Long id);
 }
