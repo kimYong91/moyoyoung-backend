@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+// 김용
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -25,12 +25,12 @@ public class GroupImageService {
         List<GroupImage> groupImages = new ArrayList<>();
 
         for (int i = 0; i < savedNames.size(); i++) {
-            String originalFilename = files.get(i).getOriginalFilename();
+            String originalImageName = files.get(i).getOriginalFilename();
             String savedName = savedNames.get(i);
 
             GroupImage groupImage = GroupImage.builder()
                     .fileName(savedName)
-                    .upLoadFileName(originalFilename)
+                    .upLoadFileName(originalImageName)
                     .mimeType(files.get(i).getContentType())
                     .dueDate(LocalDate.now())
                     .build();

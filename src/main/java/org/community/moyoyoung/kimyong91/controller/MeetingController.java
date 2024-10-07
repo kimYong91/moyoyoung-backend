@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
+// 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/test/meeting")
 public class MeetingController {
 
     private final MeetingService meetingService;
@@ -21,7 +21,7 @@ public class MeetingController {
         return ResponseEntity.ok(meetingDTO);
     }
 
-    @PostMapping("")
+    @PostMapping("/register")
     public ResponseEntity<Map<String, Long>> register(@RequestBody MeetingDTO meetingDTO) {
         Long id = meetingService.register(meetingDTO);
         return ResponseEntity.ok(Map.of("id", id));

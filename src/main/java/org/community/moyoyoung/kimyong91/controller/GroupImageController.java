@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,16 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
+// 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/test/groupImage")
 public class GroupImageController {
 
     private final GroupImageService groupImageService;
     private final CustomFileUtil customFileUtil;
 
-    @PostMapping("/{image}")
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Resource> getOne(@PathVariable(name = "id") Long id){
+        return customFileUtil.getImage(id);
+    }
+
+    @PostMapping("/upload")
     public ResponseEntity<List<GroupImage>> uploadImage(@RequestParam("image") List<MultipartFile> image) {
         try {
 
@@ -34,7 +42,7 @@ public class GroupImageController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> removeImage(@PathVariable(name = "id") Long id) {
         groupImageService.removeImage(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));

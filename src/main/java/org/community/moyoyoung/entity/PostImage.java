@@ -6,14 +6,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
+// 김용
+// 게시판 첨부 이미지
 @Entity
 @Getter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-// 게시판 첨부 이미지
 public class PostImage {
 
     @Id

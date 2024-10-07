@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+// 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/test/meetingUser")
 public class MeetingUserController {
 
     private final MeetingUserService meetingUserService;
@@ -28,7 +28,7 @@ public class MeetingUserController {
         return ResponseEntity.ok(Map.of("id", id));
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> remove(@PathVariable(name = "id") Long id) {
         meetingUserService.remove(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));

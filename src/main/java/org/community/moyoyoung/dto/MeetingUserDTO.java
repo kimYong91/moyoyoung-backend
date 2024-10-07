@@ -4,7 +4,7 @@ import lombok.*;
 import org.community.moyoyoung.entity.MyUser;
 
 import java.util.List;
-
+// 김용
 @Getter
 @Setter
 @AllArgsConstructor

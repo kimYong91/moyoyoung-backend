@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
+// 김용
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -68,7 +68,7 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public PageResponseDTO<PostMiniDTO> getPostMiniList(GroupDTO groupDTO, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PostMiniDTO> getPostMiniUserList(GroupDTO groupDTO, PageRequestDTO pageRequestDTO) {
         List<PostMiniDTO> dtoList;
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
@@ -78,7 +78,8 @@ public class GroupServiceImpl implements GroupService{
 
         Page<Object[]> result = postRepository.selectList(pageable);
 
-        if (groupDTO.isCheckOnline()) {
+
+        if (!groupDTO.isCheckOnline()) {
             dtoList = result.get().map(
                     arr -> {
                         Post post = (Post) arr[0];
@@ -97,12 +98,12 @@ public class GroupServiceImpl implements GroupService{
                     arr -> {
                         Post post = (Post) arr[0];
                         MyUser myUser = (MyUser) arr[1]; // null 체크
-                        String nickName = (myUser != null) ? myUser.getNickName() : "Anonymous"; // null 처리
+                        String nickname = (myUser != null) ? myUser.getNickName() : "Anonymous"; // null 처리
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
                                 .dueDate(post.getDueDate())
-                                .userNickName(nickName)
+                                .userNickname(nickname)
                                 .build();
                     }
             ).toList();

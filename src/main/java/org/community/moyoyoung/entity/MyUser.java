@@ -12,13 +12,13 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.Data;
-
+// 김용
+// 유저
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
-// 유저
 public class MyUser {
 
     @Id
@@ -42,8 +42,8 @@ public class MyUser {
         this.password = passwordEncoder.encode(password);
     }
 
-    @OneToMany
-    private List<Group> ownGroup = new ArrayList<>();
+    @OneToOne
+    private Group ownGroup;
 
     @OneToMany
     private List<Group> group = new ArrayList<>();

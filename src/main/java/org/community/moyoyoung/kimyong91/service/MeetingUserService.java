@@ -5,7 +5,7 @@ import org.community.moyoyoung.entity.MeetingUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+// 김용
 @Service
 public interface MeetingUserService {
 
