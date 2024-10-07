@@ -20,8 +20,6 @@ public class PostDTO {
     private Long id;
     private String title;
     private String content;
-    private String nickName;
-    private String name;
     private LocalDateTime dueDate; // 작성일자
 
 

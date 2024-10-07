@@ -17,6 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+//Author : MinU Bak
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
