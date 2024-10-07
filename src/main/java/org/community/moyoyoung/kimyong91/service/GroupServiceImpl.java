@@ -88,7 +88,7 @@ public class GroupServiceImpl implements GroupService{
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getDueDate())
+                                .dueDate(post.getCreateDate())
                                 .name(name)
                                 .build();
                     }
@@ -98,11 +98,11 @@ public class GroupServiceImpl implements GroupService{
                     arr -> {
                         Post post = (Post) arr[0];
                         MyUser myUser = (MyUser) arr[1]; // null 체크
-                        String nickname = (myUser != null) ? myUser.getNickName() : "Anonymous"; // null 처리
+                        String nickname = (myUser != null) ? myUser.getNickname() : "Anonymous"; // null 처리
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getDueDate())
+                                .dueDate(post.getCreateDate())
                                 .userNickname(nickname)
                                 .build();
                     }
