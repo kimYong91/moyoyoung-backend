@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Long register(GroupDTO groupDTO) {
         Group group = modelMapper.map(groupDTO, Group.class);
-        group.setDueDate(LocalDate.now());
+        group.setCreateDate(LocalDate.now());
         Group result = groupRepository.save(group);
         return result.getId();
     }
