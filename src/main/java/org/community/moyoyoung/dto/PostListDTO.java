@@ -30,7 +30,7 @@ public class PostListDTO {
 
     public String getUserName() {
         if (myUser != null) {
-            return myUser.isCheckOnline() ? myUser.getNickName() : myUser.getName();
+            return myUser.isCheckOnline() ? myUser.getNickname() : myUser.getName();
         }
         return null; // MyUser가 null일 경우 처리
     }

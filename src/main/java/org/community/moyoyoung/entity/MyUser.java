@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.Data;
@@ -31,8 +30,8 @@ public class MyUser {
     private Long id;
 
     @NotNull(message = "Username is required.")
-    @Pattern(regexp = "^[a-zA-Z0-9]{4,}[_]*$", 
-             message = "Username must be at least 4 characters long, contain only letters, numbers, and underscores.")
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,}[_]*$",
+            message = "Username must be at least 4 characters long, contain only letters, numbers, and underscores.")
     @Column(unique = true, nullable = false)
     private String username;
 
