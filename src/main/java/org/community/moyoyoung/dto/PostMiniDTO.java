@@ -16,7 +16,7 @@ public class PostMiniDTO {
 
     private Long id;
     private String title;
-    private LocalDateTime dueDate;
+    private LocalDateTime createDate;
     private String userNickname;
     private String name;
 

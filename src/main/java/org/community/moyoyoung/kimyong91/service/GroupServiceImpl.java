@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Long register(GroupDTO groupDTO) {
         Group group = modelMapper.map(groupDTO, Group.class);
-        group.setDueDate(LocalDate.now());
+        group.setCreateDate(LocalDate.now());
         Group result = groupRepository.save(group);
         return result.getId();
     }
@@ -88,7 +88,7 @@ public class GroupServiceImpl implements GroupService{
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getCreateDate())
+                                .createDate(post.getCreateDate())
                                 .name(name)
                                 .build();
                     }
@@ -102,7 +102,7 @@ public class GroupServiceImpl implements GroupService{
                         return PostMiniDTO.builder()
                                 .id(post.getId())
                                 .title(post.getTitle())
-                                .dueDate(post.getCreateDate())
+                                .createDate(post.getCreateDate())
                                 .userNickname(nickname)
                                 .build();
                     }

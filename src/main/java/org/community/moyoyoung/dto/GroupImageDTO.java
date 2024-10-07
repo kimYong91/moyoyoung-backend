@@ -23,7 +23,7 @@ public class GroupImageDTO {
     private Long id;
     private String fileName;
     private String upLoadFileName;
-    private LocalDate dueDate;
+    private LocalDate createDate;
     private String mimeType;
     private Group group;
 }

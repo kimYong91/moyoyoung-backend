@@ -26,7 +26,7 @@ public class Meeting {
     @Column(nullable = false)
     private String content;
     private String meetingDate;
-    private LocalDate dueDate;
+    private LocalDate createDate;
 
     @OneToOne
     private Group group;
