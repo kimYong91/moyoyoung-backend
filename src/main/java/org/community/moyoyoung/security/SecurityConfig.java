@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
+//Author : MinU Bak
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -40,7 +43,7 @@ public class SecurityConfig {
                                                 .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(authenticationEntryPoint))
-                                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
+                                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService, passwordEncoder()),
                                                 UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
@@ -63,5 +66,10 @@ public class SecurityConfig {
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**", configuration);
                 return source;
+        }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
         }
 }
