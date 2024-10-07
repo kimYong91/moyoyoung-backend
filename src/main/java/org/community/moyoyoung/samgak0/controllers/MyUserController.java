@@ -32,7 +32,7 @@ public class MyUserController {
     private final Validator validator;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody MyUser user) {
+    public ResponseEntity<?> createUser(@RequestBody(required=true) MyUser user) {
         return handleUserOperation(() -> {
             user.setDisabled(false);
             checkViolations(user);
@@ -61,7 +61,7 @@ public class MyUserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable(name = "id") Long id,
+    public ResponseEntity<?> updateUser(@PathVariable(name = "id", required=true) Long id,
             @RequestBody MyUser user) {
         return handleUserOperation(() -> {
             if (id == null) {
@@ -97,7 +97,7 @@ public class MyUserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable(name = "id", required=true) Long id) {
         return handleUserOperation(() -> {
             
             try {
@@ -116,29 +116,23 @@ public class MyUserController {
     }
 
     @GetMapping("/check/nickname")
-    public ResponseEntity<?> checkNickname(@RequestBody CheckNicknameRequest nicknameRequest) {
+    public ResponseEntity<?> checkNickname(@RequestParam(name="nickname", required=true) String nickname) {
         return handleUserOperation(() -> {
-            if (nicknameRequest == null) {
+            if (nickname == null || nickname.isEmpty()) {
                 throw new IllegalArgumentException("nickname paramter is required.");
             }
-            if (nicknameRequest.nickname == null) {
-                throw new IllegalArgumentException("nickname paramter is required.");
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByNickname(nicknameRequest.nickname)));
+            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByNickname(nickname)));
         });
     }
 
     @GetMapping("/check/username")
-    public ResponseEntity<?> checkUsername(@RequestBody CheckUsernameRequest usernameRequest) {
+    public ResponseEntity<?> checkUsername(@RequestParam(name="username", required=true) String username) {
         return handleUserOperation(() -> {
-            
-            if (usernameRequest == null) {
+            if (username == null || username.isEmpty()) {
                 throw new IllegalArgumentException("username paramter is required.");
             }
-            if (usernameRequest.username == null) {
-                throw new IllegalArgumentException("username paramter is required.");
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByUsername(usernameRequest.username)));
+            log.error("username = " + username);
+            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByUsername(username)));
         });
     }
 
