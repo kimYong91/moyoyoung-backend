@@ -27,8 +27,6 @@ public class Meeting {
     private String meetingDate;
     private LocalDate dueDate;
 
-
     @OneToOne
     private Group group;
-
 }

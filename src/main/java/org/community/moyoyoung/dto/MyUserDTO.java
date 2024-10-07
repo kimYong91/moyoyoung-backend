@@ -24,7 +24,7 @@ public class MyUserDTO {
 
     private Long id;
     private String username;
-    private String nickName;
+    private String nickname;
     
     @JsonIgnore
     @ToString.Exclude
