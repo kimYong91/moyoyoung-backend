@@ -16,6 +16,18 @@
     "phoneNumber": "01012345678"
 }'
 
+curl -X GET http://localhost:8080/users/check/nickname \
+-H "Content-Type: application/json" \
+-d '{
+    "nickname": "TaUser3"
+}'
+
+curl -X GET http://localhost:8080/users/check/username \
+-H "Content-Type: application/json" \
+-d '{
+    "username": "tesatUser2"
+}'
+
 curl -X PATCH http://localhost:8080/users/{id} \
 -H "Content-Type: application/json" \
 -d '{

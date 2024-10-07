@@ -28,8 +28,13 @@ public class MyUserServiceImpl implements MyUserService {
     }
 
     @Override
-    public Optional<MyUser> getUserById(Long id) {
-        return userRepository.findById(id);
+    public boolean checkByNickname(String nickname) {
+        return userRepository.findByNickname(nickname).isEmpty();
+    }
+
+    @Override
+    public boolean checkByUsername(String username) {
+        return userRepository.findByUsername(username).isEmpty();
     }
 
     @Override
@@ -42,7 +47,6 @@ public class MyUserServiceImpl implements MyUserService {
     public boolean deleteUser(Long id) {
         Optional<MyUser> user = userRepository.findById(id);
         
-
         if (user.isPresent()) {
             MyUser user2 = user.get();
 
@@ -56,6 +60,11 @@ public class MyUserServiceImpl implements MyUserService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Optional<MyUser> getUserById(Long id) {
+        return userRepository.findById(id);
     }
     
     @Override
