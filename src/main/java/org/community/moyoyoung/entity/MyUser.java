@@ -3,9 +3,7 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ import jakarta.validation.constraints.Size;
 // 유저
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
@@ -32,7 +31,7 @@ public class MyUser {
     private Long id;
 
     @NotNull(message = "Username is required.")
-    @Pattern(regexp = "^[a-zA-Z0-9]{4,}[_]*$",
+    @Pattern(regexp = "^[a-zA-Z0-9_]{4,}$",
             message = "Username must be at least 4 characters long, contain only letters, numbers, and underscores.")
     @Column(unique = true, nullable = false)
     private String username;
@@ -64,5 +63,6 @@ public class MyUser {
     private Group ownGroup;
 
     @OneToMany
+    @Builder.Default
     private List<Group> group = new ArrayList<>();
 }

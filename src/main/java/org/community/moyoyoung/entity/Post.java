@@ -2,8 +2,10 @@ package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 // 김용
@@ -28,25 +30,29 @@ public class Post {
     @Column(nullable = false)
     private String content;
 
-    private String nickName;
-    private String name;
+    @Column(nullable = false)
     private LocalDateTime createDate;
+    @Column(nullable = false)
     private LocalDateTime modifiedDate; // 수정일자
 
-    private boolean delFlag;
-    private boolean checkOnline;
-
-
-
+    private Boolean delFlag;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PostImage postImage;
 
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Comment> commentList;
 
-
-    @ManyToOne
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private MyUser myUser;
+
+    public void changeTitle(String title){
+        this.title = title;
+    }
+
+    public void changeModifiedDate(LocalDateTime modifiedDate){
+        this.modifiedDate = modifiedDate;
+    }
+
 }

@@ -4,6 +4,6 @@ import org.community.moyoyoung.dto.*;
 
 public interface PostListService {
 
-    PostDTO get(Long postId); // 게시글 상세 조회
+    PostListDTO get(Long postId); // 게시글 상세 조회
     PageResponseDTO<PostListDTO> list(PageRequestDTO pageRequestDTO); // 게시글 목록 조회
 }

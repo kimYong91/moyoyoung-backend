@@ -2,6 +2,7 @@
 package org.community.moyoyoung.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "tbl_postlist")
 public class PostListDTO {
 
     private Long id;
@@ -28,10 +30,5 @@ public class PostListDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDate;
 
-    public String getUserName() {
-        if (myUser != null) {
-            return myUser.isCheckOnline() ? myUser.getNickname() : myUser.getName();
-        }
-        return null; // MyUser가 null일 경우 처리
-    }
+
 }

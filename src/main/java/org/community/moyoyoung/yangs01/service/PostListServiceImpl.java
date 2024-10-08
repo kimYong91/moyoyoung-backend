@@ -24,10 +24,10 @@ public class PostListServiceImpl implements PostListService {
     private final ModelMapper modelMapper;
 
     @Override
-    public PostDTO get(Long postId) {
+    public PostListDTO get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found")); // 예외 처리
-        return modelMapper.map(post, PostDTO.class);
+        return modelMapper.map(post, PostListDTO.class);
     }
 
     @Override
