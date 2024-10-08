@@ -2,6 +2,8 @@ package org.community.moyoyoung.samgak0.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -32,7 +34,7 @@ public class MyUserController {
     private final Validator validator;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody(required=true) MyUser user) {
+    public ResponseEntity<?> createUser(@RequestBody(required = true) MyUser user) {
         return handleUserOperation(() -> {
             user.setDisabled(false);
             checkViolations(user);
@@ -61,17 +63,19 @@ public class MyUserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable(name = "id", required=true) Long id,
+    public ResponseEntity<?> updateUser(@PathVariable(name = "id", required = true) Long id,
             @RequestBody MyUser user) {
         return handleUserOperation(() -> {
             if (id == null) {
                 throw new IllegalArgumentException("ID paramter is required.");
             }
 
-            MyUser existingUser = userService.getUserById(id).orElseThrow(() -> new NoSuchElementException("User not found."));
+            MyUser existingUser = userService.getUserById(id)
+                    .orElseThrow(() -> new NoSuchElementException("User not found."));
 
             log.error(user.toString());
-            if (user.getUsername() != null || user.getName() != null || user.getPhoneNumber() != null || user.getDisabled() != null) {
+            if (user.getUsername() != null || user.getName() != null || user.getPhoneNumber() != null
+                    || user.getDisabled() != null) {
                 throw new IllegalArgumentException("Only nickname and password fields can be updated.");
             }
 
@@ -97,12 +101,12 @@ public class MyUserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(name = "id", required=true) Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable(name = "id", required = true) Long id) {
         return handleUserOperation(() -> {
-            
+
             try {
                 boolean isDeleted = userService.deleteUser(id);
-                
+
                 if (isDeleted) {
                     return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse());
                 } else {
@@ -115,27 +119,55 @@ public class MyUserController {
         });
     }
 
+    @GetMapping("/check/findId")
+    public ResponseEntity<?> findIdByNameAndPhone(@RequestParam(name = "name", required = true) String name,
+            @RequestParam(name = "phoneNumber", required = true) String phoneNumber) {
+        try {
+            MyUser user = userService.getUserByNameAndPhoneNumber(name, phoneNumber)
+                    .orElseThrow(() -> new NoSuchElementException("User not found"));
+            Map<String,Object> responseData = new HashMap<>();
+            responseData.put("id",user.getId());
+            responseData.put("username",user.getUsername());
+            return ResponseEntity.ok(new FindIdResponse(responseData));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(
+                            "User with name " + name + " and phoneNumber  " + phoneNumber + " not found."));
+        }
+    }
+
     @GetMapping("/check/nickname")
-    public ResponseEntity<?> checkNickname(@RequestParam(name="nickname", required=true) String nickname) {
+    public ResponseEntity<?> checkNickname(@RequestParam(name = "nickname", required = true) String nickname) {
         return handleUserOperation(() -> {
             if (nickname == null || nickname.isEmpty()) {
                 throw new IllegalArgumentException("nickname paramter is required.");
             }
-            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByNickname(nickname)));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new SuccessDataResponse(userService.checkByNickname(nickname)));
         });
     }
 
     @GetMapping("/check/username")
-    public ResponseEntity<?> checkUsername(@RequestParam(name="username", required=true) String username) {
+    public ResponseEntity<?> checkUsername(@RequestParam(name = "username", required = true) String username) {
         return handleUserOperation(() -> {
             if (username == null || username.isEmpty()) {
                 throw new IllegalArgumentException("username paramter is required.");
             }
-            log.error("username = " + username);
-            return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResponse(userService.checkByUsername(username)));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new SuccessDataResponse(userService.checkByUsername(username)));
         });
     }
 
+    @GetMapping("/check/phoneNumber")
+    public ResponseEntity<?> checkPhone(@RequestParam(name = "phoneNumber", required = true) String phoneNumber) {
+        return handleUserOperation(() -> {
+            if (phoneNumber == null || phoneNumber.isEmpty()) {
+                throw new IllegalArgumentException("phoneNumber paramter is required.");
+            }
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new SuccessDataResponse(userService.checkByPhoneNumber(phoneNumber)));
+        });
+    }
 
     private void checkViolations(MyUser existingUser) {
         Set<ConstraintViolation<MyUser>> violations = validator.validate(existingUser);
@@ -148,7 +180,8 @@ public class MyUserController {
             throw new ConstraintViolationException(sb.toString(), violations);
         }
         if (!userService.validatePassword(existingUser.getPassword())) {
-            throw new IllegalArgumentException("Data integrity violation: Validation failed: Password must be 8+ chars, with upper, lower, and special.");
+            throw new IllegalArgumentException(
+                    "Data integrity violation: Validation failed: Password must be 8+ chars, with upper, lower, and special.");
         }
     }
 
@@ -170,10 +203,10 @@ public class MyUserController {
         }
     }
 
-    public record CheckUsernameRequest(String username) {
-    }
-
-    public record CheckNicknameRequest(String nickname) {
+    public record FindIdResponse(boolean success, Map<String,Object> data) {
+        public FindIdResponse(Map<String,Object> data) {
+            this(true, data);
+        }
     }
 
     public record ErrorResponse(boolean success, String errorMessage) {

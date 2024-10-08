@@ -38,6 +38,11 @@ public class MyUserServiceImpl implements MyUserService {
     }
 
     @Override
+    public boolean checkByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber).isEmpty();
+    }
+
+    @Override
     public void updateUser(MyUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -46,7 +51,7 @@ public class MyUserServiceImpl implements MyUserService {
     @Override
     public boolean deleteUser(Long id) {
         Optional<MyUser> user = userRepository.findById(id);
-        
+
         if (user.isPresent()) {
             MyUser user2 = user.get();
 
@@ -66,7 +71,17 @@ public class MyUserServiceImpl implements MyUserService {
     public Optional<MyUser> getUserById(Long id) {
         return userRepository.findById(id);
     }
-    
+
+    @Override
+    public Optional<MyUser> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<MyUser> getUserByNameAndPhoneNumber(String name, String phoneNumber) {
+        return userRepository.findByNameAndPhoneNumber(name, phoneNumber);
+    }
+
     @Override
     public boolean validatePassword(String password) {
         return Pattern.compile(PASSWORD_PATTERN).matcher(password).matches();
