@@ -28,14 +28,28 @@ public class PostDTO {
     private String title;
     private String content;
 
-    private LocalDateTime createDate; // 작성일자
-
     private PostImage postImage;
 
     private List<Comment> commentList;
 
     private MyUser myUser;
 
+    private boolean checkOnline;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate dueDate;
+    private LocalDate createDate;
+
+//    public String getUserName() {
+//        if (myUser != null) {
+//            return myUser.isCheckOnline() ? myUser.getNickname() : myUser.getName();
+//        }
+//        return null; // MyUser가 null일 경우 처리
+//    }
+
+    public String getUserName() {
+        if (myUser != null) {
+            return checkOnline ? myUser.getNickname() : myUser.getName();
+        }
+        return "Unknown User";
+    }
 }

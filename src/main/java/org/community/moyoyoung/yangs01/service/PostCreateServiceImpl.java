@@ -1,4 +1,4 @@
-package org.community.moyoyoung.yangs01;
+package org.community.moyoyoung.yangs01.service;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.PostCreateDTO;

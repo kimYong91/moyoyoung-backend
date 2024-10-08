@@ -1,20 +1,15 @@
-package org.community.moyoyoung.yangs01;
+package org.community.moyoyoung.yangs01.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.community.moyoyoung.dto.CommentDTO;
 import org.community.moyoyoung.entity.Comment;
 import org.community.moyoyoung.entity.MyUser;
-import org.community.moyoyoung.entity.Post;
 import org.community.moyoyoung.repository.CommentRepository;
-import org.community.moyoyoung.repository.PostRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

@@ -2,6 +2,7 @@ package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import java.time.LocalDateTime;
@@ -26,14 +27,20 @@ public class Comment {
 
     @Column(length = 200)
     private String content;
-    private String userNickname;
-    private String username;
+
+    private String nickName;
+    private String name;
+
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDate;
+
     private boolean checkOnline;
 
     @ManyToOne
     private Post post;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private MyUser myUser;
+
 }
