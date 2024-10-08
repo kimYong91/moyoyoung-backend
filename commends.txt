@@ -1,20 +1,37 @@
  curl -X POST localhost:8080/auth/login \
  -H "Content-Type: application/json" \
- -d '{"username": "user", "password": "pssword"}'
+ -d '{"username": "testUser1", "password": "passworD123!"}'
+
+//$2a$10$T.FNUFMkH6Ul2qVolVCHe.6F01td.Ve4g3VbVYpbU.uhH.n0gUHgC
 
  curl -X GET -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzI3NzUxMjk4LCJleHAiOjE3Mjc3NTQ4OTh9.uRnW4eF1aptO4xdG3OJpojsEZ4B0pxLcais4SI8-iUvjJqIuzlXDZIA1DgG9sgYoJAvZYDBfaDdeBjMiQIG3zA" http://localhost:8080/hello
 
  curl -X GET -v http://localhost:8080/hello
 
- curl -X POST http://localhost:8080/users \
+ curl -X POST http://localhost:8080/users/create \
 -H "Content-Type: application/json" \
 -d '{
-    "username": "testUser1",
-    "nickname": "TestUser1",
+    "username": "testUser9",
+    "nickname": "Tesser19",
     "password": "Password123!",
     "name": "Test Name",
-    "phoneNumber": "01012345678"
+    "phoneNumber": "01012349678"
 }'
+
+curl -X POST "http://localhost:8080/users/check/resetPassword" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testUser9",
+    "phoneNumber": "01012349678",
+    "name": "Test Name",
+    "password": "aIdWZxu*d7^"
+}'
+
+
+curl -X GET http://localhost:8080/users/check/nickname?nickname=testUser1
+curl -X GET http://localhost:8080/users/check/username?username=tesatUser2
+curl -X GET http://localhost:8080/users/check/phoneNumber?phoneNumber=01000000000
+curl -X GET "http://localhost:8080/users/check/findId?name=%EA%B0%80%EB%82%98&phoneNumber=01000000000"
 
 curl -X PATCH http://localhost:8080/users/{id} \
 -H "Content-Type: application/json" \

@@ -17,14 +17,14 @@ import java.util.Map;
 // 김용
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test/groupImage")
+@RequestMapping("/api/groupImage")
 public class GroupImageController {
 
     private final GroupImageService groupImageService;
     private final CustomFileUtil customFileUtil;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Resource> getOne(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Resource> getOneImage(@PathVariable(name = "id") Long id){
         return customFileUtil.getImage(id);
     }
 

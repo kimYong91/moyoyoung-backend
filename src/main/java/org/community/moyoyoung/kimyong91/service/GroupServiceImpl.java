@@ -4,35 +4,47 @@ import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.*;
+import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
-import org.community.moyoyoung.repository.MeetingRepository;
-import org.community.moyoyoung.repository.PostRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 // 김용
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
 
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
-    private final PostRepository postRepository;
-    private final MeetingRepository meetingRepository;
+    private final GroupImageRepository groupImageRepository;
 
     @Override
     public Long register(GroupDTO groupDTO) {
         Group group = modelMapper.map(groupDTO, Group.class);
         group.setCreateDate(LocalDate.now());
+
+        List<String> uploadFileName = groupDTO.getUploadFileName();
+        if (uploadFileName != null && !uploadFileName.isEmpty()) {
+            for (int i = 0; i < uploadFileName.size(); i++) {
+                String fileName = uploadFileName.get(i);
+                String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
+                GroupImage groupImage = new GroupImage();
+                groupImage.setFileName(fileName);
+                groupImage.setGroup(group);
+                groupImage.setCreateDate(LocalDate.now());
+                groupImage.setUpLoadFileName(upLoadFileName);
+                groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
+
+                groupImageRepository.save(groupImage);
+            }
+        }
+
         Group result = groupRepository.save(group);
         return result.getId();
     }
@@ -67,34 +79,44 @@ public class GroupServiceImpl implements GroupService{
         groupRepository.updateToDelete(id, true);
     }
 
+
     @Override
-    public PageResponseDTO<PostMiniDTO> getPostMiniUserList(GroupDTO groupDTO, PageRequestDTO pageRequestDTO) {
+    public MeetingDTO getMeeting(Long id) {
+        Optional<Group> result = groupRepository.findById(id);
+        Meeting meeting = result.get().getMeeting();
+        MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
+
+        return meetingDTO;
+    }
+
+    @Override
+    public List<PostMiniDTO> getPostMiniList(Long id) {
+
+        Optional<Group> group = groupRepository.findById(id);
+
         List<PostMiniDTO> dtoList;
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("dueDate").descending()
-        );
 
-        Page<Object[]> result = postRepository.selectList(pageable);
+        List<Object[]> result = groupRepository.selectList(group.get().getId());
 
 
-        if (!groupDTO.isCheckOnline()) {
-            dtoList = result.get().map(
-                    arr -> {
-                        Post post = (Post) arr[0];
-                        MyUser myUser = (MyUser) arr[1]; // MyUser는 null일 수 있으므로 체크
-                        String name = (myUser != null) ? myUser.getName() : "Unknown User"; // null 처리
-                        return PostMiniDTO.builder()
-                                .id(post.getId())
-                                .title(post.getTitle())
-                                .createDate(post.getCreateDate())
-                                .name(name)
-                                .build();
-                    }
-            ).toList();
+        if (!group.get().isCheckOnline()) {
+            dtoList = result.stream()
+                    .map(arr -> {
+                                Post post = (Post) arr[0];
+                                MyUser myUser = (MyUser) arr[1]; // MyUser는 null일 수 있으므로 체크
+                                String name = (myUser != null) ? myUser.getName() : "Unknown User"; // null 처리
+                                return PostMiniDTO.builder()
+                                        .id(post.getId())
+                                        .title(post.getTitle())
+                                        .createDate(post.getCreateDate())
+                                        .name(name)
+                                        .build();
+                            }
+                    )
+                    .toList();
+
         } else {
-            dtoList = result.get().map(
+            dtoList = result.stream().map(
                     arr -> {
                         Post post = (Post) arr[0];
                         MyUser myUser = (MyUser) arr[1]; // null 체크
@@ -109,24 +131,8 @@ public class GroupServiceImpl implements GroupService{
             ).toList();
         }
 
-        long totalCount = result.getTotalElements();
-
-        // PageResponseDTO를 생성하여 반환
-        return PageResponseDTO.<PostMiniDTO>withAll()
-                .dtoList(dtoList)
-                .totalCount(totalCount)
-                .pageRequestDTO(pageRequestDTO)
-                .build();
+        return dtoList;
     }
 
 
-
-    @Override
-    public MeetingDTO getMeeting(Long id) {
-        Optional<Meeting> result = meetingRepository.findById(id);
-        Meeting meeting = result.orElseThrow();
-        MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
-
-        return meetingDTO;
-    }
 }

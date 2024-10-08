@@ -22,7 +22,7 @@ public class MeetingUserServiceImpl implements MeetingUserService{
 
 
     @Override
-    public Long register(MeetingUserDTO meetingUserDTO) {
+    public Long join(MeetingUserDTO meetingUserDTO) {
         MeetingUser meetingUser = modelMapper.map(meetingUserDTO, MeetingUser.class);
 
         MeetingUser result = meetingUserRepository.save(meetingUser);

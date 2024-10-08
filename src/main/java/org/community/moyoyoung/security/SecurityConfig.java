@@ -39,6 +39,8 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/auth/**").permitAll()
+                                                .requestMatchers("/users/create").permitAll()
+                                                .requestMatchers("/users/check/**").permitAll()
                                                 // .anyRequest().authenticated())
                                                 .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
@@ -59,7 +61,7 @@ public class SecurityConfig {
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 //configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-                configuration.setAllowedOrigins(List.of("*"));
+                configuration.addAllowedOriginPattern("*");
                 configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 configuration.setAllowCredentials(true);
                 configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // 필요한 헤더만 설정
