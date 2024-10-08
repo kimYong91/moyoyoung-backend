@@ -8,15 +8,25 @@
 
  curl -X GET -v http://localhost:8080/hello
 
- curl -X POST http://localhost:8080/users \
+ curl -X POST http://localhost:8080/users/create \
 -H "Content-Type: application/json" \
 -d '{
-    "username": "testUser1",
-    "nickname": "TestUser1",
+    "username": "testUser9",
+    "nickname": "Tesser19",
     "password": "Password123!",
     "name": "Test Name",
-    "phoneNumber": "01012345678"
+    "phoneNumber": "01012349678"
 }'
+
+curl -X POST "http://localhost:8080/users/check/resetPassword" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testUser9",
+    "phoneNumber": "01012349678",
+    "name": "Test Name",
+    "password": "aIdWZxu*d7^"
+}'
+
 
 curl -X GET http://localhost:8080/users/check/nickname?nickname=testUser1
 curl -X GET http://localhost:8080/users/check/username?username=tesatUser2
