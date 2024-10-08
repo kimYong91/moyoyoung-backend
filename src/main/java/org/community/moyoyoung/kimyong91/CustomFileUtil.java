@@ -1,9 +1,7 @@
 package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
-import org.community.moyoyoung.dto.GroupImageDTO;
 import org.community.moyoyoung.entity.GroupImage;
-import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

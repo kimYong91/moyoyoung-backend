@@ -1,10 +1,6 @@
 package org.community.moyoyoung.repository;
 
-import org.community.moyoyoung.dto.GroupOfflineListDTO;
-import org.community.moyoyoung.dto.GroupOnlineListDTO;
 import org.community.moyoyoung.entity.Group;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

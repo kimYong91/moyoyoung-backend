@@ -15,7 +15,6 @@ import jakarta.validation.constraints.Size;
 //Modified MinU Bak 241008
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
