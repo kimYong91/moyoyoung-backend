@@ -2,9 +2,11 @@ package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.*;
+import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.Map;
 public class GroupController {
 
     private final GroupService groupService;
+    private final CustomFileUtil customFileUtil;
 
     @GetMapping("/{id}")
     public ResponseEntity<GroupDTO> getOneGroup(@PathVariable(name = "id") Long id) {
@@ -25,7 +28,7 @@ public class GroupController {
 
 
     @GetMapping("/postList")
-    public ResponseEntity<List<PostMiniDTO>> getPostMiniList1(@RequestParam Long id) {
+    public ResponseEntity<List<PostMiniDTO>> getPostMiniList(@RequestParam Long id) {
         List<PostMiniDTO> postMiniList1 = groupService.getPostMiniList(id);
         return ResponseEntity.ok(postMiniList1);
     }
@@ -37,10 +40,14 @@ public class GroupController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Map<String, Long>> groupRegister(@RequestBody GroupDTO groupDTO) {
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Long>> groupRegister(GroupDTO groupDTO) {
+        List<MultipartFile> files = groupDTO.getFile();
+
+        List<String> uploadFileName = customFileUtil.saveFile(files);
+        groupDTO.setUploadFileName(uploadFileName);
         Long id = groupService.register(groupDTO);
-        return ResponseEntity.ok(Map.of("id", id));
+        return ResponseEntity.ok(Map.of("result", id));
     }
 
     @PutMapping("/{id}")

@@ -4,34 +4,47 @@ import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.*;
+import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
-import org.community.moyoyoung.repository.MeetingRepository;
-import org.community.moyoyoung.repository.PostRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 // 김용
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
 
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
-    private final MeetingRepository meetingRepository;
+    private final GroupImageRepository groupImageRepository;
 
     @Override
     public Long register(GroupDTO groupDTO) {
         Group group = modelMapper.map(groupDTO, Group.class);
         group.setCreateDate(LocalDate.now());
+
+        List<String> uploadFileName = groupDTO.getUploadFileName();
+        if (uploadFileName != null && !uploadFileName.isEmpty()) {
+            for (int i = 0; i < uploadFileName.size(); i++) {
+                String fileName = uploadFileName.get(i);
+                String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
+                GroupImage groupImage = new GroupImage();
+                groupImage.setFileName(fileName);
+                groupImage.setGroup(group);
+                groupImage.setCreateDate(LocalDate.now());
+                groupImage.setUpLoadFileName(upLoadFileName);
+                groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
+
+                groupImageRepository.save(groupImage);
+            }
+        }
+
         Group result = groupRepository.save(group);
         return result.getId();
     }
@@ -120,10 +133,6 @@ public class GroupServiceImpl implements GroupService{
 
         return dtoList;
     }
-
-
-
-
 
 
 }

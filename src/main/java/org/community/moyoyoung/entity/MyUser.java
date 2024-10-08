@@ -56,8 +56,8 @@ public class MyUser {
     @Column(nullable = false)
     private Boolean disabled;
 
-    @OneToOne(mappedBy = "ownUser")
-    private Group ownGroup;
+    @OneToMany(mappedBy = "ownUser")
+    private List<Group> ownGroup;
 
     @ManyToMany
     private List<Group> group = new ArrayList<>();
