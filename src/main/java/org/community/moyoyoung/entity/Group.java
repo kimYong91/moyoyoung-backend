@@ -40,7 +40,7 @@ public class Group {
     @OneToOne
     private GroupImage groupImage;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<MyUser> member = new ArrayList<>();
 
     @OneToOne

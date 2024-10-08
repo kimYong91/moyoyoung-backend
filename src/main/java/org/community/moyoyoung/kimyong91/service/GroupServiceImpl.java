@@ -26,7 +26,6 @@ public class GroupServiceImpl implements GroupService{
 
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
-    private final PostRepository postRepository;
     private final MeetingRepository meetingRepository;
 
     @Override
@@ -67,41 +66,44 @@ public class GroupServiceImpl implements GroupService{
         groupRepository.updateToDelete(id, true);
     }
 
-    @Override
-    public PageResponseDTO<PostMiniDTO> getPostMiniList(Long id, PageRequestDTO pageRequestDTO) {
 
+    @Override
+    public MeetingDTO getMeeting(Long id) {
+        Optional<Group> result = groupRepository.findById(id);
+        Meeting meeting = result.get().getMeeting();
+        MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
+
+        return meetingDTO;
+    }
+
+    @Override
+    public List<PostMiniDTO> getPostMiniList(Long id) {
 
         Optional<Group> group = groupRepository.findById(id);
 
-        GroupDTO groupDTO = modelMapper.map(group, GroupDTO.class);
-
-
         List<PostMiniDTO> dtoList;
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("dueDate").descending()
-        );
 
-        Page<Object[]> result = postRepository.selectList(pageable);
+        List<Object[]> result = groupRepository.selectList(group.get().getId());
 
 
-        if (!groupDTO.isCheckOnline()) {
-            dtoList = result.get().map(
-                    arr -> {
-                        Post post = (Post) arr[0];
-                        MyUser myUser = (MyUser) arr[1]; // MyUser는 null일 수 있으므로 체크
-                        String name = (myUser != null) ? myUser.getName() : "Unknown User"; // null 처리
-                        return PostMiniDTO.builder()
-                                .id(post.getId())
-                                .title(post.getTitle())
-                                .createDate(post.getCreateDate())
-                                .name(name)
-                                .build();
-                    }
-            ).toList();
+        if (!group.get().isCheckOnline()) {
+            dtoList = result.stream()
+                    .map(arr -> {
+                                Post post = (Post) arr[0];
+                                MyUser myUser = (MyUser) arr[1]; // MyUser는 null일 수 있으므로 체크
+                                String name = (myUser != null) ? myUser.getName() : "Unknown User"; // null 처리
+                                return PostMiniDTO.builder()
+                                        .id(post.getId())
+                                        .title(post.getTitle())
+                                        .createDate(post.getCreateDate())
+                                        .name(name)
+                                        .build();
+                            }
+                    )
+                    .toList();
+
         } else {
-            dtoList = result.get().map(
+            dtoList = result.stream().map(
                     arr -> {
                         Post post = (Post) arr[0];
                         MyUser myUser = (MyUser) arr[1]; // null 체크
@@ -116,24 +118,12 @@ public class GroupServiceImpl implements GroupService{
             ).toList();
         }
 
-        long totalCount = result.getTotalElements();
-
-        // PageResponseDTO를 생성하여 반환
-        return PageResponseDTO.<PostMiniDTO>withAll()
-                .dtoList(dtoList)
-                .totalCount(totalCount)
-                .pageRequestDTO(pageRequestDTO)
-                .build();
+        return dtoList;
     }
 
 
 
-    @Override
-    public MeetingDTO getMeeting(Long id) {
-        Optional<Group> result = groupRepository.findById(id);
-        Meeting meeting = result.get().getMeeting();
-        MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
 
-        return meetingDTO;
-    }
+
+
 }
