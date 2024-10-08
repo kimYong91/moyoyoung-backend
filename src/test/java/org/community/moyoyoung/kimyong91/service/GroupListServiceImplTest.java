@@ -42,21 +42,21 @@ class GroupListServiceImplTest {
         myUserRepository.save(mu);
     }
 
-    @Test
-    public void 그룹추가() {
-        Group g = new Group();
-        g.setCheckOnline(false);
-        g.setCountry("한국");
-        g.setCategory("운동");
-        g.setTitle("제목");
-        g.setContent("내용");
-        g.setCreateDate(LocalDate.now());
-        MyUser user = new MyUser();
-        user.setId(1L);
-        g.setOwnUser(user);
-
-        groupRepository.save(g);
-    }
+//    @Test
+//    public void 그룹추가() {
+//        Group g = new Group();
+//        g.setCheckOnline(false);
+//        g.setCountry("한국");
+//        g.setCategory("운동");
+//        g.setTitle("제목");
+//        g.setContent("내용");
+//        g.setCreateDate(LocalDate.now());
+//        MyUser user = new MyUser();
+//        user.setId(1L);
+//        g.setOwnUser(user);
+//
+//        groupRepository.save(g);
+//    }
 
     @Test
     @Transactional

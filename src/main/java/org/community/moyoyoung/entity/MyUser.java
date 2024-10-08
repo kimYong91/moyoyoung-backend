@@ -1,5 +1,6 @@
 package org.community.moyoyoung.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -59,6 +60,7 @@ public class MyUser {
 
 
     @ManyToMany
+    @JsonIgnore
     private List<Group> group = new ArrayList<>();
 
     public boolean isCheckOnline() {

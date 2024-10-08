@@ -19,6 +19,6 @@ public class GroupImageDTO {
     private String upLoadFileName;
     private LocalDate createDate;
     private String mimeType;
-    private Group group;
+
 }
 
