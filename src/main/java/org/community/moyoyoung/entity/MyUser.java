@@ -10,14 +10,11 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import lombok.Data;
-
 import jakarta.validation.constraints.Size;
 
 // 김용
 // 유저
+//Modified MinU Bak 241008
 @Entity
 @Data
 @AllArgsConstructor
@@ -50,9 +47,8 @@ public class MyUser {
 
     @NotNull(message = "Phone number is required.")
     @Pattern(regexp = "^\\d{10,11}$", message = "Phone number must be 10 or 11 digits long.")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
-    private boolean checkOnline;
 
     @Column(nullable = false)
     private Boolean disabled;
@@ -62,4 +58,8 @@ public class MyUser {
 
     @OneToMany
     private List<Group> group = new ArrayList<>();
+
+    public boolean isCheckOnline() {
+        return false;
+    }
 }

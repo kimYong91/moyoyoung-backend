@@ -20,6 +20,8 @@
 
 curl -X GET http://localhost:8080/users/check/nickname?nickname=testUser1
 curl -X GET http://localhost:8080/users/check/username?username=tesatUser2
+curl -X GET http://localhost:8080/users/check/phoneNumber?phoneNumber=01000000000
+curl -X GET "http://localhost:8080/users/check/findId?name=%EA%B0%80%EB%82%98&phoneNumber=01000000000"
 
 curl -X PATCH http://localhost:8080/users/{id} \
 -H "Content-Type: application/json" \
