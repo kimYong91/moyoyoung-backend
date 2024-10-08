@@ -6,6 +6,7 @@ import org.community.moyoyoung.kimyong91.service.GroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 // 김용
@@ -22,16 +23,13 @@ public class GroupController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/postList")
-    public ResponseEntity<PageResponseDTO<PostMiniDTO>> getPostMiniList(
-            @RequestParam Long id,
-            @RequestParam int page,
-            @RequestParam int size) {
 
-        PageRequestDTO pageRequestDTO = new PageRequestDTO(page, size);
-        PageResponseDTO<PostMiniDTO> response = groupService.getPostMiniList(id, pageRequestDTO);
-        return ResponseEntity.ok(response);
+    @GetMapping("/postList")
+    public ResponseEntity<List<PostMiniDTO>> getPostMiniList1(@RequestParam Long id) {
+        List<PostMiniDTO> postMiniList1 = groupService.getPostMiniList(id);
+        return ResponseEntity.ok(postMiniList1);
     }
+
 
     @GetMapping("/meeting/{id}")
     public ResponseEntity<MeetingDTO> getMeeting(@PathVariable(name = "id") Long id) {

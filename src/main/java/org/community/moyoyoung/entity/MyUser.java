@@ -3,9 +3,7 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +21,7 @@ import jakarta.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
+@ToString(exclude = {"ownGroup", "group"})
 public class MyUser {
 
     @Id
@@ -57,9 +56,9 @@ public class MyUser {
     @Column(nullable = false)
     private Boolean disabled;
 
-    @OneToOne
+    @OneToOne(mappedBy = "ownUser")
     private Group ownGroup;
 
-    @OneToMany
+    @ManyToMany
     private List<Group> group = new ArrayList<>();
 }
