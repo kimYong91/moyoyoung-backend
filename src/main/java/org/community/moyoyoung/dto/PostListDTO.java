@@ -20,11 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "tbl_postlist")
 public class PostListDTO {
 
     private Long id;
     private String title;
+    private String name;
+    private String nickname;
     private MyUser myUser;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

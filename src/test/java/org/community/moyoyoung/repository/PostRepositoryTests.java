@@ -40,7 +40,6 @@ class PostRepositoryTests {
                     .password("password")
                     .phoneNumber("1234567890")
                     .disabled(false) // disabled 필드에 false 설정
-                    .checkOnline(i % 2 == 0)  // 짝수일 때 온라인, 홀수일 때 오프라인 설정
                     .build();
 
             MyUser savedUser =  myUserRepository.save(myUser);

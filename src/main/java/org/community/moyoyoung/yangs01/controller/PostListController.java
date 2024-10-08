@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Log4j2
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/allBoard")
 public class PostListController {
 
     private final PostListService service;

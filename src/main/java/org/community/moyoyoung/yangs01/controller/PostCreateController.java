@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/allBoard")
 public class PostCreateController {
     private final PostCreateService postCreateService;
 
