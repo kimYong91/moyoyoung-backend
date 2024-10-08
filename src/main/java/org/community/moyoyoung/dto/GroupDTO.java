@@ -37,7 +37,7 @@ public class GroupDTO {
     private MyUser ownUser;
 
     @Builder.Default
-    private List<MultipartFile> files = new ArrayList<>();
+    private List<MultipartFile> file = new ArrayList<>();
     @Builder.Default
     private List<String> uploadFileName = new ArrayList<>();
 

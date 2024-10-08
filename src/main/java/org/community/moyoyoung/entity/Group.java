@@ -43,7 +43,7 @@ public class Group {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<MyUser> member = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     private MyUser ownUser;
 
     @OneToMany
