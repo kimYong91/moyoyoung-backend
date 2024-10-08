@@ -1,7 +1,6 @@
 package org.community.moyoyoung.repository;
 
 import lombok.extern.log4j.Log4j2;
-import org.community.moyoyoung.dto.PostDTO;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.Post;
 import org.junit.jupiter.api.Test;
@@ -13,11 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Log4j2
@@ -33,15 +28,13 @@ class PostRepositoryTests {
     public void testInsert() {
 
         for (int i = 1; i <= 10; i++) {
-            MyUser myUser = MyUser.builder()
-                    .username("user__" + i) // username에 값을 할당
-                    .name("실명" + i)
-                    .nickname("닉네임__" + i)
-                    .password("password")
-                    .phoneNumber("1234567890")
-                    .disabled(false) // disabled 필드에 false 설정
-                    .checkOnline(i % 2 == 0)  // 짝수일 때 온라인, 홀수일 때 오프라인 설정
-                    .build();
+            MyUser myUser = new MyUser();
+            myUser.setUsername("user__" + i);
+            myUser.setName("실명" + i);
+            myUser.setNickname("닉네임__" + i);
+            myUser.setPassword("password");
+            myUser.setPhoneNumber("1234567890");
+            myUser.setDisabled(false);
 
             MyUser savedUser =  myUserRepository.save(myUser);
 

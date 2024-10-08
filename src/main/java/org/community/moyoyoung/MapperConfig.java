@@ -2,8 +2,6 @@ package org.community.moyoyoung;
 
 import org.community.moyoyoung.dto.GroupDTO;
 import org.community.moyoyoung.dto.GroupImageDTO;
-import org.community.moyoyoung.dto.GroupOfflineListDTO;
-import org.community.moyoyoung.dto.GroupOnlineListDTO;
 import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.GroupImage;
 import org.modelmapper.ModelMapper;
