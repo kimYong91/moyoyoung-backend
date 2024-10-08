@@ -2,14 +2,17 @@ package org.community.moyoyoung.samgak0.services;
 
 import java.util.Optional;
 
+import org.community.moyoyoung.dto.MyUserDTO;
 import org.community.moyoyoung.entity.MyUser;
 
 //Author : MinU Bak
 public interface MyUserService {
     void createUser(MyUser user);
-    Optional<MyUser> getUserById(Long id);
-    Optional<MyUser> getUserByUsername(String username);
-    Optional<MyUser> getUserByNameAndPhoneNumber(String name, String phoneNumber);
+    Optional<MyUserDTO> getUserById(Long id);
+    Optional<MyUserDTO> getUserByUsername(String username);
+    Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber);
+    Optional<MyUserDTO> getUserByPhoneNumberAndName(String phoneNumber, String name);
+    Optional<MyUserDTO> getUserByUsernamePhoneNumberAndName(String username, String phoneNumber, String name);
     void updateUser(MyUser user);
     boolean deleteUser(Long id);
     boolean validatePassword(String password);

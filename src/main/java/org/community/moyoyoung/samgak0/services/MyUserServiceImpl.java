@@ -4,7 +4,9 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.community.moyoyoung.entity.MyUser;
+import org.community.moyoyoung.dto.MyUserDTO;
 import org.community.moyoyoung.repository.MyUserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     private final MyUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
     @Override
     public void createUser(MyUser user) {
@@ -29,57 +32,87 @@ public class MyUserServiceImpl implements MyUserService {
 
     @Override
     public boolean checkByNickname(String nickname) {
-        return userRepository.findByNickname(nickname).isEmpty();
+        return userRepository.findByNickname(nickname).filter(user -> !user.getDisabled()).isEmpty();
     }
 
     @Override
     public boolean checkByUsername(String username) {
-        return userRepository.findByUsername(username).isEmpty();
+        return userRepository.findByUsername(username).filter(user -> !user.getDisabled()).isEmpty();
     }
 
     @Override
     public boolean checkByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber).isEmpty();
+        return userRepository.findByPhoneNumber(phoneNumber).filter(user -> !user.getDisabled()).isEmpty();
     }
 
     @Override
     public void updateUser(MyUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDisabled(false);
         userRepository.save(user);
     }
 
     @Override
     public boolean deleteUser(Long id) {
-        Optional<MyUser> user = userRepository.findById(id);
-
-        if (user.isPresent()) {
-            MyUser user2 = user.get();
-
-            if (user2.getDisabled() == true) {
-                throw new IllegalStateException("The account with ID: " + user2.getId() + " has already been deleted.");
+        return userRepository.findById(id).map(user -> {
+            if (user.getDisabled()) {
+                throw new IllegalStateException("The account with ID: " + user.getId() + " has already been deleted.");
             }
-
-            user2.setDisabled(true);
-            userRepository.save(user2);
+            user.setDisabled(true);
+            userRepository.save(user);
             return true;
-        } else {
-            return false;
-        }
+        }).orElse(false);
     }
 
     @Override
-    public Optional<MyUser> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<MyUserDTO> getUserById(Long id) {
+        return userRepository.findById(id)
+                .filter(user -> !user.getDisabled())
+                .map(user -> {
+                    user.setPassword(null);
+                    return modelMapper.map(user, MyUserDTO.class);
+                });
     }
 
     @Override
-    public Optional<MyUser> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<MyUserDTO> getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .filter(user -> !user.getDisabled())
+                .map(user -> {
+                    user.setPassword(null);
+                    return modelMapper.map(user, MyUserDTO.class);
+                });
     }
 
     @Override
-    public Optional<MyUser> getUserByNameAndPhoneNumber(String name, String phoneNumber) {
-        return userRepository.findByNameAndPhoneNumber(name, phoneNumber);
+    public Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+                .filter(user -> !user.getDisabled())
+                .map(user -> {
+                    user.setPassword(null);
+                    return modelMapper.map(user, MyUserDTO.class);
+                });
+    }
+
+    @Override
+    public Optional<MyUserDTO> getUserByPhoneNumberAndName(String phoneNumber, String name) {
+        
+        return userRepository.findByPhoneNumber(phoneNumber)
+                .filter(user -> !user.getDisabled() && user.getName().equals(name))
+                .map(user -> {
+                    user.setPassword(null);
+                    return modelMapper.map(user, MyUserDTO.class);
+                });
+    }
+
+    @Override
+    public Optional<MyUserDTO> getUserByUsernamePhoneNumberAndName(String username, String phoneNumber, String name) {
+        return userRepository.findByUsername(username)
+                .filter(user -> !user.getDisabled() && user.getPhoneNumber().equals(phoneNumber) && user.getName().equals(name))
+                .map(user -> {
+                    user.setPassword(null);
+                    return modelMapper.map(user, MyUserDTO.class);
+                });
     }
 
     @Override

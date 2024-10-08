@@ -2,9 +2,11 @@ package org.community.moyoyoung.samgak0.controllers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -14,14 +16,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
+import org.community.moyoyoung.dto.MyUserDTO;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.samgak0.services.MyUserService;
+import org.modelmapper.ModelMapper;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
+import lombok.extern.slf4j.Slf4j;
 
 //Author : MinU Bak
 @Slf4j
@@ -32,13 +36,35 @@ public class MyUserController {
 
     private final MyUserService userService;
     private final Validator validator;
+    private final ModelMapper modelMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody(required = true) MyUser user) {
+    public ResponseEntity<?> createUser(@RequestBody(required = true) CreateRequest request) {
         return handleUserOperation(() -> {
-            user.setDisabled(false);
+            if (!userService.checkByUsername(request.username)) {
+                throw new IllegalArgumentException("Username is already in use.");
+            }
+            if (!userService.checkByPhoneNumber(request.phoneNumber)) {
+                throw new IllegalArgumentException("Phone number is already in use.");
+            }
+            if (!userService.checkByNickname(request.nickname)) {
+                throw new IllegalArgumentException("Nickname is already in use.");
+            }
+
+            MyUser user = new MyUser(
+                    null,
+                    request.username,
+                    request.nickname,
+                    request.password,
+                    request.name,
+                    request.phoneNumber,
+                    false,
+                    null,
+                    new ArrayList<>());
+
             checkViolations(user);
             userService.createUser(user);
+
             try {
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .location(new URI(String.format("/users/%d", user.getId())))
@@ -53,9 +79,9 @@ public class MyUserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable(name = "id", required = true) Long id) {
         try {
-            MyUser user = userService.getUserById(id)
+            MyUserDTO userDTO = userService.getUserById(id)
                     .orElseThrow(() -> new NoSuchElementException("User not found"));
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(userDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ErrorResponse("User with ID " + id + " not found."));
@@ -64,34 +90,27 @@ public class MyUserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable(name = "id", required = true) Long id,
-            @RequestBody MyUser user) {
+            @RequestBody UpdateRequest updateRequest) {
         return handleUserOperation(() -> {
             if (id == null) {
-                throw new IllegalArgumentException("ID paramter is required.");
+                throw new IllegalArgumentException("ID parameter is required.");
             }
 
             MyUser existingUser = userService.getUserById(id)
+                    .map(user -> modelMapper.map(user, MyUser.class))
                     .orElseThrow(() -> new NoSuchElementException("User not found."));
 
-            log.error(user.toString());
-            if (user.getUsername() != null || user.getName() != null || user.getPhoneNumber() != null
-                    || user.getDisabled() != null) {
-                throw new IllegalArgumentException("Only nickname and password fields can be updated.");
-            }
-
-            if (user.getPassword() == null && user.getNickname() == null) {
+            if (updateRequest == null) {
                 throw new IllegalArgumentException("At least one of nickname or password must be provided.");
             }
 
-            if (user.getNickname() != null) {
-                existingUser.setNickname(user.getNickname());
+            if (updateRequest.nickname.isPresent()) {
+                existingUser.setNickname(updateRequest.nickname.get());
             }
 
-            if (user.getPassword() != null) {
-                existingUser.setPassword(user.getPassword());
+            if (updateRequest.password.isPresent()) {
+                existingUser.setPassword(updateRequest.password.get());
             }
-
-            existingUser.setId(id);
 
             checkViolations(existingUser);
 
@@ -103,7 +122,6 @@ public class MyUserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(name = "id", required = true) Long id) {
         return handleUserOperation(() -> {
-
             try {
                 boolean isDeleted = userService.deleteUser(id);
 
@@ -119,28 +137,46 @@ public class MyUserController {
         });
     }
 
-    @GetMapping("/check/findId")
-    public ResponseEntity<?> findIdByNameAndPhone(@RequestParam(name = "name", required = true) String name,
-            @RequestParam(name = "phoneNumber", required = true) String phoneNumber) {
-        try {
-            MyUser user = userService.getUserByNameAndPhoneNumber(name, phoneNumber)
+    @PostMapping("/check/resetCheckPassword")
+    public ResponseEntity<?> resetCheckPassword(@RequestBody(required = true) ResetCheckRequest request) {
+        return handleUserOperation(() -> {
+            Optional<MyUserDTO> userDTO = userService.getUserByUsernamePhoneNumberAndName(request.username, request.phoneNumber, request.name);
+            return ResponseEntity.ok(new SuccessDataResponse(userDTO.isPresent()));
+        });
+    }
+
+    @PostMapping("/check/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody(required = true) ResetRequest request) {
+        return handleUserOperation(() -> {
+            MyUserDTO userDTO = userService
+                    .getUserByUsernamePhoneNumberAndName(request.username, request.phoneNumber, request.name)
                     .orElseThrow(() -> new NoSuchElementException("User not found"));
-            Map<String,Object> responseData = new HashMap<>();
-            responseData.put("id",user.getId());
-            responseData.put("username",user.getUsername());
+            MyUser user = modelMapper.map(userDTO, MyUser.class);
+            user.setPassword(request.password);
+            checkViolations(user);
+            userService.updateUser(user);
+            return ResponseEntity.ok(new SuccessResponse());
+        });
+    }
+
+    @GetMapping("/check/findId")
+    public ResponseEntity<?> findIdByPhoneAndName(@RequestParam(name = "name", required = true) String name,
+            @RequestParam(name = "phoneNumber", required = true) String phoneNumber) {
+        return handleUserOperation(() -> {
+            MyUserDTO userDTO = userService.getUserByPhoneNumberAndName(phoneNumber, name)
+                    .orElseThrow(() -> new NoSuchElementException("User not found"));
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("id", userDTO.getId());
+            responseData.put("username", userDTO.getUsername());
             return ResponseEntity.ok(new FindIdResponse(responseData));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ErrorResponse(
-                            "User with name " + name + " and phoneNumber  " + phoneNumber + " not found."));
-        }
+        });
     }
 
     @GetMapping("/check/nickname")
     public ResponseEntity<?> checkNickname(@RequestParam(name = "nickname", required = true) String nickname) {
         return handleUserOperation(() -> {
             if (nickname == null || nickname.isEmpty()) {
-                throw new IllegalArgumentException("nickname paramter is required.");
+                throw new IllegalArgumentException("nickname parameter is required.");
             }
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new SuccessDataResponse(userService.checkByNickname(nickname)));
@@ -151,7 +187,7 @@ public class MyUserController {
     public ResponseEntity<?> checkUsername(@RequestParam(name = "username", required = true) String username) {
         return handleUserOperation(() -> {
             if (username == null || username.isEmpty()) {
-                throw new IllegalArgumentException("username paramter is required.");
+                throw new IllegalArgumentException("username parameter is required.");
             }
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new SuccessDataResponse(userService.checkByUsername(username)));
@@ -162,7 +198,7 @@ public class MyUserController {
     public ResponseEntity<?> checkPhone(@RequestParam(name = "phoneNumber", required = true) String phoneNumber) {
         return handleUserOperation(() -> {
             if (phoneNumber == null || phoneNumber.isEmpty()) {
-                throw new IllegalArgumentException("phoneNumber paramter is required.");
+                throw new IllegalArgumentException("phoneNumber parameter is required.");
             }
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new SuccessDataResponse(userService.checkByPhoneNumber(phoneNumber)));
@@ -203,8 +239,20 @@ public class MyUserController {
         }
     }
 
-    public record FindIdResponse(boolean success, Map<String,Object> data) {
-        public FindIdResponse(Map<String,Object> data) {
+    public record ResetRequest(String username, String phoneNumber, String name, String password) {
+    }
+
+    public record ResetCheckRequest(String username, String phoneNumber, String name) {
+    }
+
+    public record CreateRequest(String username, String nickname, String password, String name, String phoneNumber) {
+    }
+
+    public record UpdateRequest(Optional<String> nickname, Optional<String> password) {
+    }
+
+    public record FindIdResponse(boolean success, Map<String, Object> data) {
+        public FindIdResponse(Map<String, Object> data) {
             this(true, data);
         }
     }
