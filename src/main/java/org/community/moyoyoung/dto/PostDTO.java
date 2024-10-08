@@ -1,7 +1,6 @@
 package org.community.moyoyoung.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,6 @@ import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.PostImage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
