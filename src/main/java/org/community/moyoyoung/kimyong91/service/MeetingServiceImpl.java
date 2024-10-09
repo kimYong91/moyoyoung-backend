@@ -2,7 +2,9 @@ package org.community.moyoyoung.kimyong91.service;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.MeetingDTO;
+import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.Meeting;
+import org.community.moyoyoung.repository.GroupRepository;
 import org.community.moyoyoung.repository.MeetingRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class MeetingServiceImpl implements MeetingService{
 
     private final ModelMapper modelMapper;
     private final MeetingRepository meetingRepository;
+    private final GroupRepository groupRepository;
 
     @Override
     public MeetingDTO get(Long id) {
@@ -28,13 +31,32 @@ public class MeetingServiceImpl implements MeetingService{
         return meetingDTO;
     }
 
+
+
+
+//    @Override
+//    public Long register(MeetingDTO meetingDTO) {
+//        Meeting meeting = modelMapper.map(meetingDTO, Meeting.class);
+//        meeting.setCreateDate(LocalDate.now());
+//        Meeting result = meetingRepository.save(meeting);
+//        return result.getId();
+//    }
+
     @Override
     public Long register(MeetingDTO meetingDTO) {
         Meeting meeting = modelMapper.map(meetingDTO, Meeting.class);
         meeting.setCreateDate(LocalDate.now());
+
+        Group group = groupRepository.findById(meetingDTO.getGroupId()).orElseThrow();
+        meeting.setGroup(group);
+
         Meeting result = meetingRepository.save(meeting);
         return result.getId();
     }
+
+
+
+
 
     @Override
     public void modify(MeetingDTO meetingDTO) {
