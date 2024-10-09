@@ -65,16 +65,6 @@ public class CustomFileUtil {
                 try {
                     Files.copy(file.getInputStream(), savePath);
 
-//                    if (contentType != null && contentType.startsWith("image")) { // 이미지 파일일 경우
-//                        // 이미지 파일에 대한 썸네일 경로 생성
-//                        Path thumbnailPath = Paths.get(uploadPath, "s_" + savedName);
-//
-//                        // 원본 이미지를 200x200 크기로 축소하여 썸네일 생성 (비율을 유지하면서 가장 긴 쪽을 200으로 맞춤)
-//                        Thumbnails.of(savePath.toFile())  // 원본 파일을 불러와서
-//                                .size(200, 200)  // 썸네일 크기를 200x200으로 지정
-//                                .toFile(thumbnailPath.toFile());  // 썸네일 이미지를 새로운 파일로 저장
-//                    }
-
                     uploadNames.add(savedName);
 
                 } catch (IOException e) {

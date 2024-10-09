@@ -1,8 +1,8 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import lombok.RequiredArgsConstructor;
-import org.community.moyoyoung.dto.GroupOfflineListDTO;
-import org.community.moyoyoung.dto.GroupOnlineListDTO;
+import org.community.moyoyoung.dto.GroupOfflineDTO;
+import org.community.moyoyoung.dto.GroupOnlineDTO;
 import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
@@ -25,13 +25,13 @@ public class GroupListServiceImpl implements GroupListService {
 
 
     @Override
-    public List<GroupOfflineListDTO> getGroupOfflineList() {
+    public List<GroupOfflineDTO> getGroupOfflineList() {
 
         List<Group> groupOfflineList = groupRepository.getGroupOnlineList();
-        List<GroupOfflineListDTO> groupOfflineListDTO = new ArrayList<>();
+        List<GroupOfflineDTO> groupOfflineListDTO = new ArrayList<>();
 
         for (int i = 0; i < groupOfflineList.size(); i++) {
-            groupOfflineListDTO.add(modelMapper.map(groupOfflineList.get(i), GroupOfflineListDTO.class));
+            groupOfflineListDTO.add(modelMapper.map(groupOfflineList.get(i), GroupOfflineDTO.class));
             GroupImage fileName = groupOfflineList.get(i).getGroupImage();
             groupOfflineListDTO.get(i).setGroupImage(fileName);
             Long id = groupOfflineList.get(i).getGroupImage().getId();
@@ -42,13 +42,13 @@ public class GroupListServiceImpl implements GroupListService {
     }
 
     @Override
-    public List<GroupOnlineListDTO> getGroupOnlineList() {
+    public List<GroupOnlineDTO> getGroupOnlineList() {
 
         List<Group> groupOnlineList = groupRepository.getGroupOnlineList();
-        List<GroupOnlineListDTO> groupOnlineListDTO = new ArrayList<>();
+        List<GroupOnlineDTO> groupOnlineListDTO = new ArrayList<>();
 
         for (int i = 0; i < groupOnlineList.size(); i++) {
-            groupOnlineListDTO.add(modelMapper.map(groupOnlineList.get(i), GroupOnlineListDTO.class));
+            groupOnlineListDTO.add(modelMapper.map(groupOnlineList.get(i), GroupOnlineDTO.class));
             GroupImage fileName = groupOnlineList.get(i).getGroupImage();
             groupOnlineListDTO.get(i).setGroupImage(fileName);
             Long id = groupOnlineList.get(i).getGroupImage().getId();

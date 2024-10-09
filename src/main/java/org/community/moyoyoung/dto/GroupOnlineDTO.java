@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GroupOfflineListDTO {
+public class GroupOnlineDTO {
 
     private Long id;
     private boolean checkOnline;
