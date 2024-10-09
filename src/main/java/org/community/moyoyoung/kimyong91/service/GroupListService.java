@@ -1,7 +1,7 @@
 package org.community.moyoyoung.kimyong91.service;
 
-import org.community.moyoyoung.dto.GroupOfflineListDTO;
-import org.community.moyoyoung.dto.GroupOnlineListDTO;
+import org.community.moyoyoung.dto.GroupOfflineDTO;
+import org.community.moyoyoung.dto.GroupOnlineDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface GroupListService {
 
-    List<GroupOnlineListDTO> getGroupOnlineList();
+    List<GroupOnlineDTO> getGroupOnlineList();
 
-    List<GroupOfflineListDTO> getGroupOfflineList();
+    List<GroupOfflineDTO> getGroupOfflineList();
 }

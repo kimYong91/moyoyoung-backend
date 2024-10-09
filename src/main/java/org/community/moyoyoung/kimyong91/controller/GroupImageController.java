@@ -21,10 +21,6 @@ public class GroupImageController {
     private final GroupImageService groupImageService;
     private final CustomFileUtil customFileUtil;
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Resource> getOneImage(@PathVariable(name = "id") Long id){
-        return customFileUtil.getImage(id);
-    }
 
     @PostMapping("/upload")
     public ResponseEntity<List<GroupImage>> uploadImage(@RequestParam("image") List<MultipartFile> image) {

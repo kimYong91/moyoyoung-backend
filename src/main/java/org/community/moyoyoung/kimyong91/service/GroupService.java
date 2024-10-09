@@ -20,4 +20,6 @@ public interface GroupService{
     MeetingDTO getMeeting(Long id);
 
     List<PostMiniDTO> getPostMiniList(Long id);
+
+    GroupDetailDTO getGroupDetail(Long id);
 }

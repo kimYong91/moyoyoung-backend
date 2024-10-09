@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.community.moyoyoung.entity.GroupImage;
 
 import java.time.LocalDate;
 
@@ -12,12 +13,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GroupOfflineListDTO {
+public class GroupOfflineDTO {
 
+    private Long id;
     private boolean checkOnline;
     private String country;
     private String category;
     private String title;
     private LocalDate createDate;
-
+    private GroupImage groupImage;
 }

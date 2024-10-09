@@ -5,19 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 // 김용
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GroupOnlineListDTO {
+public class GroupDetailDTO {
 
-    private boolean checkOnline;
-    private String country;
-    private String category;
-    private String title;
-    private LocalDate createDate;
-
+    private GroupDTO group;
+    private List<PostMiniDTO> postMiniList;
+    private MeetingDTO meeting;
 }

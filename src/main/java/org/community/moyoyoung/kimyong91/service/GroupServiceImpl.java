@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.*;
+import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,7 @@ public class GroupServiceImpl implements GroupService {
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
     private final GroupImageRepository groupImageRepository;
+    private final CustomFileUtil customFileUtil;
 
     @Override
     public Long register(GroupDTO groupDTO) {
@@ -36,10 +39,12 @@ public class GroupServiceImpl implements GroupService {
                 String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
                 GroupImage groupImage = new GroupImage();
                 groupImage.setFileName(fileName);
-                groupImage.setGroup(group);
                 groupImage.setCreateDate(LocalDate.now());
                 groupImage.setUpLoadFileName(upLoadFileName);
                 groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
+                group.setGroupImage(groupImage);
+                group.setOwnUser(groupDTO.getOwnUser());
+                group.setMeeting(groupDTO.getMeeting());
 
                 groupImageRepository.save(groupImage);
             }
@@ -54,6 +59,9 @@ public class GroupServiceImpl implements GroupService {
         Optional<Group> result = groupRepository.findById(id);
         Group group = result.orElseThrow();
         GroupDTO groupDTO = modelMapper.map(group, GroupDTO.class);
+
+        Long imageId = group.getGroupImage().getId();
+        customFileUtil.getImage(imageId);
 
         return groupDTO;
     }
@@ -83,10 +91,20 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public MeetingDTO getMeeting(Long id) {
         Optional<Group> result = groupRepository.findById(id);
-        Meeting meeting = result.get().getMeeting();
-        MeetingDTO meetingDTO = modelMapper.map(meeting, MeetingDTO.class);
 
-        return meetingDTO;
+
+        if (result.isPresent()) {
+            Group group = result.get();
+            Meeting meeting = group.getMeeting();
+
+            if (meeting != null) {
+
+                return modelMapper.map(meeting, MeetingDTO.class);
+            }
+        }
+
+
+        return MeetingDTO.builder().build();
     }
 
     @Override
@@ -134,5 +152,30 @@ public class GroupServiceImpl implements GroupService {
         return dtoList;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public GroupDetailDTO getGroupDetail(Long id) {
+        GroupDTO groupDTO = getOne(id);
+        List<PostMiniDTO> postMiniList = getPostMiniList(id);
+        MeetingDTO meetingDTO = getMeeting(id);
+
+        GroupDetailDTO groupDetail = new GroupDetailDTO();
+        groupDetail.setGroup(groupDTO);
+        groupDetail.setPostMiniList(postMiniList);
+        groupDetail.setMeeting(meetingDTO);
+
+        return groupDetail;
+    }
 
 }

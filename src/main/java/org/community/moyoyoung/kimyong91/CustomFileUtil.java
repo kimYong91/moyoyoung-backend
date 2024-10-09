@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,6 +64,7 @@ public class CustomFileUtil {
 
                 try {
                     Files.copy(file.getInputStream(), savePath);
+
                     uploadNames.add(savedName);
 
                 } catch (IOException e) {
@@ -93,9 +95,8 @@ public class CustomFileUtil {
         try {
 
             headers.add(
-//                    "Content-Type", "image/jpeg"
-//                    "Content-Type", "application/octet-stream"
-                    "Content-Type", Files.probeContentType(resource.getFile().toPath())
+                    "Content-Type",
+                    Files.probeContentType(resource.getFile().toPath())
             );
 
         } catch (Exception e) {

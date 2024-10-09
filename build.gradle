@@ -53,6 +53,7 @@ dependencies {
 
 	implementation 'jakarta.validation:jakarta.validation-api'
 
+	implementation 'net.coobird:thumbnailator:0.4.20'
 
 }
 
