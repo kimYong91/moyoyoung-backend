@@ -44,7 +44,7 @@ public class GroupServiceImpl implements GroupService {
                 groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
                 group.setGroupImage(groupImage);
                 group.setOwnUser(groupDTO.getOwnUser());
-                group.setMeeting(groupDTO.getMeeting());
+//                group.setMeeting(groupDTO.getMeeting());   // 그룹을 만들때 미팅은 만들어지는것이 아니기에 없어야 됨
 
                 groupImageRepository.save(groupImage);
             }

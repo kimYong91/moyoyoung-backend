@@ -22,5 +22,7 @@ public class MeetingDTO {
     private String nickname;
     private String name;
 
-    private Post post;
+//    private Post post;
+
+    private Long groupId;
 }

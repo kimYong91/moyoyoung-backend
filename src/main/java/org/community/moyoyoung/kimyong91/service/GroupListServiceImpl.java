@@ -24,6 +24,23 @@ public class GroupListServiceImpl implements GroupListService {
     private final CustomFileUtil customFileUtil;
 
 
+//    @Override
+//    public List<GroupOfflineDTO> getGroupOfflineList() {
+//
+//        List<Group> groupOfflineList = groupRepository.getGroupOnlineList();
+//        List<GroupOfflineDTO> groupOfflineListDTO = new ArrayList<>();
+//
+//        for (int i = 0; i < groupOfflineList.size(); i++) {
+//            groupOfflineListDTO.add(modelMapper.map(groupOfflineList.get(i), GroupOfflineDTO.class));
+//            GroupImage fileName = groupOfflineList.get(i).getGroupImage();
+//            groupOfflineListDTO.get(i).setGroupImage(fileName);
+//            Long id = groupOfflineList.get(i).getGroupImage().getId();
+//            customFileUtil.getImage(id);
+//        }
+//
+//        return groupOfflineListDTO;
+//    }
+
     @Override
     public List<GroupOfflineDTO> getGroupOfflineList() {
 
@@ -32,14 +49,33 @@ public class GroupListServiceImpl implements GroupListService {
 
         for (int i = 0; i < groupOfflineList.size(); i++) {
             groupOfflineListDTO.add(modelMapper.map(groupOfflineList.get(i), GroupOfflineDTO.class));
-            GroupImage fileName = groupOfflineList.get(i).getGroupImage();
-            groupOfflineListDTO.get(i).setGroupImage(fileName);
+            GroupImage groupImage = groupOfflineList.get(i).getGroupImage();
+            groupOfflineListDTO.get(i).setGroupImageId(groupImage.getId());
             Long id = groupOfflineList.get(i).getGroupImage().getId();
             customFileUtil.getImage(id);
         }
 
         return groupOfflineListDTO;
     }
+
+
+
+//    @Override
+//    public List<GroupOnlineDTO> getGroupOnlineList() {
+//
+//        List<Group> groupOnlineList = groupRepository.getGroupOnlineList();
+//        List<GroupOnlineDTO> groupOnlineListDTO = new ArrayList<>();
+//
+//        for (int i = 0; i < groupOnlineList.size(); i++) {
+//            groupOnlineListDTO.add(modelMapper.map(groupOnlineList.get(i), GroupOnlineDTO.class));
+//            GroupImage fileName = groupOnlineList.get(i).getGroupImage();
+//            groupOnlineListDTO.get(i).setGroupImage(fileName);
+//            Long id = groupOnlineList.get(i).getGroupImage().getId();
+//            customFileUtil.getImage(id);
+//        }
+//
+//        return groupOnlineListDTO;
+//    }
 
     @Override
     public List<GroupOnlineDTO> getGroupOnlineList() {
@@ -49,14 +85,13 @@ public class GroupListServiceImpl implements GroupListService {
 
         for (int i = 0; i < groupOnlineList.size(); i++) {
             groupOnlineListDTO.add(modelMapper.map(groupOnlineList.get(i), GroupOnlineDTO.class));
-            GroupImage fileName = groupOnlineList.get(i).getGroupImage();
-            groupOnlineListDTO.get(i).setGroupImage(fileName);
+            GroupImage groupImage = groupOnlineList.get(i).getGroupImage();
+            groupOnlineListDTO.get(i).setGroupImageId(groupImage.getId());
             Long id = groupOnlineList.get(i).getGroupImage().getId();
             customFileUtil.getImage(id);
         }
 
         return groupOnlineListDTO;
-
     }
 
 
