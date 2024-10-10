@@ -1,11 +1,10 @@
 package org.community.moyoyoung.samgak0.controllers;
 
+import java.util.Optional;
+
 import org.community.moyoyoung.dto.MyUserDTO;
-import org.community.moyoyoung.entity.MyUser;
-import org.community.moyoyoung.samgak0.services.MyUserService;
-import org.modelmapper.ModelMapper;
+import org.community.moyoyoung.samgak0.services.AuthService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,14 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class CheckUserController {
-    
-    private final MyUserService userService;
-    private final ModelMapper modelMapper;
 
-    @GetMapping("/check/my")
-    public MyUser my(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        MyUserDTO myUserDTO = userService.getUserByUsername(user.getUsername()).orElseThrow();
-        return modelMapper.map(myUserDTO, MyUser.class);
+    private final AuthService authService;
+
+    @GetMapping("/my")
+    public MyUserDTO my(Authentication authentication) {
+        Optional<MyUserDTO> myuserDTO = authService.getLoginData();
+        log.info(myuserDTO.toString());
+        return myuserDTO.get();
     }
 }

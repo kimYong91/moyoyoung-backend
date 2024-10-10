@@ -24,6 +24,7 @@ public class MyUserServiceImpl implements MyUserService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
+
     @Override
     public void createUser(MyUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -43,6 +44,11 @@ public class MyUserServiceImpl implements MyUserService {
     @Override
     public boolean checkByPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumberAndDisabledFalse(phoneNumber).isEmpty();
+    }
+
+    @Override
+    public Optional<MyUser> findUserByUsername(String username) {
+        return userRepository.findByUsernameAndDisabledFalse(username);
     }
 
     @Override

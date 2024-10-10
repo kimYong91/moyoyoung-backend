@@ -8,9 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
-    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     private final List<String> excludedUrls = Arrays.asList(
@@ -48,8 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .authorities("ROLE_USER")
                     .build();
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
             return;
         }
@@ -74,23 +70,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = tokenProvider.getUsernameFromJWT(token);
                 if (username == null) {
                     setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
-                    "username is invalidate in token");
+                            "username is invalidate in token");
                     return;
                 }
 
-                if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                    if (userDetails != null) {
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    } else {
-                        setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
-                                "username is invalidate in token");
-                        return;
-                    }
-                }
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(username,null));
             }
         } catch (JwtTokenProvider.TokenExpiredException ex) {
             setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, JwtTokenProvider.TokenExpiredException.CODE,
@@ -100,12 +84,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, JwtTokenProvider.InvalidTokenException.CODE,
                     "Invalid token");
             return;
-        } catch (UsernameNotFoundException e) {
-            setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
-                    "username is invalidate in token");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "UNKNOWN_ERROR",
                     "Unknown Error occor in token vailidation");
+            return;
         }
 
         filterChain.doFilter(request, response);
@@ -141,6 +123,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     "{\n  \"success\": %b,\n  \"code\": \"%s\",\n  \"message\": \"%s\"\n}",
                     success, code, message);
         }
-
     }
 }
