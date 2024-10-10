@@ -9,9 +9,10 @@ import java.util.List;
 @Service
 public interface MeetingUserService {
 
-    MeetingUser join(Long id, Long userId);
+    MeetingUserDTO meetingJoin(Long meetingId, Long userId);
 
-    void remove(Long id);
+    void meetingRemove(Long id);
 
     List<MeetingUserDTO> getListAll();
+
 }

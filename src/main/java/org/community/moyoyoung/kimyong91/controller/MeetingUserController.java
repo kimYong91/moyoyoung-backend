@@ -23,15 +23,16 @@ public class MeetingUserController {
         return ResponseEntity.ok(listAll);
     }
 
-    @PostMapping("/join/{id}/{userId}")
-    public ResponseEntity<Map<String, MeetingUser>> meetingJoin(@PathVariable(name = "id") Long id, @PathVariable(name = "id") Long userId) {
-        MeetingUser meetingUser = meetingUserService.join(id, userId);
-        return ResponseEntity.ok(Map.of("id", meetingUser));
+
+    @PostMapping("/join/{meetingId}/{userId}")
+    public ResponseEntity<Map<String, String>> meetingJoin(@PathVariable(name = "meetingId") Long meetingId, @PathVariable(name = "userId") Long userId) {
+        meetingUserService.meetingJoin(meetingId, userId);
+        return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> meetingUserRemove(@PathVariable(name = "id") Long id) {
-        meetingUserService.remove(id);
+        meetingUserService.meetingRemove(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 

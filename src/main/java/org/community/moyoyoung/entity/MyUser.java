@@ -59,11 +59,11 @@ public class MyUser {
     private List<Group> ownGroup;
 
 
-    @ManyToMany
-    @JsonIgnore
-    private List<Group> group = new ArrayList<>();
+//    @ManyToMany
+//    @JsonIgnore
+//    private List<Group> group = new ArrayList<>();
 
-    public boolean isCheckOnline() {
-        return false;
-    }
+//    public boolean isCheckOnline() {
+//        return false;
+//    }
 }

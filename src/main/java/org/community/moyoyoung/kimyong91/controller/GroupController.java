@@ -50,6 +50,13 @@ public class GroupController {
         return ResponseEntity.ok(Map.of("result", id));
     }
 
+    @PostMapping("/join/{groupId}/{userId}")
+    public ResponseEntity<Map<String, String>> groupJoin(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId) {
+        groupService.groupJoin(groupId, userId);
+        return ResponseEntity.ok(Map.of("result", "SUCCESS"));
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> modify(@PathVariable(name = "id") Long id,
                                                       @RequestBody GroupDTO groupDTO) {

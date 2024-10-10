@@ -7,6 +7,7 @@ import org.community.moyoyoung.entity.*;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
+import org.community.moyoyoung.repository.MyUserRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ public class GroupServiceImpl implements GroupService {
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
     private final GroupImageRepository groupImageRepository;
+    private final MyUserRepository myUserRepository;
     private final CustomFileUtil customFileUtil;
 
     @Override
@@ -67,45 +69,24 @@ public class GroupServiceImpl implements GroupService {
         return groupDTO;
     }
 
-//    @Override
-//    public void modify(GroupDTO groupDTO) {
-//        Optional<Group> result = groupRepository.findById(groupDTO.getId());
-//        Group group = result.orElseThrow();
-//
-//        group.setCheckOnline(groupDTO.isCheckOnline());
-//        group.setCountry(groupDTO.getCountry());
-//        group.setCategory(groupDTO.getCategory());
-//        group.setGroupImage(groupDTO.getGroupImage());
-//        group.setTitle(groupDTO.getTitle());
-//        group.setContent(groupDTO.getContent());
-//
-//        groupRepository.save(group);
-//    }
-
 
     @Override
     public void modify(GroupDTO groupDTO) {
         Optional<Group> result = groupRepository.findById(groupDTO.getId());
         Group group = result.orElseThrow();
 
-        // 그룹 수정 사항 반영
         group.setCheckOnline(groupDTO.isCheckOnline());
         group.setCountry(groupDTO.getCountry());
         group.setCategory(groupDTO.getCategory());
         group.setTitle(groupDTO.getTitle());
         group.setContent(groupDTO.getContent());
 
-        // 이미지가 있을 경우 업데이트 로직 추가
         if (groupDTO.getGroupImage() != null) {
             group.setGroupImage(groupDTO.getGroupImage());
         }
 
-        // 그룹 정보 저장
         groupRepository.save(group);
     }
-
-
-
 
     @Override
     public void remove(Long id) {
@@ -192,4 +173,11 @@ public class GroupServiceImpl implements GroupService {
         return groupDetail;
     }
 
+//    @Override
+//    public GroupDTO groupJoin(Long groupId, Long userId) {
+//        Group group = groupRepository.findById(groupId).orElseThrow();
+//        MyUser myUser = myUserRepository.findById(userId).orElseThrow();
+//
+//        return ;
+//    }
 }
