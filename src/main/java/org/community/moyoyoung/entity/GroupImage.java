@@ -26,7 +26,4 @@ public class GroupImage {
     private LocalDate createDate;
     private String mimeType;
 
-    @OneToOne
-    @JsonIgnore
-    private Group group;
 }

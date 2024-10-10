@@ -1,8 +1,10 @@
 package org.community.moyoyoung.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +33,6 @@ public class PostDTO {
     private String title;
     private String content;
 
-    @JsonIgnore
     private PostImage postImage;
 
     private List<Comment> commentList;

@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class GroupListResponseDTO {
-    private List<GroupOnlineListDTO> onlineGroups;
-    private List<GroupOfflineListDTO> offlineGroups;
+    private List<GroupOnlineDTO> onlineGroups;
+    private List<GroupOfflineDTO> offlineGroups;
 }

@@ -13,6 +13,9 @@ import java.util.List;
 public class MeetingUserDTO {
 
     private Long id;
+//    private Long meetingId;
+//    private List<MyUser> userIds;
+
     private Long meetingId;
-    private List<MyUser> userIds;
+    private List<Long> myUserIds;
 }

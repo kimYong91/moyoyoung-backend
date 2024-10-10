@@ -20,24 +20,11 @@ public class GroupController {
     private final GroupService groupService;
     private final CustomFileUtil customFileUtil;
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<GroupDTO> getOneGroup(@PathVariable(name = "id") Long id) {
-        GroupDTO response = groupService.getOne(id);
-        return ResponseEntity.ok(response);
-    }
-
-
-    @GetMapping("/postList")
-    public ResponseEntity<List<PostMiniDTO>> getPostMiniList(@RequestParam Long id) {
-        List<PostMiniDTO> postMiniList1 = groupService.getPostMiniList(id);
-        return ResponseEntity.ok(postMiniList1);
-    }
-
-
-    @GetMapping("/meeting/{id}")
-    public ResponseEntity<MeetingDTO> getMeeting(@PathVariable(name = "id") Long id) {
-        MeetingDTO response = groupService.getMeeting(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<GroupDetailDTO> getGroupDetails(@PathVariable(name = "id") Long id) {
+        GroupDetailDTO groupDetail = groupService.getGroupDetail(id);
+        return ResponseEntity.ok(groupDetail);
     }
 
     @PostMapping("/register")
