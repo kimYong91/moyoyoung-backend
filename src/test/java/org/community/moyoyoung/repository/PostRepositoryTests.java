@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -123,6 +124,17 @@ class PostRepositoryTests {
 
         }
 
+        @Test
+    void getListTest(){
+        List<Post> postList = postRepository.findAll();
+        }
+
+        @Test
+     void getPost(){
+        Long id = 1L;
+        Optional<Post> post =  postRepository.findById(id);
+        Post post1 = post.orElseThrow();
+     }
     }
 
 

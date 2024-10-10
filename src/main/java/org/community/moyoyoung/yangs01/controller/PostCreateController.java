@@ -1,6 +1,9 @@
 package org.community.moyoyoung.yangs01.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.community.moyoyoung.dto.PostCreateDTO;
+import org.community.moyoyoung.dto.PostDTO;
 import org.community.moyoyoung.yangs01.service.PostCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,17 +14,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
+@Log4j2
 @RestController
 @RequestMapping("/api/allBoard")
 public class PostCreateController {
+
     private final PostCreateService postCreateService;
 
-    @Autowired
-    public PostCreateController(PostCreateService postCreateService) {
-        this.postCreateService = postCreateService;
-    }
-
-    @PostMapping("/create")
+//    @PostMapping
+//    public PostDTO createPost(@RequestBody PostDTO postDTO) {
+//        PostDTO createdPost = postCreateService.create(postDTO); // 게시글 작성 서비스 호출
+//        return createdPost; // 작성된 게시글 반환
+//    }
+    @PostMapping("/posts/create")
     public ResponseEntity<String> createPost(@RequestParam("title") String title,
                                              @RequestParam("content") String content,
                                              @RequestParam("myUserId") Long myUserId,
@@ -38,7 +44,7 @@ public class PostCreateController {
         return new ResponseEntity<>("Post created with ID: " + postId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/modify/{id}")
+    @PutMapping("/posts/modify/{id}")
     public ResponseEntity<String> modifyPost(@PathVariable Long id,
                                              @RequestParam("title") String title,
                                              @RequestParam("content") String content,
