@@ -21,7 +21,7 @@ class GroupServiceImplTest {
                     .title("제목" + i)
                     .content("내용" + i)
                     .build();
-            groupService.register(groupDTO);
+            groupService.register(groupDTO, null);
         }
         for (int i = 0; i < 100; i++) {
             GroupDTO groupDTO = GroupDTO.builder()
@@ -31,7 +31,7 @@ class GroupServiceImplTest {
                     .title("제목" + i)
                     .content("내용" + i)
                     .build();
-            groupService.register(groupDTO);
+            groupService.register(groupDTO, null);
         }
     }
 }
