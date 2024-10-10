@@ -3,10 +3,11 @@ package org.community.moyoyoung.security;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,17 +29,21 @@ public class AuthController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/token")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-        
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-        if (userDetails == null || !passwordEncoder.matches(authRequest.getPassword(), userDetails.getPassword())) {
+
+        try {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return handleTokenGeneration(authRequest.getUsername());
+        } catch (UsernameNotFoundException e) {
             return createAuthResponse(false, "Invalid username or password", HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            return createAuthResponse(false, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return handleTokenGeneration(authRequest.getUsername());
     }
 
     @PostMapping("/token/refresh")
@@ -55,7 +60,7 @@ public class AuthController {
         log.error("Unhandled exception occurred: {}", ex.getMessage());
         return createAuthResponse(false, "An error occurred during authentication", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     private ResponseEntity<?> handleTokenGeneration(String username) {
         try {
             String accessToken = jwtTokenProvider.generateAccessToken(username);
@@ -87,6 +92,7 @@ public class AuthController {
         private String message;
         private String accessToken;
         private String refreshToken;
+
         public TokenResponse(boolean success, String accessToken, String refreshToken) {
             this.success = success;
             this.message = "Token generated successfully";
