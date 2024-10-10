@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // 김용
 // Modified MinU Bak
 public interface MyUserRepository extends JpaRepository<MyUser, Long> {
-    Optional<MyUser> findByUsername(String username);
-    Optional<MyUser> findByNickname(String nickname);
-    Optional<MyUser> findByPhoneNumber(String phoneNumber);
-    Optional<MyUser> findByNameAndPhoneNumber(String name , String phoneNumber);
+    Optional<MyUser> findByUsernameAndDisabledFalse(String username);
+    Optional<MyUser> findByNicknameAndDisabledFalse(String nickname);
+    Optional<MyUser> findByPhoneNumberAndDisabledFalse(String phoneNumber);
+    Optional<MyUser> findByNameAndPhoneNumberAndDisabledFalse(String name, String phoneNumber);
 }

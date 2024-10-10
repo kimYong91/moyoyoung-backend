@@ -1,6 +1,6 @@
- curl -X POST localhost:8080/auth/login \
+ curl -X POST "localhost:8080/auth/token" \
  -H "Content-Type: application/json" \
- -d '{"username": "testUser1", "password": "passworD123!"}'
+ -d '{"username": "TestUser1", "password": "passworD123!"}'
 
 //$2a$10$T.FNUFMkH6Ul2qVolVCHe.6F01td.Ve4g3VbVYpbU.uhH.n0gUHgC
 
