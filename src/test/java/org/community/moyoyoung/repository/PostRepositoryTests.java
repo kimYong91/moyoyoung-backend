@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 @Log4j2
@@ -35,14 +33,14 @@ class PostRepositoryTests {
 
         for (int i = 1; i <= 10; i++) {
 
-            MyUser myUser = MyUser.builder()
-                    .username("user__" + i) // username에 값을 할당
-                    .name("실명" + i)
-                    .nickname("닉네임__" + i)
-                    .password("password")
-                    .phoneNumber("1234567890")
-                    .disabled(false) // disabled 필드에 false 설정
-                    .build();
+            // MyUser myUser = MyUser.builder()
+            //         .username("user__" + i) // username에 값을 할당
+            //         .name("실명" + i)
+            //         .nickname("닉네임__" + i)
+            //         .password("password")
+            //         .phoneNumber("1234567890")
+            //         .disabled(false) // disabled 필드에 false 설정
+            //         .build();
 
             MyUser myUser = new MyUser();
             myUser.setUsername("user__" + i);

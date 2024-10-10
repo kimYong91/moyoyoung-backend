@@ -1,10 +1,15 @@
 package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.community.moyoyoung.dto.*;
+import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupService;
+import org.community.moyoyoung.samgak0.services.MyUserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +24,8 @@ public class GroupController {
 
     private final GroupService groupService;
     private final CustomFileUtil customFileUtil;
+    private final MyUserService myUserService;
+    private final ModelMapper modelMapper;
 
 
     @GetMapping("/{id}")
@@ -28,18 +35,24 @@ public class GroupController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Long>> groupRegister(GroupDTO groupDTO) {
+    public ResponseEntity<Map<String, Long>> groupRegister(GroupDTO groupDTO, Authentication authentication) {
         List<MultipartFile> files = groupDTO.getFile();
 
         List<String> uploadFileName = customFileUtil.saveFile(files);
         groupDTO.setUploadFileName(uploadFileName);
-        Long id = groupService.register(groupDTO);
+
+        User user = (User) authentication.getPrincipal();
+        MyUserDTO myUserDTO = myUserService.getUserByUsername(user.getUsername()).orElseThrow();
+        MyUser myUser = modelMapper.map(myUserDTO, MyUser.class);
+
+
+        Long id = groupService.register(groupDTO, myUser);
         return ResponseEntity.ok(Map.of("result", id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> modify(@PathVariable(name = "id") Long id,
-                                    @RequestBody GroupDTO groupDTO) {
+                                                      @RequestBody GroupDTO groupDTO) {
         groupDTO.setId(id);
         groupService.modify(groupDTO);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));

@@ -52,10 +52,10 @@ public class GroupListServiceImpl implements GroupListService {
 
         for (int i = 0; i < groupOfflineList.size(); i++) {
             groupOfflineListDTO.add(modelMapper.map(groupOfflineList.get(i), GroupOfflineDTO.class));
-            GroupImage groupImage = groupOfflineList.get(i).getGroupImage();
-            groupOfflineListDTO.get(i).setGroupImageId(groupImage.getId());
-            Long id = groupOfflineList.get(i).getGroupImage().getId();
-            customFileUtil.getImage(id);
+//            GroupImage groupImage = groupOfflineList.get(i).getGroupImage();
+//            groupOfflineListDTO.get(i).setGroupImageId(groupImage.getId());
+//            Long id = groupOfflineList.get(i).getGroupImage().getId();
+//            customFileUtil.getImage(id);
         }
 
         return groupOfflineListDTO;
@@ -88,10 +88,10 @@ public class GroupListServiceImpl implements GroupListService {
 
         for (int i = 0; i < groupOnlineList.size(); i++) {
             groupOnlineListDTO.add(modelMapper.map(groupOnlineList.get(i), GroupOnlineDTO.class));
-            GroupImage groupImage = groupOnlineList.get(i).getGroupImage();
-            groupOnlineListDTO.get(i).setGroupImageId(groupImage.getId());
-            Long id = groupOnlineList.get(i).getGroupImage().getId();
-            customFileUtil.getImage(id);
+//            GroupImage groupImage = groupOnlineList.get(i).getGroupImage();
+//            groupOnlineListDTO.get(i).setGroupImageId(groupImage.getId());
+//            Long id = groupOnlineList.get(i).getGroupImage().getId();
+//            customFileUtil.getImage(id);
         }
 
         return groupOnlineListDTO;

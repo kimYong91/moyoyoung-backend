@@ -52,8 +52,4 @@ public class GroupListController {
 
     }
 
-//    @GetMapping("/list")
-//    public List<Group> list() {
-//        return groupRepository.findAll();
-//    }
 }

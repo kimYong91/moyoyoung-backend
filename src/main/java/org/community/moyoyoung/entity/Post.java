@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
 // 김용
 // 게시판
 @Entity
@@ -34,6 +36,7 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime modifiedDate; // 수정일자
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean delFlag = false; // 기본값을 false로 설정
 

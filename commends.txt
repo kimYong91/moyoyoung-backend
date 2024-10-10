@@ -1,12 +1,16 @@
- curl -X POST localhost:8080/auth/login \
+ curl -X POST "localhost:8080/auth/token" \
  -H "Content-Type: application/json" \
- -d '{"username": "testUser1", "password": "passworD123!"}'
+ -d '{"username": "TestUser1", "password": "passworD123!"}'
 
 //$2a$10$T.FNUFMkH6Ul2qVolVCHe.6F01td.Ve4g3VbVYpbU.uhH.n0gUHgC
 
- curl -X GET -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzI3NzUxMjk4LCJleHAiOjE3Mjc3NTQ4OTh9.uRnW4eF1aptO4xdG3OJpojsEZ4B0pxLcais4SI8-iUvjJqIuzlXDZIA1DgG9sgYoJAvZYDBfaDdeBjMiQIG3zA" http://localhost:8080/hello
+curl -X GET -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzI3NzUxMjk4LCJleHAiOjE3Mjc3NTQ4OTh9.uRnW4eF1aptO4xdG3OJpojsEZ4B0pxLcais4SI8-iUvjJqIuzlXDZIA1DgG9sgYoJAvZYDBfaDdeBjMiQIG3zA" \
+"http://localhost:8080/hello"
 
- curl -X GET -v http://localhost:8080/hello
+curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0VXNlcjEiLCJpYXQiOjE3Mjg1MzM1MDksImV4cCI6MTcyODUzNzEwOSwidG9rZW5fdHlwZSI6IkFDQ0VTU19UT0tFTiJ9.JUM9JOLnLkf72-nRIzSDBZOmvDwkQH-MZ4AHWpavbgBNW8bjR_qQomPHG7fEFtseK4PPH0P3HDYxr-f0XMhX5w" \
+"localhost:8080/users/my"
+ 
+curl -X GET -v http://localhost:8080/hello
 
  curl -X POST http://localhost:8080/users/create \
 -H "Content-Type: application/json" \
