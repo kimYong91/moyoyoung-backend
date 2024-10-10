@@ -50,8 +50,4 @@ public class GroupListController {
         return customFileUtil.getImage(groupImage);
     }
 
-//    @GetMapping("/list")
-//    public List<Group> list() {
-//        return groupRepository.findAll();
-//    }
 }

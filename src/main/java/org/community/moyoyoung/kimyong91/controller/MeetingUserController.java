@@ -2,6 +2,7 @@ package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.MeetingUserDTO;
+import org.community.moyoyoung.entity.MeetingUser;
 import org.community.moyoyoung.kimyong91.service.MeetingUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,10 @@ public class MeetingUserController {
         return ResponseEntity.ok(listAll);
     }
 
-    @PostMapping("/join")
-    public ResponseEntity<Map<String, Long>> meetingJoin(@RequestBody MeetingUserDTO meetingUserDTO) {
-        Long id = meetingUserService.join(meetingUserDTO);
-        return ResponseEntity.ok(Map.of("id", id));
+    @PostMapping("/join/{id}/{userId}")
+    public ResponseEntity<Map<String, MeetingUser>> meetingJoin(@PathVariable(name = "id") Long id, @PathVariable(name = "id") Long userId) {
+        MeetingUser meetingUser = meetingUserService.join(id, userId);
+        return ResponseEntity.ok(Map.of("id", meetingUser));
     }
 
     @DeleteMapping("/{id}")
