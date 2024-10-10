@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.repository.GroupImageRepository;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 // 김용
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomFileUtil {
@@ -82,11 +84,14 @@ public class CustomFileUtil {
         return uploadNames;
     }
 
-
     public ResponseEntity<Resource> getImage(Long id) {
         Optional<GroupImage> image = groupImageRepository.findById(id);
 
         GroupImage groupImage = image.orElse(new GroupImage());
+        return this.getImage(groupImage);
+    }
+
+    public ResponseEntity<Resource> getImage(GroupImage groupImage) {
 
         Resource resource = new FileSystemResource(uploadPath + File.separator + groupImage.getFileName());
 
