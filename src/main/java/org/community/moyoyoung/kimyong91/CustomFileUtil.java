@@ -2,7 +2,6 @@ package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.beans.factory.annotation.Value;

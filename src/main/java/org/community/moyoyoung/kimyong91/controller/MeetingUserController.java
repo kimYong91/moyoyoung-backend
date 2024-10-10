@@ -2,7 +2,6 @@ package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.MeetingUserDTO;
-import org.community.moyoyoung.entity.MeetingUser;
 import org.community.moyoyoung.kimyong91.service.MeetingUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
