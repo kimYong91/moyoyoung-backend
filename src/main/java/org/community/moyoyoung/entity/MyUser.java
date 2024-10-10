@@ -1,12 +1,10 @@
 package org.community.moyoyoung.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.constraints.Size;
@@ -19,7 +17,7 @@ import jakarta.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
-@ToString(exclude = {"ownGroup", "group"})
+@ToString(exclude = {"ownGroup"})
 public class MyUser {
 
     public interface RegistrationGroup {}
