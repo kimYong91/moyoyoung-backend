@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.community.moyoyoung.entity.MyUser;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 // 양수연
 @Data

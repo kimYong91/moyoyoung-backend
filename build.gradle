@@ -53,6 +53,9 @@ dependencies {
 
 	implementation 'jakarta.validation:jakarta.validation-api'
 
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+
 
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
