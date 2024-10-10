@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -71,16 +72,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
                 String username = tokenProvider.getUsernameFromJWT(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                if (userDetails != null) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                } else {
-                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "LOGIN_FAILED",
-                            "Invalid username or password");
+                if (username == null) {
+                    setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
+                    "username is invalidate in token");
                     return;
+                }
+
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                    if (userDetails != null) {
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } else {
+                        setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
+                                "username is invalidate in token");
+                        return;
+                    }
                 }
             }
         } catch (JwtTokenProvider.TokenExpiredException ex) {
@@ -91,6 +100,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, JwtTokenProvider.InvalidTokenException.CODE,
                     "Invalid token");
             return;
+        } catch (UsernameNotFoundException e) {
+            setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "INVALIDATE_USERNAME",
+                    "username is invalidate in token");
+        } catch (Exception e) {
+            setAuthErrorResponse(response, HttpStatus.UNAUTHORIZED, "UNKNOWN_ERROR",
+                    "Unknown Error occor in token vailidation");
         }
 
         filterChain.doFilter(request, response);
