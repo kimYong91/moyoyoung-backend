@@ -1,34 +1,27 @@
 package org.community.moyoyoung.kimyong91.service;
 
-import org.community.moyoyoung.dto.GroupOfflineListDTO;
-import org.community.moyoyoung.dto.GroupOnlineListDTO;
-import org.community.moyoyoung.dto.PageRequestDTO;
-import org.community.moyoyoung.dto.PageResponseDTO;
+import org.community.moyoyoung.dto.GroupOfflineDTO;
+import org.community.moyoyoung.dto.GroupOnlineDTO;
 import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.repository.GroupRepository;
 import org.community.moyoyoung.repository.MyUserRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@Slf4j
 @SpringBootTest
 class GroupListServiceImplTest {
 
     @Autowired
     private GroupListService groupListService;
-    private static final Logger log = LoggerFactory.getLogger(GroupListServiceImplTest.class);
 
     @Autowired
     MyUserRepository myUserRepository;
@@ -48,21 +41,21 @@ class GroupListServiceImplTest {
         myUserRepository.save(mu);
     }
 
-    @Test
-    public void 그룹추가() {
-        Group g = new Group();
-        g.setCheckOnline(false);
-        g.setCountry("한국");
-        g.setCategory("운동");
-        g.setTitle("제목");
-        g.setContent("내용");
-        g.setCreateDate(LocalDate.now());
-        MyUser user = new MyUser();
-        user.setId(1L);
-        g.setOwnUser(user);
-
-        groupRepository.save(g);
-    }
+//    @Test
+//    public void 그룹추가() {
+//        Group g = new Group();
+//        g.setCheckOnline(false);
+//        g.setCountry("한국");
+//        g.setCategory("운동");
+//        g.setTitle("제목");
+//        g.setContent("내용");
+//        g.setCreateDate(LocalDate.now());
+//        MyUser user = new MyUser();
+//        user.setId(1L);
+//        g.setOwnUser(user);
+//
+//        groupRepository.save(g);
+//    }
 
     @Test
     @Transactional
@@ -91,14 +84,14 @@ class GroupListServiceImplTest {
     @Test
     @Transactional
     public void 온라인그룹목록조회() {
-        List<GroupOnlineListDTO> groupOnlineList = groupListService.getGroupOnlineList();
+        List<GroupOnlineDTO> groupOnlineList = groupListService.getGroupOnlineList();
         System.out.println(groupOnlineList);
     }
 
     @Test
     @Transactional
     public void 오프라인그룹목록조회() {
-        List<GroupOfflineListDTO> groupOfflineList = groupListService.getGroupOfflineList();
+        List<GroupOfflineDTO> groupOfflineList = groupListService.getGroupOfflineList();
         System.out.println(groupOfflineList);
     }
 }

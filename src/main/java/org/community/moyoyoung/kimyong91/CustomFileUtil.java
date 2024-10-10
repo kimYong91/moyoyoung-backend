@@ -1,9 +1,9 @@
 package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
-import org.community.moyoyoung.dto.GroupImageDTO;
+import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.community.moyoyoung.entity.GroupImage;
-import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -19,12 +19,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 // 김용
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomFileUtil {
@@ -66,6 +66,7 @@ public class CustomFileUtil {
 
                 try {
                     Files.copy(file.getInputStream(), savePath);
+
                     uploadNames.add(savedName);
 
                 } catch (IOException e) {
@@ -83,11 +84,14 @@ public class CustomFileUtil {
         return uploadNames;
     }
 
-
     public ResponseEntity<Resource> getImage(Long id) {
         Optional<GroupImage> image = groupImageRepository.findById(id);
 
         GroupImage groupImage = image.orElse(new GroupImage());
+        return this.getImage(groupImage);
+    }
+
+    public ResponseEntity<Resource> getImage(GroupImage groupImage) {
 
         Resource resource = new FileSystemResource(uploadPath + File.separator + groupImage.getFileName());
 
@@ -96,9 +100,8 @@ public class CustomFileUtil {
         try {
 
             headers.add(
-//                    "Content-Type", "image/jpeg"
-//                    "Content-Type", "application/octet-stream"
-                    "Content-Type", Files.probeContentType(resource.getFile().toPath())
+                    "Content-Type",
+                    Files.probeContentType(resource.getFile().toPath())
             );
 
         } catch (Exception e) {

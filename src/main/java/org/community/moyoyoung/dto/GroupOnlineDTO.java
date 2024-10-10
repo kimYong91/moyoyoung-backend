@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.community.moyoyoung.entity.Group;
+import org.community.moyoyoung.entity.GroupImage;
 
 import java.time.LocalDate;
 
@@ -13,12 +13,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GroupImageDTO {
+public class GroupOnlineDTO {
+
     private Long id;
-    private String fileName;
-    private String upLoadFileName;
+    private boolean checkOnline;
+    private String country;
+    private String category;
+    private String title;
     private LocalDate createDate;
-    private String mimeType;
+//    private GroupImage groupImage;
 
+    private Long groupImageId;
 }
-

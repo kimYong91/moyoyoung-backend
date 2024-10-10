@@ -26,10 +26,10 @@ public class GroupDTO {
 
     private List<PostDTO> posts;  // 최신 포스트 리스트 필드
 
-
-    private Meeting meetingList;
+    private Meeting meeting;
 
     private GroupImage groupImage;
+
 
     @Builder.Default
     private List<MyUser> member = new ArrayList<>();

@@ -1,12 +1,9 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.GroupDTO;
-import org.hibernate.validator.internal.engine.groups.Group;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class GroupServiceImplTest {
