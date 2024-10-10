@@ -36,8 +36,7 @@ public class Post {
 
     @Column(nullable = false)
     private LocalDateTime modifiedDate; // 수정일자
-
-    @Builder.Default
+    
     @Column(nullable = false)
     @Builder.Default
     private Boolean delFlag = false; // 기본값을 false로 설정
