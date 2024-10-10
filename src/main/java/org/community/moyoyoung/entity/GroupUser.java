@@ -1,8 +1,6 @@
 package org.community.moyoyoung.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,6 +12,10 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tbl_groupUser")
 public class GroupUser {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     private Group group;
