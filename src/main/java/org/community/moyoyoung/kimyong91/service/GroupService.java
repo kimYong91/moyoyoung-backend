@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.*;
+import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.MyUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,6 @@ public interface GroupService{
     GroupDetailDTO getGroupDetail(Long id);
 
 //    GroupDTO groupJoin(Long groupId, Long userId);
+
+    Group getGroup(Long gruopId);
 }
