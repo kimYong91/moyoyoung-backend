@@ -25,5 +25,5 @@ public interface GroupService{
 
     GroupDetailDTO getGroupDetail(Long id);
 
-    GroupDTO groupJoin(Long groupId, Long userId);
+//    GroupDTO groupJoin(Long groupId, Long userId);
 }
