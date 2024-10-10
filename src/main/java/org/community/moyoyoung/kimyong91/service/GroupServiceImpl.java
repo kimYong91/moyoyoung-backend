@@ -88,7 +88,6 @@ public class GroupServiceImpl implements GroupService {
         groupRepository.save(group);
     }
 
-
     @Override
     public void remove(Long id) {
         groupRepository.updateToDelete(id, true);

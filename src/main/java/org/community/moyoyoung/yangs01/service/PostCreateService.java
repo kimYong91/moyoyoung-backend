@@ -10,6 +10,8 @@ public interface PostCreateService {
         void modify(Long id, PostCreateDTO postCreateDTO);
         // 기존 게시글 수정 (게시글 ID와 수정할 데이터 포함)
 
+        void remove (Long id);
+
 }
 
 

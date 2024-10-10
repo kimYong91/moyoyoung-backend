@@ -27,6 +27,7 @@ public class PostCreateServiceImpl implements PostCreateService {
     private final MyUserRepository myUserRepository;
 
 
+    @Transactional
     @Override
     public Long register(PostCreateDTO postCreateDTO) {
 
@@ -37,13 +38,12 @@ public class PostCreateServiceImpl implements PostCreateService {
                     log.error("User with ID {} not found", postCreateDTO.getMyUserId());
                     return new RuntimeException("User not found");
                 });
-        Post postCreate = new Post();
+         Post postCreate = new Post();
         postCreate.setMyUser(myUser);
         postCreate.setTitle(postCreateDTO.getTitle());
         postCreate.setContent(postCreateDTO.getContent());
-        postCreate.setCreateDate(postCreateDTO.getCreateDate());
+        postCreate.setCreateDate(LocalDateTime.now());
         postCreate.setModifiedDate(LocalDateTime.now());
-
 
 
         List<MultipartFile> files = postCreateDTO.getFiles();
@@ -52,6 +52,8 @@ public class PostCreateServiceImpl implements PostCreateService {
                 PostImage postImage = savePostImage(file);
                 postCreate.setPostImage(postImage);
             }
+        }else {
+            postCreate.setPostImage(null); // 이미지가 없으면 null로 설정
         }
 
         postRepository.save(postCreate);
@@ -82,5 +84,10 @@ public class PostCreateServiceImpl implements PostCreateService {
 
         postRepository.save(postCreate);
     }
+
+    @Override
+    public void remove(Long id) {
+        postRepository.deleteById(id);
     }
+}
 

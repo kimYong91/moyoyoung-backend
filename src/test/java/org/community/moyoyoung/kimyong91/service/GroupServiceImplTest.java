@@ -11,6 +11,7 @@ class GroupServiceImplTest {
     @Autowired
     private GroupService groupService;
 
+
 //    @Test
 //    public void register() {
 //        for (int i = 0; i < 100; i++) {

@@ -1,6 +1,7 @@
 package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -38,9 +39,10 @@ public class Post {
 
     @Builder.Default
     @Column(nullable = false)
+    @Builder.Default
     private Boolean delFlag = false; // 기본값을 false로 설정
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private PostImage postImage;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
@@ -49,6 +51,11 @@ public class Post {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private MyUser myUser;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = LocalDateTime.now(); // 현재 시간으로 생성일자 설정
+    }
 
     public void changeTitle(String title) {
         this.title = title;

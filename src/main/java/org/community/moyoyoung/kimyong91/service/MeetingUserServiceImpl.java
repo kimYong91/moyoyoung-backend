@@ -28,9 +28,23 @@ public class MeetingUserServiceImpl implements MeetingUserService{
     private final ModelMapper modelMapper;
 
 
+//    @Override
+//    public Long join(MeetingUserDTO meetingUserDTO) {
+//        MeetingUser meetingUser = modelMapper.map(meetingUserDTO, MeetingUser.class);
+//
+//        meetingUser.setMeeting(meetingUserDTO.getMeeting());
+//        meetingUser.setMyUsers(meetingUserDTO.getUsers());
+//
+//        MeetingUser result = meetingUserRepository.save(meetingUser);
+//
+//        return result.getId();
+//    }
+
     @Override
+
     public MeetingUserDTO meetingJoin(Long meetingId, Long userId) {
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow();
+
         MyUser myUser = myUserRepository.findById(userId).orElseThrow();
 
         MeetingUser meetingUser = MeetingUser.builder()
@@ -41,7 +55,6 @@ public class MeetingUserServiceImpl implements MeetingUserService{
         meetingUserRepository.save(meetingUser);
 
         MeetingUserDTO MeetingUserDTO = modelMapper.map(meetingUser, MeetingUserDTO.class);
-
 
         return MeetingUserDTO;
     }
