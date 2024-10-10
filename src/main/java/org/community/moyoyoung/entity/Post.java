@@ -51,6 +51,8 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private MyUser myUser;
 
+
+
     @PrePersist
     protected void onCreate() {
         this.createDate = LocalDateTime.now(); // 현재 시간으로 생성일자 설정

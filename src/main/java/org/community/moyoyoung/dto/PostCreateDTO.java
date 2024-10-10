@@ -3,6 +3,8 @@ package org.community.moyoyoung.dto;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.community.moyoyoung.entity.MyUser;
+import org.community.moyoyoung.entity.PostImage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -24,13 +26,18 @@ public class PostCreateDTO {
     @Column(name = "modified_date", nullable = false)
     private LocalDateTime modifiedDate;
 
-    private Long myUserId; // 현재 사용자 정보
+    private MyUser myUser;
+
+    private PostImage postImage;
 
     @Builder.Default
     private List<MultipartFile> files = new ArrayList<>();
 
+
     @Builder.Default
-    private List<String> uploadFileNames = new ArrayList<>();
+    private List<MultipartFile> file = new ArrayList<>();
+    @Builder.Default
+    private List<String> uploadFileName = new ArrayList<>();
 }
 
 

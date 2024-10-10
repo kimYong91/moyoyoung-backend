@@ -3,11 +3,13 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 // 김용
 // 게시판 첨부 이미지
 @Entity
 @Getter
+@Setter
 @ToString
 @Builder
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class PostImage {
 
     private String fileName;
     private String upLoadFileName;
-    private LocalDate createDate;
+    private LocalDateTime createDate;
     private String mimeType;
 
     @OneToOne
@@ -30,9 +32,11 @@ public class PostImage {
     private MyUser myUser;
 
     public void setFileName(String originalFilename) {
+        this.fileName = originalFilename;
     }
 
     public void setFilePath(String path) {
+        this.upLoadFileName = path;
     }
 }
 
