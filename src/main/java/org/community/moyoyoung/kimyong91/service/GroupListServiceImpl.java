@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.community.moyoyoung.dto.GroupOfflineDTO;
 import org.community.moyoyoung.dto.GroupOnlineDTO;
 import org.community.moyoyoung.entity.Group;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -96,11 +98,11 @@ public class GroupListServiceImpl implements GroupListService {
     }
 
     @Override
-    public Long getGroupImage(Long id) {
+    public GroupImage getGroupImage(Long id) {
 
         Optional<Group> group = groupRepository.findById(id);
 
-        return group.get().getId();
+        return group.orElseThrow().getGroupImage();
     }
 
 }

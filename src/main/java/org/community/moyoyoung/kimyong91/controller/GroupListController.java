@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.community.moyoyoung.dto.GroupListResponseDTO;
 import org.community.moyoyoung.dto.GroupOfflineDTO;
 import org.community.moyoyoung.dto.GroupOnlineDTO;
+import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupListService;
 import org.community.moyoyoung.repository.GroupRepository;
@@ -44,10 +45,9 @@ public class GroupListController {
     @GetMapping("/getImage/{id}")
     public ResponseEntity<Resource> getImage(@PathVariable(name = "id") Long id) {
 
-        Long groupImageId = groupListService.getGroupImage(id);
+        GroupImage groupImage = groupListService.getGroupImage(id);
 
-        return customFileUtil.getImage(groupImageId);
-
+        return customFileUtil.getImage(groupImage);
     }
 
 //    @GetMapping("/list")
