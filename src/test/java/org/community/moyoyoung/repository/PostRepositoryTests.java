@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
+import java.util.Optional;
+
+
 @SpringBootTest
 @Log4j2
 class PostRepositoryTests {
@@ -28,6 +32,16 @@ class PostRepositoryTests {
     public void testInsert() {
 
         for (int i = 1; i <= 10; i++) {
+
+            // MyUser myUser = MyUser.builder()
+            //         .username("user__" + i) // username에 값을 할당
+            //         .name("실명" + i)
+            //         .nickname("닉네임__" + i)
+            //         .password("password")
+            //         .phoneNumber("1234567890")
+            //         .disabled(false) // disabled 필드에 false 설정
+            //         .build();
+
             MyUser myUser = new MyUser();
             myUser.setUsername("user__" + i);
             myUser.setName("실명" + i);
@@ -35,6 +49,7 @@ class PostRepositoryTests {
             myUser.setPassword("password");
             myUser.setPhoneNumber("1234567890");
             myUser.setDisabled(false);
+
 
             MyUser savedUser =  myUserRepository.save(myUser);
 
@@ -117,6 +132,17 @@ class PostRepositoryTests {
 
         }
 
+        @Test
+    void getListTest(){
+        List<Post> postList = postRepository.findAll();
+        }
+
+        @Test
+     void getPost(){
+        Long id = 1L;
+        Optional<Post> post =  postRepository.findById(id);
+        Post post1 = post.orElseThrow();
+     }
     }
 
 

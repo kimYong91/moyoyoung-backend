@@ -1,9 +1,8 @@
 package org.community.moyoyoung.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -23,6 +22,9 @@ public class PostCreateDTO {
     private String content;
 
     private LocalDateTime createDate;
+
+    @Column(name = "modified_date", nullable = false)
+    private LocalDateTime modifiedDate;
 
     private Long myUserId; // 현재 사용자 정보
 
