@@ -43,7 +43,11 @@ public class GroupListController {
 
     @GetMapping("/getImage/{id}")
     public ResponseEntity<Resource> getImage(@PathVariable(name = "id") Long id) {
-        return customFileUtil.getImage(id);
+
+        Long groupImageId = groupListService.getGroupImage(id);
+
+        return customFileUtil.getImage(groupImageId);
+
     }
 
 //    @GetMapping("/list")

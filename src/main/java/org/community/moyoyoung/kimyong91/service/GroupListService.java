@@ -13,4 +13,6 @@ public interface GroupListService {
     List<GroupOnlineDTO> getGroupOnlineList();
 
     List<GroupOfflineDTO> getGroupOfflineList();
+
+    Long getGroupImage(Long id);
 }
