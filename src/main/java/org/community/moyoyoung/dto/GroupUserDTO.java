@@ -1,6 +1,8 @@
 package org.community.moyoyoung.dto;
 
 import lombok.*;
+import org.community.moyoyoung.entity.Group;
+import org.community.moyoyoung.entity.MyUser;
 
 // 김용
 @Getter
@@ -10,7 +12,10 @@ import lombok.*;
 @Builder
 public class GroupUserDTO {
 
-    private Long group;
-    private Long user;
+    private Group group;
+    private MyUser user;
+
+//    private Long group;
+//    private Long user;
 
 }

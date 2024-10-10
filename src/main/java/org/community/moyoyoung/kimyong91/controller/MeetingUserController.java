@@ -18,10 +18,9 @@ public class MeetingUserController {
 
     @GetMapping("/list")
     public ResponseEntity<List<MeetingUserDTO>> getJoinUserList() {
-        List<MeetingUserDTO> listAll = meetingUserService.getListAll();
+        List<MeetingUserDTO> listAll = meetingUserService.getMeetingUserListAll();
         return ResponseEntity.ok(listAll);
     }
-
 
     @PostMapping("/join/{meetingId}/{userId}")
     public ResponseEntity<Map<String, String>> meetingJoin(@PathVariable(name = "meetingId") Long meetingId, @PathVariable(name = "userId") Long userId) {
@@ -31,7 +30,7 @@ public class MeetingUserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> meetingUserRemove(@PathVariable(name = "id") Long id) {
-        meetingUserService.meetingRemove(id);
+        meetingUserService.meetingUserRemove(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 
