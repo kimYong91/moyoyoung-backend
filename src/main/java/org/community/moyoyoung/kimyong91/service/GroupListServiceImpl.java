@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -94,6 +95,13 @@ public class GroupListServiceImpl implements GroupListService {
         return groupOnlineListDTO;
     }
 
+    @Override
+    public Long getGroupImage(Long id) {
+
+        Optional<Group> group = groupRepository.findById(id);
+
+        return group.get().getId();
+    }
 
 }
 
