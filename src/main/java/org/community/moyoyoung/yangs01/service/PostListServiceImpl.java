@@ -23,11 +23,18 @@ public class PostListServiceImpl implements PostListService {
     private final PostRepository postRepository;
     private final ModelMapper modelMapper;
 
+//    @PostConstruct
+//    public void configureModelMapper() {
+//        modelMapper.typeMap(Post.class, PostListDTO.class)
+//                .addMapping(src -> src.getMyUser().getName(), PostListDTO::setName)
+//                .addMapping(src -> src.getMyUser().getNickname(), PostListDTO::setNickname);
+//    }
+
     @Override
-    public PostListDTO get(Long postId) {
+    public PostDTO get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found")); // 예외 처리
-        return modelMapper.map(post, PostListDTO.class);
+        return modelMapper.map(post, PostDTO.class);
     }
 
     @Override
@@ -35,6 +42,8 @@ public class PostListServiceImpl implements PostListService {
         PageRequest pageable = PageRequest.of(pageRequestDTO.getPage(), pageRequestDTO.getSize());
 
         Page<Post> result = postRepository.findAll(pageable);
+
+
 
         List<PostListDTO> dtoList = result.getContent().stream()
                 .map(post -> modelMapper.map(post, PostListDTO.class))
@@ -50,5 +59,10 @@ public class PostListServiceImpl implements PostListService {
 
             return responseDTO;
     }
+//
+//    public List<PostDTO> getPostDtoList (){
+//        List<Post> postDtoList = postRepository.findAll();
+//        return null;
+//    }
 
 }
