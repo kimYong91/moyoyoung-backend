@@ -24,7 +24,6 @@ public class MapperConfig {
         modelMapper.typeMap(GroupDTO.class, Group.class).addMappings(mapper -> {
             mapper.skip(Group::setMeeting);
             mapper.skip(Group::setGroupImage);
-            mapper.skip(Group::setMember);
             mapper.skip(Group::setOwnUser);
             mapper.skip(Group::setPostList);
         });
