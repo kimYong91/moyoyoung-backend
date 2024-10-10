@@ -7,12 +7,14 @@ import org.community.moyoyoung.entity.MyUser;
 
 //Author : MinU Bak
 public interface MyUserService {
-    void createUser(MyUser user);
     Optional<MyUserDTO> getUserById(Long id);
     Optional<MyUserDTO> getUserByUsername(String username);
     Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber);
     Optional<MyUserDTO> getUserByPhoneNumberAndName(String phoneNumber, String name);
     Optional<MyUserDTO> getUserByUsernamePhoneNumberAndName(String username, String phoneNumber, String name);
+    
+    void createUser(MyUser user);
+    Optional<MyUser> findUserByUsername(String username);
     void updateUser(MyUser user);
     boolean deleteUser(Long id);
     boolean validatePassword(String password);
