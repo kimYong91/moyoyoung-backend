@@ -32,17 +32,17 @@ public class MyUserServiceImpl implements MyUserService {
 
     @Override
     public boolean checkByNickname(String nickname) {
-        return userRepository.findByNickname(nickname).filter(user -> !user.getDisabled()).isEmpty();
+        return userRepository.findByNicknameAndDisabledFalse(nickname).isEmpty();
     }
 
     @Override
     public boolean checkByUsername(String username) {
-        return userRepository.findByUsername(username).filter(user -> !user.getDisabled()).isEmpty();
+        return userRepository.findByUsernameAndDisabledFalse(username).isEmpty();
     }
 
     @Override
     public boolean checkByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber).filter(user -> !user.getDisabled()).isEmpty();
+        return userRepository.findByPhoneNumberAndDisabledFalse(phoneNumber).isEmpty();
     }
 
     @Override
@@ -76,8 +76,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     @Override
     public Optional<MyUserDTO> getUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .filter(user -> !user.getDisabled())
+        return userRepository.findByUsernameAndDisabledFalse(username)
                 .map(user -> {
                     user.setPassword(null);
                     return modelMapper.map(user, MyUserDTO.class);
@@ -86,8 +85,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     @Override
     public Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber)
-                .filter(user -> !user.getDisabled())
+        return userRepository.findByPhoneNumberAndDisabledFalse(phoneNumber)
                 .map(user -> {
                     user.setPassword(null);
                     return modelMapper.map(user, MyUserDTO.class);
@@ -97,7 +95,7 @@ public class MyUserServiceImpl implements MyUserService {
     @Override
     public Optional<MyUserDTO> getUserByPhoneNumberAndName(String phoneNumber, String name) {
         
-        return userRepository.findByPhoneNumber(phoneNumber)
+        return userRepository.findByPhoneNumberAndDisabledFalse(phoneNumber)
                 .filter(user -> !user.getDisabled() && user.getName().equals(name))
                 .map(user -> {
                     user.setPassword(null);
@@ -107,7 +105,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     @Override
     public Optional<MyUserDTO> getUserByUsernamePhoneNumberAndName(String username, String phoneNumber, String name) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByUsernameAndDisabledFalse(username)
                 .filter(user -> !user.getDisabled() && user.getPhoneNumber().equals(phoneNumber) && user.getName().equals(name))
                 .map(user -> {
                     user.setPassword(null);

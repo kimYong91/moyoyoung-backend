@@ -1,7 +1,6 @@
 package org.community.moyoyoung.yangs01.service;
 
 import org.community.moyoyoung.dto.*;
-import org.community.moyoyoung.entity.Post;
 
 import java.util.List;
 

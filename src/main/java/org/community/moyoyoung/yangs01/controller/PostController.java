@@ -3,7 +3,6 @@ package org.community.moyoyoung.yangs01.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.community.moyoyoung.dto.PostDTO;
-import org.community.moyoyoung.yangs01.service.PostListService;
 import org.community.moyoyoung.yangs01.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupImageService;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
