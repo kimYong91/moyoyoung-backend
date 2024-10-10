@@ -6,6 +6,7 @@ import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupService;
+import org.community.moyoyoung.samgak0.services.AuthService;
 import org.community.moyoyoung.samgak0.services.MyUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 // 김용
 @RestController
@@ -26,6 +28,7 @@ public class GroupController {
     private final CustomFileUtil customFileUtil;
     private final MyUserService myUserService;
     private final ModelMapper modelMapper;
+    private final AuthService authService;
 
 
     @GetMapping("/{id}")
@@ -41,8 +44,8 @@ public class GroupController {
         List<String> uploadFileName = customFileUtil.saveFile(files);
         groupDTO.setUploadFileName(uploadFileName);
 
-        User user = (User) authentication.getPrincipal();
-        MyUserDTO myUserDTO = myUserService.getUserByUsername(user.getUsername()).orElseThrow();
+
+        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
         MyUser myUser = modelMapper.map(myUserDTO, MyUser.class);
 
 
