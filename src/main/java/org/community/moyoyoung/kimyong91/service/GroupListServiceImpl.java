@@ -44,7 +44,7 @@ public class GroupListServiceImpl implements GroupListService {
     @Override
     public List<GroupOfflineDTO> getGroupOfflineList() {
 
-        List<Group> groupOfflineList = groupRepository.getGroupOnlineList();
+        List<Group> groupOfflineList = groupRepository.getGroupOfflineList();
         List<GroupOfflineDTO> groupOfflineListDTO = new ArrayList<>();
 
         for (int i = 0; i < groupOfflineList.size(); i++) {

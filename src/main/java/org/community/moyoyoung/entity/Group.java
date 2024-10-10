@@ -1,5 +1,6 @@
 package org.community.moyoyoung.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,18 +35,22 @@ public class Group {
     private LocalDate createDate;
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
+    @JsonIgnore
     @OneToOne
     private Meeting meeting;
 
     @OneToOne
     private GroupImage groupImage;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private List<MyUser> member = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne
     private MyUser ownUser;
 
+    @JsonIgnore
     @OneToMany
     private List<Post> postList = new ArrayList<>();
 }
