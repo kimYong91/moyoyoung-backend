@@ -59,7 +59,6 @@ public class MyUserController {
                     request.name,
                     request.phoneNumber,
                     false,
-                    null,
                     new ArrayList<>());
 
             checkViolations(user);

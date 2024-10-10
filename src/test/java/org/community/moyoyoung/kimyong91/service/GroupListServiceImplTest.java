@@ -66,11 +66,6 @@ class GroupListServiceImplTest {
         MyUser u = new MyUser();
         u.setId(1L);
 
-        List<MyUser> ul = g.getMember();
-        ul.add(u);
-
-        g.setMember(ul);
-
         groupRepository.save(g);
     }
 
