@@ -25,12 +25,13 @@ public class MeetingUser {
     @ManyToOne
     private Meeting meeting;
 
-    @ManyToMany
-    @Builder.Default
-    @JoinTable(
-            name = "meeting_user",
-            joinColumns = @JoinColumn(name = "meeting_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<MyUser> myUsers = new ArrayList<>();
+//    @ManyToMany
+//    @Builder.Default
+//    @JoinTable(
+//            name = "meeting_user",
+//            joinColumns = @JoinColumn(name = "meeting_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+    @ManyToOne
+    private MyUser myUser;
 }

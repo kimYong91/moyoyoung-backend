@@ -36,7 +36,7 @@ public class Group {
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(mappedBy = "group")
     private Meeting meeting;
 
     @OneToOne
