@@ -1,13 +1,7 @@
 package org.community.moyoyoung;
 
 import org.community.moyoyoung.dto.GroupDTO;
-import org.community.moyoyoung.dto.GroupImageDTO;
-import org.community.moyoyoung.dto.MeetingDTO;
-import org.community.moyoyoung.dto.MyUserDTO;
 import org.community.moyoyoung.entity.Group;
-import org.community.moyoyoung.entity.GroupImage;
-import org.community.moyoyoung.entity.Meeting;
-import org.community.moyoyoung.entity.MyUser;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;

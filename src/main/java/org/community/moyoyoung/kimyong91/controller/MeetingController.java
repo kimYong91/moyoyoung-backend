@@ -23,7 +23,7 @@ public class MeetingController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> meetingModify(@PathVariable(name = "id") Long id,
-                                                      @RequestParam MeetingDTO meetingDTO) {
+                                                      @RequestBody MeetingDTO meetingDTO) {
         meetingDTO.setId(id);
         meetingService.modify(meetingDTO);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));

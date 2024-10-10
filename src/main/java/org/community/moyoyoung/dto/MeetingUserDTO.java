@@ -1,6 +1,7 @@
 package org.community.moyoyoung.dto;
 
 import lombok.*;
+import org.community.moyoyoung.entity.Meeting;
 import org.community.moyoyoung.entity.MyUser;
 
 import java.util.List;
@@ -13,9 +14,9 @@ import java.util.List;
 public class MeetingUserDTO {
 
     private Long id;
-//    private Long meetingId;
-//    private List<MyUser> userIds;
+    private Meeting meeting;
+    private MyUser user;
 
-    private Long meetingId;
-    private List<Long> myUserIds;
+//    private Long meetingId;
+//    private List<Long> myUserIds;
 }

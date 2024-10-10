@@ -1,6 +1,8 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.*;
+import org.community.moyoyoung.entity.MyUser;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 @Service
 public interface GroupService{
 
-    Long register(GroupDTO groupDTO);
+    Long register(GroupDTO groupDTO, MyUser myUser);
 
     GroupDTO getOne(Long id);
 
