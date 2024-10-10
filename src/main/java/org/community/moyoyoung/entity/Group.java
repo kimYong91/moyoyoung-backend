@@ -35,6 +35,7 @@ public class Group {
     private LocalDate createDate;
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
+
     @JsonIgnore
     @OneToOne(mappedBy = "group")
     private Meeting meeting;
@@ -42,9 +43,9 @@ public class Group {
     @OneToOne
     private GroupImage groupImage;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<MyUser> member = new ArrayList<>();
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private List<MyUser> member = new ArrayList<>();
 
     @JsonIgnore
     @ManyToOne

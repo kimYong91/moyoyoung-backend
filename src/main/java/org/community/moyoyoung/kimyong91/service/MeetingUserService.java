@@ -1,7 +1,6 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.MeetingUserDTO;
-import org.community.moyoyoung.entity.MeetingUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +8,10 @@ import java.util.List;
 @Service
 public interface MeetingUserService {
 
-    MeetingUser join(Long id, Long userId);
+    MeetingUserDTO meetingJoin(Long meetingId, Long userId);
 
-    void remove(Long id);
+    void meetingRemove(Long id);
 
     List<MeetingUserDTO> getListAll();
+
 }

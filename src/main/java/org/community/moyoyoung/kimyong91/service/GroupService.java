@@ -24,4 +24,6 @@ public interface GroupService{
     List<PostMiniDTO> getPostMiniList(Long id);
 
     GroupDetailDTO getGroupDetail(Long id);
+
+    GroupDTO groupJoin(Long groupId, Long userId);
 }

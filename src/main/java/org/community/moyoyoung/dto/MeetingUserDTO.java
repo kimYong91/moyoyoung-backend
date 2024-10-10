@@ -17,6 +17,4 @@ public class MeetingUserDTO {
     private Meeting meeting;
     private MyUser user;
 
-//    private Long meetingId;
-//    private List<Long> myUserIds;
 }
