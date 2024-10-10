@@ -3,6 +3,7 @@ package org.community.moyoyoung.yangs01.service;
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.PageRequestDTO;
 import org.community.moyoyoung.dto.PageResponseDTO;
+import org.community.moyoyoung.dto.PostCreateDTO;
 import org.community.moyoyoung.dto.PostDTO;
 import org.community.moyoyoung.entity.Post;
 import org.community.moyoyoung.repository.PostRepository;
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService{
 
     private final ModelMapper modelMapper;
-
     private final PostRepository postRepository;
+
 
     @Override
     public PostDTO get(Long id) {

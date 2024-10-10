@@ -10,12 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.Comment;
+import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.PostImage;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -37,6 +37,8 @@ public class PostDTO {
     private List<Comment> commentList;
 
     private List<MultipartFile> files;
+
+    private Long myUserId;
 
 //    private MyUser myUser;
 

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -34,7 +35,6 @@ public class PostCreateController {
                 .title(title)
                 .content(content)
                 .myUserId(myUserId)
-                .createDate(LocalDateTime.now())
                 .files(files)
                 .build();
 
@@ -55,5 +55,15 @@ public class PostCreateController {
 
         postCreateService.modify(id, postCreateDTO);
         return new ResponseEntity<>("Post modified with ID: " + id, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public Map<String, String> remove(@PathVariable(name="id") Long id ){
+
+        log.info("Remove:  " + id);
+
+        postCreateService.remove(id);
+
+        return Map.of("RESULT", "SUCCESS");
     }
 }

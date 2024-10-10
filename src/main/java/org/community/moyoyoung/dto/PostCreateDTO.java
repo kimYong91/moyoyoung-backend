@@ -21,8 +21,6 @@ public class PostCreateDTO {
     @NotBlank(message = "내용을 입력하세요.")
     private String content;
 
-    private LocalDateTime createDate;
-
     @Column(name = "modified_date", nullable = false)
     private LocalDateTime modifiedDate;
 
