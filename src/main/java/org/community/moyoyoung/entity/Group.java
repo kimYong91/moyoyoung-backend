@@ -42,12 +42,13 @@ public class Group {
 
     @OneToOne
     private GroupImage groupImage;
-
+  
     @JsonIgnore
     @ManyToOne
     private MyUser ownUser;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="group_id", nullable = false)
     private List<Post> postList = new ArrayList<>();
 }

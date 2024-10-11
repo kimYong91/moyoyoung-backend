@@ -1,7 +1,6 @@
 package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -50,6 +49,8 @@ public class Post {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private MyUser myUser;
+
+
 
     @PrePersist
     protected void onCreate() {

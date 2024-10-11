@@ -1,16 +1,10 @@
 package org.community.moyoyoung.dto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.community.moyoyoung.entity.Comment;
-import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.PostImage;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;

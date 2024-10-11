@@ -1,5 +1,6 @@
 package org.community.moyoyoung.kimyong91.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;

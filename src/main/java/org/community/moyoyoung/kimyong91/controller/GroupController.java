@@ -1,7 +1,6 @@
 package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;

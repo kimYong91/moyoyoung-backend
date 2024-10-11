@@ -3,7 +3,6 @@ package org.community.moyoyoung.yangs01.service;
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.PageRequestDTO;
 import org.community.moyoyoung.dto.PageResponseDTO;
-import org.community.moyoyoung.dto.PostCreateDTO;
 import org.community.moyoyoung.dto.PostDTO;
 import org.community.moyoyoung.entity.Post;
 import org.community.moyoyoung.repository.PostRepository;

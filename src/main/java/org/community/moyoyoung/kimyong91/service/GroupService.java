@@ -1,8 +1,8 @@
 package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.*;
+import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.MyUser;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

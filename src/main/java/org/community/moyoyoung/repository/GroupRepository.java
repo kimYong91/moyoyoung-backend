@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 // 김용
 public interface GroupRepository extends JpaRepository<Group, Long> {
@@ -46,10 +47,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
 
 
-
-
-
-
     @Query(nativeQuery = true,
             value = "SELECT *," +
                     "       (" +
@@ -81,18 +78,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
 //    @Query(nativeQuery = true, value = "SELECT g FROM Group g LEFT OUTER JOIN ")
 
-
-
-
-
-
-
-
-
-
-
     @Query("SELECT p, mu FROM Group g JOIN g.postList p LEFT JOIN p.myUser mu WHERE g.id = :id AND p.delFlag = false ORDER BY p.createDate DESC")
     List<Object[]> selectList(@Param("id") Long id);
-
-
 }
