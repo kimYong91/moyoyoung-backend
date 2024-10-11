@@ -16,12 +16,46 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("update Group g set g.delFlag = :flag where g.id = :id")
     void updateToDelete(@Param("id") Long id, @Param("flag") boolean flag);
 
+//    @Query(nativeQuery = true,
+//            value = "SELECT *," +
+//                    "       (" +
+//                    "       SELECT COUNT(1)" +
+//                    "         FROM tbl_group_member gm" +
+//                    "        WHERE gm.group_id = tg.id" +
+//                    "       ) AS cnt" +
+//                    "  FROM tbl_group tg" +
+//                    "  WHERE tg.check_online = 1 AND tg.del_flag = 0" +
+//                    " ORDER BY cnt DESC" +
+//                    " LIMIT 5"
+//    )
+//    List<Group> getGroupOnlineList();
+//
+//    @Query(nativeQuery = true,
+//            value = "SELECT *," +
+//                    "       (" +
+//                    "       SELECT COUNT(1)" +
+//                    "         FROM tbl_group_member gm" +
+//                    "        WHERE gm.group_id = tg.id" +
+//                    "       ) AS cnt" +
+//                    "  FROM tbl_group tg" +
+//                    "  WHERE tg.check_online = 0 AND tg.del_flag = 0" +
+//                    " ORDER BY cnt DESC" +
+//                    " LIMIT 5"
+//    )
+//    List<Group>  getGroupOfflineList();
+
+
+
+
+
+
+
     @Query(nativeQuery = true,
             value = "SELECT *," +
                     "       (" +
                     "       SELECT COUNT(1)" +
-                    "         FROM tbl_group_member gm" +
-                    "        WHERE gm.group_id = tg.id" +
+                    "         FROM tbl_group_user gu" +
+                    "        WHERE gu.group_id = tg.id" +
                     "       ) AS cnt" +
                     "  FROM tbl_group tg" +
                     "  WHERE tg.check_online = 1 AND tg.del_flag = 0" +
@@ -34,8 +68,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
             value = "SELECT *," +
                     "       (" +
                     "       SELECT COUNT(1)" +
-                    "         FROM tbl_group_member gm" +
-                    "        WHERE gm.group_id = tg.id" +
+                    "         FROM tbl_group_user gu" +
+                    "        WHERE gu.group_id = tg.id" +
                     "       ) AS cnt" +
                     "  FROM tbl_group tg" +
                     "  WHERE tg.check_online = 0 AND tg.del_flag = 0" +
@@ -45,6 +79,20 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Group>  getGroupOfflineList();
 
 
+//    @Query(nativeQuery = true, value = "SELECT g FROM Group g LEFT OUTER JOIN ")
+
+
+
+
+
+
+
+
+
+
+
     @Query("SELECT p, mu FROM Group g JOIN g.postList p LEFT JOIN p.myUser mu WHERE g.id = :id AND p.delFlag = false ORDER BY p.createDate DESC")
     List<Object[]> selectList(@Param("id") Long id);
+
+
 }

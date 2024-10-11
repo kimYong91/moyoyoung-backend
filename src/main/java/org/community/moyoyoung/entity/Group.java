@@ -43,10 +43,6 @@ public class Group {
     @OneToOne
     private GroupImage groupImage;
 
-//    @JsonIgnore
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private List<MyUser> member = new ArrayList<>();
-
     @JsonIgnore
     @ManyToOne
     private MyUser ownUser;
