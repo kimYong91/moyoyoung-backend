@@ -42,8 +42,9 @@ public class SecurityConfig {
                                                 .requestMatchers("/api/main/**").permitAll()
                                                 .requestMatchers("/api/group/detail/**").permitAll()
                                                 .requestMatchers("/api/groupUser/list").permitAll()
-                                                 .anyRequest().authenticated())
-//                                                .anyRequest().permitAll())
+                                                .requestMatchers("/api/main/getImage/**").permitAll()
+                                                 //.anyRequest().authenticated())
+                                                .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(authenticationEntryPoint))
                                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, passwordEncoder()),

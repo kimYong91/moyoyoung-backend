@@ -190,6 +190,7 @@ public class GroupServiceImpl implements GroupService {
         log.info("postList : " + postList);
 
         return findGroup;
+    }
 
     @Override
     public userStateDTO getGroupUserState(Long groupId, Long userId) {
