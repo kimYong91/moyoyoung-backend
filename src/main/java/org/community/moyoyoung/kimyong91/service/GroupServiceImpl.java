@@ -176,9 +176,25 @@ public class GroupServiceImpl implements GroupService {
         return groupDetail;
     }
 
+
+    @Override
+    public Group getGroup(Long gruopId) {
+
+        Group findGroup = groupRepository.findById(gruopId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + gruopId));
+
+        log.info("findGroup : " + findGroup);
+
+        List<Post> postList = findGroup.getPostList();
+
+        log.info("postList : " + postList);
+
+        return findGroup;
+
     @Override
     public userStateDTO getGroupUserState(Long groupId, Long userId) {
         userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
         return groupUserStateDTO;
+
     }
 }

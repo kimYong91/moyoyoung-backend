@@ -42,7 +42,7 @@ public class Group {
 
     @OneToOne
     private GroupImage groupImage;
-  
+
     @JsonIgnore
     @ManyToOne
     private MyUser ownUser;

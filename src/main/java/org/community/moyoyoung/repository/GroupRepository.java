@@ -77,4 +77,5 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("SELECT p, mu FROM Group g JOIN g.postList p LEFT JOIN p.myUser mu WHERE g.id = :id AND p.delFlag = false ORDER BY p.createDate DESC")
     List<Object[]> selectList(@Param("id") Long id);
+
 }

@@ -25,5 +25,9 @@ public interface GroupService{
 
     GroupDetailDTO getGroupDetail(Long id);
 
+
+     Group getGroup(Long gruopId);
+
     userStateDTO getGroupUserState(Long groupId, Long userId);
+
 }
