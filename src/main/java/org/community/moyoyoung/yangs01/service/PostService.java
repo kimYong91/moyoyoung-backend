@@ -9,6 +9,7 @@ public interface PostService {
 
      PostDTO get(Long id); // 게시글 상세 조회
      PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
-     List<PostDTO> getAllPosts(Long group_id);
+//     List<PostDTO> getAllPosts(Long group_id);
+     List<PostDTO> getAllPosts();
 }
 
