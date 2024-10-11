@@ -26,7 +26,6 @@ public class GroupController {
 
     private final GroupService groupService;
     private final CustomFileUtil customFileUtil;
-    private final MyUserService myUserService;
     private final ModelMapper modelMapper;
     private final AuthService authService;
     private final GroupUserService groupUserService;
