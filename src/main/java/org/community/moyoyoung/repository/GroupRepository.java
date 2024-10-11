@@ -1,5 +1,6 @@
 package org.community.moyoyoung.repository;
 
+import org.community.moyoyoung.dto.userStateDTO;
 import org.community.moyoyoung.entity.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -76,8 +77,37 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Group>  getGroupOfflineList();
 
 
-//    @Query(nativeQuery = true, value = "SELECT g FROM Group g LEFT OUTER JOIN ")
+    @Query(nativeQuery = true, value = """
+            SELECT\s
+                g.id AS groupId,
+                g.title AS groupTitle,
+                u.id AS userId,
+                u.name AS userName,
+                CASE\s
+                    WHEN g.own_user_id = u.id THEN "TRUE"
+                    ELSE "FALSE"\s
+                END AS isOwner,
+                CASE\s
+                    WHEN COUNT(gu.user_id) > 0 THEN "TRUE"
+                    ELSE "FALSE"\s
+                END AS isGroup,
+                CASE\s
+                    WHEN COUNT(gu.user_id) > 0 AND COUNT(mu.my_user_id) > 0 THEN "TRUE"
+                    ELSE "FALSE"\s
+                END AS isMeeting
+              FROM\s
+                tbl_group g
+              JOIN tbl_user u
+              LEFT JOIN tbl_group_user gu ON g.id = gu.group_id AND u.id = gu.user_id
+              LEFT JOIN tbl_meeting_user mu ON gu.user_id = mu.my_user_id
+              LEFT JOIN tbl_meeting m ON mu.meeting_id = m.id AND m.group_id = g.id
+             WHERE g.id = ?1 AND u.id = ?2
+             GROUP BY g.id, u.id;
+            """)
+    userStateDTO groupUserState(Long groupId, Long userId);
 
     @Query("SELECT p, mu FROM Group g JOIN g.postList p LEFT JOIN p.myUser mu WHERE g.id = :id AND p.delFlag = false ORDER BY p.createDate DESC")
     List<Object[]> selectList(@Param("id") Long id);
+
+
 }
