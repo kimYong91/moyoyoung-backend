@@ -2,7 +2,7 @@ package org.community.moyoyoung.yangs01.service;
 
 import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.*;
-import org.community.moyoyoung.entity.Group;
+
 import org.community.moyoyoung.entity.Post;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.PostRepository;
@@ -62,7 +62,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostDTO> getAllPosts(Long group_id) {
+    public List<PostDTO> getAllPosts() {
         List<Post> postList = postRepository.findAll(); // 엔티티 리스트 가져오기
 
         // 엔티티 리스트를 DTO 리스트로 변환

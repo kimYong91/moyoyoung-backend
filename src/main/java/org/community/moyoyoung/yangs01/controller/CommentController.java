@@ -12,17 +12,18 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/allBoard")
 public class CommentController {
 
     private final CommentService commentService;
 
 
     // 댓글 생성
-    @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody CommentDTO commentDTO,
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<Void> createComment(@PathVariable Long postId,
+                                              @RequestBody CommentDTO commentDTO,
                                               @SessionAttribute("currentUser") MyUser currentUser) {
-        commentService.createComment(commentDTO, currentUser); // 댓글 생성 서비스 호출
+        commentService.createComment(postId, commentDTO, currentUser); // 댓글 생성 서비스 호출
         return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created 응답 반환
     }
 

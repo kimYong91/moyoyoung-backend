@@ -2,7 +2,7 @@ package org.community.moyoyoung.yangs01.service;
 
 import org.community.moyoyoung.dto.PostCreateDTO;
 import org.community.moyoyoung.entity.MyUser;
-import org.springframework.transaction.annotation.Transactional;
+
 
 public interface PostCreateService {
 
