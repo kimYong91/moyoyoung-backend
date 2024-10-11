@@ -2,7 +2,6 @@ package org.community.moyoyoung.kimyong91;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +54,6 @@ public class CustomFileUtil {
         for (MultipartFile file : files) {
             String contentType = file.getContentType();
 
-
             if (contentType != null && (contentType.startsWith("image/"))) {
                 String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
                 Path savePath = Paths.get(uploadPath, savedName);
@@ -83,6 +81,7 @@ public class CustomFileUtil {
 
         return uploadNames;
     }
+
 
     public ResponseEntity<Resource> getImage(Long id) {
         Optional<GroupImage> image = groupImageRepository.findById(id);

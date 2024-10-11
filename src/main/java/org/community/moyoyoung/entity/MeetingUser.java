@@ -3,9 +3,6 @@ package org.community.moyoyoung.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // 김용
 // 정기모임 가입 유저
 @Entity

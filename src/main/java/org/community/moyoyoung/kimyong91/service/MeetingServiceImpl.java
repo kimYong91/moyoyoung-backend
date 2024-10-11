@@ -32,16 +32,6 @@ public class MeetingServiceImpl implements MeetingService{
     }
 
 
-
-
-//    @Override
-//    public Long register(MeetingDTO meetingDTO) {
-//        Meeting meeting = modelMapper.map(meetingDTO, Meeting.class);
-//        meeting.setCreateDate(LocalDate.now());
-//        Meeting result = meetingRepository.save(meeting);
-//        return result.getId();
-//    }
-
     @Override
     public Long register(MeetingDTO meetingDTO) {
         Meeting meeting = modelMapper.map(meetingDTO, Meeting.class);
@@ -53,9 +43,6 @@ public class MeetingServiceImpl implements MeetingService{
         Meeting result = meetingRepository.save(meeting);
         return result.getId();
     }
-
-
-
 
 
     @Override
