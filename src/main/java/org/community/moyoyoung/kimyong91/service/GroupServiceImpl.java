@@ -162,7 +162,6 @@ public class GroupServiceImpl implements GroupService {
         return dtoList;
     }
 
-
     @Override
     public GroupDetailDTO getGroupDetail(Long id) {
         GroupDTO groupDTO = getOne(id);
@@ -179,21 +178,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public userStateDTO getGroupUserState(Long groupId, Long userId) {
-//        TestDTO dto = groupRepository.test();
-//        System.out.println(dto);
-
         userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
-//        Map groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
-//        System.out.println(groupUserStateDTO);
-//        Set set = groupUserStateDTO.keySet();
-//        Iterator iter = set.iterator();
-//        while(iter.hasNext()) {
-//            String key = (String) iter.next();
-//            System.out.println(key);
-//            System.out.println(groupUserStateDTO.get(key));
-//        }
         return groupUserStateDTO;
-//        return null;
     }
-
 }
