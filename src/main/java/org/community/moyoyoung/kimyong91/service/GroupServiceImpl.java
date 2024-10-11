@@ -162,7 +162,6 @@ public class GroupServiceImpl implements GroupService {
         return dtoList;
     }
 
-
     @Override
     public GroupDetailDTO getGroupDetail(Long id) {
         GroupDTO groupDTO = getOne(id);
@@ -182,5 +181,4 @@ public class GroupServiceImpl implements GroupService {
         userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
         return groupUserStateDTO;
     }
-
 }
