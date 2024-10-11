@@ -41,6 +41,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/users/check/**").permitAll()
                                                 .requestMatchers("/api/main/**").permitAll()
                                                 .requestMatchers("/api/group/detail/**").permitAll()
+                                                .requestMatchers("/api/group/state/**").permitAll()
                                                 .requestMatchers("/api/groupUser/list").permitAll()
                                                  .anyRequest().authenticated())
 //                                                .anyRequest().permitAll())
