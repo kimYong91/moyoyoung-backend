@@ -191,6 +191,8 @@ public class GroupServiceImpl implements GroupService {
 
         return findGroup;
 
+    }
+    
     @Override
     public userStateDTO getGroupUserState(Long groupId, Long userId) {
         userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
