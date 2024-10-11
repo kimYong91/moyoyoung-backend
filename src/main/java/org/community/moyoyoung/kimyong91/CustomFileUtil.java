@@ -54,7 +54,6 @@ public class CustomFileUtil {
         for (MultipartFile file : files) {
             String contentType = file.getContentType();
 
-
             if (contentType != null && (contentType.startsWith("image/"))) {
                 String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
                 Path savePath = Paths.get(uploadPath, savedName);
@@ -82,6 +81,7 @@ public class CustomFileUtil {
 
         return uploadNames;
     }
+
 
     public ResponseEntity<Resource> getImage(Long id) {
         Optional<GroupImage> image = groupImageRepository.findById(id);

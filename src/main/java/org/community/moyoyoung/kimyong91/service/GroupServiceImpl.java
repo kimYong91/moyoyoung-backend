@@ -43,7 +43,11 @@ public class GroupServiceImpl implements GroupService {
                 String fileName = uploadFileName.get(i);
                 String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
                 GroupImage groupImage = new GroupImage();
-                groupImage.setFileName(fileName);
+                if (fileName != null) {
+                    groupImage.setFileName(fileName);
+                } else {
+                    groupImage.setFileName(null);
+                }
                 groupImage.setCreateDate(LocalDate.now());
                 groupImage.setUpLoadFileName(upLoadFileName);
                 groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
@@ -174,26 +178,4 @@ public class GroupServiceImpl implements GroupService {
         return groupDetail;
     }
 
-//    @Override
-//    public GroupDTO groupJoin(Long groupId, Long userId) {
-//        Group group = groupRepository.findById(groupId).orElseThrow();
-//        MyUser myUser = myUserRepository.findById(userId).orElseThrow();
-//
-//        return ;
-//    }
-
-    @Override
-    public Group getGroup(Long gruopId) {
-
-        Group findGroup = groupRepository.findById(gruopId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + gruopId));
-
-        log.info("findGroup : " + findGroup);
-
-        List<Post> postList = findGroup.getPostList();
-
-        log.info("postList : " + postList);
-
-        return findGroup;
-    }
 }
