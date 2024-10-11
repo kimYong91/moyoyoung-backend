@@ -1,5 +1,6 @@
 package org.community.moyoyoung.kimyong91.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;
@@ -180,4 +181,19 @@ public class GroupServiceImpl implements GroupService {
 //
 //        return ;
 //    }
+
+    @Override
+    public Group getGroup(Long gruopId) {
+
+        Group findGroup = groupRepository.findById(gruopId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + gruopId));
+
+        log.info("findGroup : " + findGroup);
+
+        List<Post> postList = findGroup.getPostList();
+
+        log.info("postList : " + postList);
+
+        return findGroup;
+    }
 }
