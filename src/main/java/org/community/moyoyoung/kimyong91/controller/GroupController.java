@@ -5,6 +5,7 @@ import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.kimyong91.service.GroupService;
+import org.community.moyoyoung.kimyong91.service.GroupUserService;
 import org.community.moyoyoung.samgak0.services.AuthService;
 import org.community.moyoyoung.samgak0.services.MyUserService;
 import org.modelmapper.ModelMapper;
@@ -28,12 +29,20 @@ public class GroupController {
     private final MyUserService myUserService;
     private final ModelMapper modelMapper;
     private final AuthService authService;
+    private final GroupUserService groupUserService;
 
 
     @GetMapping("/{id}")
     public ResponseEntity<GroupDetailDTO> getGroupDetails(@PathVariable(name = "id") Long id) {
         GroupDetailDTO groupDetail = groupService.getGroupDetail(id);
         return ResponseEntity.ok(groupDetail);
+    }
+
+    @GetMapping("/state/{groupId}")
+    public ResponseEntity<userStateDTO> getGroupUserState(@PathVariable(name = "groupId") Long groupId){
+        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
+        userStateDTO groupUserState = groupService.getGroupUserState(groupId, myUserDTO.orElseThrow().getId());
+        return ResponseEntity.ok(groupUserState);
     }
 
     @PostMapping("/register")
@@ -52,8 +61,10 @@ public class GroupController {
         return ResponseEntity.ok(Map.of("result", id));
     }
 
-    @PostMapping("/join/{groupId}/{userId}")
-    public ResponseEntity<Map<String, String>> groupJoin(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId) {
+    @PostMapping("/join/{groupId}")
+    public ResponseEntity<Map<String, String>> groupJoin(@PathVariable(name = "groupId") Long groupId) {
+        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
+        groupUserService.groupJoin(groupId, myUserDTO.orElseThrow().getId());
 
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }

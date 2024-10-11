@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 // 김용
 @Service
@@ -163,7 +162,6 @@ public class GroupServiceImpl implements GroupService {
         return dtoList;
     }
 
-
     @Override
     public GroupDetailDTO getGroupDetail(Long id) {
         GroupDTO groupDTO = getOne(id);
@@ -178,4 +176,9 @@ public class GroupServiceImpl implements GroupService {
         return groupDetail;
     }
 
+    @Override
+    public userStateDTO getGroupUserState(Long groupId, Long userId) {
+        userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
+        return groupUserStateDTO;
+    }
 }
