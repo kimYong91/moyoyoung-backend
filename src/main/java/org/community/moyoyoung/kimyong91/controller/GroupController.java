@@ -31,7 +31,7 @@ public class GroupController {
     private final GroupUserService groupUserService;
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<GroupDetailDTO> getGroupDetails(@PathVariable(name = "id") Long id) {
         GroupDetailDTO groupDetail = groupService.getGroupDetail(id);
         return ResponseEntity.ok(groupDetail);
@@ -69,15 +69,16 @@ public class GroupController {
     }
 
 
-    @PutMapping("/{id}")
+    // modify/      추가
+    @PutMapping("/modify/{id}")
     public ResponseEntity<Map<String, String>> modify(@PathVariable(name = "id") Long id,
                                                       @RequestBody GroupDTO groupDTO) {
         groupDTO.setId(id);
         groupService.modify(groupDTO);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
-
-    @DeleteMapping("/{id}")
+    // remove/      추가
+    @DeleteMapping("/remove/{id}")
     public ResponseEntity<Map<String, String>> remove(@PathVariable(name = "id") Long id) {
         groupService.remove(id);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));

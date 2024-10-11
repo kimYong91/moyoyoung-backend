@@ -37,18 +37,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if ("".equals("")) {
-            org.springframework.security.core.userdetails.UserDetails userDetails = org.springframework.security.core.userdetails.User
-                    .withUsername("username")
-                    .password(passwordEncoder.encode("password"))
-                    .authorities("ROLE_USER")
-                    .build();
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if ("".equals("")) {
+//            org.springframework.security.core.userdetails.UserDetails userDetails = org.springframework.security.core.userdetails.User
+//                    .withUsername("username")
+//                    .password(passwordEncoder.encode("password"))
+//                    .authorities("ROLE_USER")
+//                    .build();
+//            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+//                    userDetails, null, userDetails.getAuthorities());
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
         String token = getJwtFromRequest(request);
         String requestURI = request.getRequestURI();
