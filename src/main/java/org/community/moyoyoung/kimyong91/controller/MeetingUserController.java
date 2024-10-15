@@ -3,6 +3,7 @@ package org.community.moyoyoung.kimyong91.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.MeetingUserDTO;
+import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.service.MeetingUserService;
 import org.community.moyoyoung.samgak0.services.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class MeetingUserController {
 
     @PostMapping("/join/{meetingId}")
     public ResponseEntity<Map<String, String>> meetingJoin(@PathVariable(name = "meetingId") Long meetingId) {
-        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
-        meetingUserService.meetingJoin(meetingId, myUserDTO.orElseThrow().getId());
+        Optional<MyUser> myUser = authService.getLoginData();
+        meetingUserService.meetingJoin(meetingId, myUser.orElseThrow().getId());
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 

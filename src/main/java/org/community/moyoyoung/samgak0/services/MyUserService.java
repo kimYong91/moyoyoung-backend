@@ -9,6 +9,7 @@ import org.community.moyoyoung.entity.MyUser;
 public interface MyUserService {
     Optional<MyUserDTO> getUserById(Long id);
     Optional<MyUserDTO> getUserByUsername(String username);
+    Optional<MyUser> getUserByUsernameReal(String username);
     Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber);
     Optional<MyUserDTO> getUserByPhoneNumberAndName(String phoneNumber, String name);
     Optional<MyUserDTO> getUserByUsernamePhoneNumberAndName(String username, String phoneNumber, String name);

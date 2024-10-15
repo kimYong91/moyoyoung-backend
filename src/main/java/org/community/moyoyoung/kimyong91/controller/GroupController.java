@@ -1,6 +1,7 @@
 package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 // 김용
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/group")
@@ -39,8 +41,8 @@ public class GroupController {
 
     @GetMapping("/state/{groupId}")
     public ResponseEntity<userStateDTO> getGroupUserState(@PathVariable(name = "groupId") Long groupId){
-        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
-        userStateDTO groupUserState = groupService.getGroupUserState(groupId, myUserDTO.orElseThrow().getId());
+        MyUser myUser = authService.getLoginData().orElseThrow();
+        userStateDTO groupUserState = groupService.getGroupUserState(groupId, myUser.getId());
         return ResponseEntity.ok(groupUserState);
     }
 
@@ -52,9 +54,7 @@ public class GroupController {
         groupDTO.setUploadFileName(uploadFileName);
 
 
-        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
-        MyUser myUser = modelMapper.map(myUserDTO, MyUser.class);
-
+        MyUser myUser = authService.getLoginData().orElseThrow();
 
         Long id = groupService.register(groupDTO, myUser);
         return ResponseEntity.ok(Map.of("result", id));
@@ -62,8 +62,8 @@ public class GroupController {
 
     @PostMapping("/join/{groupId}")
     public ResponseEntity<Map<String, String>> groupJoin(@PathVariable(name = "groupId") Long groupId) {
-        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
-        groupUserService.groupJoin(groupId, myUserDTO.orElseThrow().getId());
+        Optional<MyUser> myUser = authService.getLoginData();
+        groupUserService.groupJoin(groupId, myUser.orElseThrow().getId());
 
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }

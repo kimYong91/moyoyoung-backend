@@ -90,6 +90,11 @@ public class MyUserServiceImpl implements MyUserService {
     }
 
     @Override
+    public Optional<MyUser> getUserByUsernameReal(String username) {
+        return userRepository.findByUsernameAndDisabledFalse(username);
+    }
+
+    @Override
     public Optional<MyUserDTO> getUserByPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumberAndDisabledFalse(phoneNumber)
                 .map(user -> {

@@ -38,8 +38,7 @@ public class PostCreateController {
         postCreateDTO.setUploadFileName(uploadFileName);
 
         // 현재 로그인한 사용자 정보 가져오기
-        Optional<MyUserDTO> myUserDTO = authService.getLoginData();
-        MyUser myUser = modelMapper.map(myUserDTO.orElse(null), MyUser.class);
+        MyUser myUser = myUser = authService.getLoginData().orElseThrow();
 
         // 게시글 등록
         Long id = postCreateService.register(postCreateDTO, myUser);
