@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public void createComment(CommentDTO commentDTO, MyUser currentUser) {
+    public void createComment(Long postId, CommentDTO commentDTO, MyUser currentUser) {
         Comment comment = new Comment(); // 새로운 댓글 객체 생성
 
         comment.setContent(commentDTO.getContent()); // 댓글 내용 설정

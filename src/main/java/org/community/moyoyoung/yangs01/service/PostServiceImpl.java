@@ -5,6 +5,7 @@ import org.community.moyoyoung.dto.PageRequestDTO;
 import org.community.moyoyoung.dto.PageResponseDTO;
 import org.community.moyoyoung.dto.PostDTO;
 import org.community.moyoyoung.entity.Post;
+import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +22,19 @@ public class PostServiceImpl implements PostService{
 
     private final ModelMapper modelMapper;
     private final PostRepository postRepository;
+    private final CustomFileUtil customFileUtil;
 
 
     @Override
     public PostDTO get(Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found")); // 예외 처리
-        return modelMapper.map(post, PostDTO.class);
+        Optional<Post> result = postRepository.findById(id);
+        Post post = result.orElseThrow();
+        PostDTO postDTO = modelMapper.map(post, PostDTO.class);
 
+        Long imageId = post.getPostImage().getId();
+        customFileUtil.getImage(imageId);
+
+        return postDTO;
     }
 
     @Override

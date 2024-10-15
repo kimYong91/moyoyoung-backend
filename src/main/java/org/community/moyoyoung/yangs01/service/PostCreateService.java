@@ -1,10 +1,13 @@
 package org.community.moyoyoung.yangs01.service;
 
 import org.community.moyoyoung.dto.PostCreateDTO;
+import org.community.moyoyoung.entity.MyUser;
+
 
 public interface PostCreateService {
 
-        Long register(PostCreateDTO postCreateDTO);
+
+        Long register(PostCreateDTO postCreateDTO, MyUser myUser);
         // 게시글 등록
 
         void modify(Long id, PostCreateDTO postCreateDTO);

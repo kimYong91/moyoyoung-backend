@@ -39,7 +39,12 @@ public class SecurityConfig {
                                                 .requestMatchers("/auth/**").permitAll()
                                                 .requestMatchers("/users/create").permitAll()
                                                 .requestMatchers("/users/check/**").permitAll()
-                                                // .anyRequest().authenticated())
+                                                .requestMatchers("/api/main/**").permitAll()
+                                                .requestMatchers("/api/group/detail/**").permitAll()
+                                                .requestMatchers("/api/group/state/**").permitAll()
+                                                .requestMatchers("/api/groupUser/list").permitAll()
+                                                .requestMatchers("/api/main/getImage/**").permitAll()
+                                                 //.anyRequest().authenticated())
                                                 .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(authenticationEntryPoint))

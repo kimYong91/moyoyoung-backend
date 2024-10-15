@@ -10,8 +10,8 @@ public interface MeetingUserService {
 
     MeetingUserDTO meetingJoin(Long meetingId, Long userId);
 
-    void meetingRemove(Long id);
+    void meetingUserRemove(Long id);
 
-    List<MeetingUserDTO> getListAll();
+    List<MeetingUserDTO> getMeetingUserListAll();
 
 }

@@ -38,12 +38,21 @@ public class PostController {
 //        return service.list(pageRequestDTO);
 //    }
 
+//    @GetMapping("/posts/list/{group_id}")
+//    public List<PostDTO> list(@PathVariable(name = "group_id") Long group_id ){
+//        List<PostDTO> postDTOList = postService.getAllPosts(group_id);
+//        System.out.println("--------------------------------------깐뜨롤러");
+//        return postDTOList;
+//    }
+
     @GetMapping("/posts/list")
     public List<PostDTO> list(){
         List<PostDTO> postDTOList = postService.getAllPosts();
         System.out.println("--------------------------------------깐뜨롤러");
         return postDTOList;
     }
+
+
 
 }
 

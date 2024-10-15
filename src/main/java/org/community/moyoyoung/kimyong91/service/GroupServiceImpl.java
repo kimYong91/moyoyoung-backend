@@ -1,5 +1,6 @@
 package org.community.moyoyoung.kimyong91.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.community.moyoyoung.dto.*;
@@ -15,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 // 김용
 @Service
@@ -42,7 +42,11 @@ public class GroupServiceImpl implements GroupService {
                 String fileName = uploadFileName.get(i);
                 String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
                 GroupImage groupImage = new GroupImage();
-                groupImage.setFileName(fileName);
+                if (fileName != null) {
+                    groupImage.setFileName(fileName);
+                } else {
+                    groupImage.setFileName(null);
+                }
                 groupImage.setCreateDate(LocalDate.now());
                 groupImage.setUpLoadFileName(upLoadFileName);
                 groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
@@ -158,7 +162,6 @@ public class GroupServiceImpl implements GroupService {
         return dtoList;
     }
 
-
     @Override
     public GroupDetailDTO getGroupDetail(Long id) {
         GroupDTO groupDTO = getOne(id);
@@ -173,11 +176,26 @@ public class GroupServiceImpl implements GroupService {
         return groupDetail;
     }
 
-//    @Override
-//    public GroupDTO groupJoin(Long groupId, Long userId) {
-//        Group group = groupRepository.findById(groupId).orElseThrow();
-//        MyUser myUser = myUserRepository.findById(userId).orElseThrow();
-//
-//        return ;
-//    }
+
+    @Override
+    public Group getGroup(Long gruopId) {
+
+        Group findGroup = groupRepository.findById(gruopId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + gruopId));
+
+        log.info("findGroup : " + findGroup);
+
+        List<Post> postList = findGroup.getPostList();
+
+        log.info("postList : " + postList);
+
+        return findGroup;
+    }
+    
+    @Override
+    public userStateDTO getGroupUserState(Long groupId, Long userId) {
+        userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);
+        return groupUserStateDTO;
+
+    }
 }
