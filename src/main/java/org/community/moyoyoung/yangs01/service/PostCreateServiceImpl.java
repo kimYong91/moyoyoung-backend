@@ -3,7 +3,6 @@ package org.community.moyoyoung.yangs01.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.community.moyoyoung.dto.PostCreateDTO;
-import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.entity.Post;
 import org.community.moyoyoung.entity.PostImage;
