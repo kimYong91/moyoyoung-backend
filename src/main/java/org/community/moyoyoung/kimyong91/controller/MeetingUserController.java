@@ -1,8 +1,8 @@
 package org.community.moyoyoung.kimyong91.controller;
 
 import lombok.RequiredArgsConstructor;
+
 import org.community.moyoyoung.dto.MeetingUserDTO;
-import org.community.moyoyoung.dto.MyUserDTO;
 import org.community.moyoyoung.kimyong91.service.MeetingUserService;
 import org.community.moyoyoung.samgak0.services.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.community.moyoyoung.dto.MyUserDTO;
 
 // 김용
 @RestController
