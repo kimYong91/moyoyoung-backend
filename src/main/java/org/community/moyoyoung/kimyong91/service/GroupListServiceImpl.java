@@ -24,8 +24,6 @@ public class GroupListServiceImpl implements GroupListService {
 
     private final GroupRepository groupRepository;
     private final ModelMapper modelMapper;
-    private final CustomFileUtil customFileUtil;
-
 
 //    @Override
 //    public List<GroupOfflineDTO> getGroupOfflineList() {
@@ -91,9 +89,9 @@ public class GroupListServiceImpl implements GroupListService {
 
     @Override
 
-    public GroupImage getGroupImage(Long id) {
+    public GroupImage getGroupImage(Long groupId) {
 
-        Optional<Group> group = groupRepository.findById(id);
+        Optional<Group> group = groupRepository.findById(groupId);
 
         return group.orElseThrow().getGroupImage();
 

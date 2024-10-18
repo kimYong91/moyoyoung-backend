@@ -18,10 +18,11 @@ public class MeetingDTO {
     private String meetingDate;
     private String content;
     private LocalDate createDate;
-    private String nickname;
-    private String name;
+    private String ownUserNickname;
+    private String ownUserName;
+
+    private Long groupId;
 
 //    private Post post;
 
-    private Long groupId;
 }

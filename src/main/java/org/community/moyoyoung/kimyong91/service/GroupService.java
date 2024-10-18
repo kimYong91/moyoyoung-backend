@@ -2,7 +2,6 @@ package org.community.moyoyoung.kimyong91.service;
 
 import org.community.moyoyoung.dto.*;
 import org.community.moyoyoung.entity.Group;
-import org.community.moyoyoung.entity.MyUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,22 +10,23 @@ import java.util.List;
 @Service
 public interface GroupService{
 
-    Long register(GroupDTO groupDTO, MyUser myUser);
+    Long register(GroupDTO groupDTO);
 
-    GroupDTO getOne(Long id);
+    GroupDTO getOne(Long groupId);
 
     void modify(GroupDTO groupDTO);
 
-    void remove(Long id);
+    void updateToRemove(Long groupId);
 
-    MeetingDTO getMeeting(Long id);
+    void realRemove(Long groupId);
 
-    List<PostMiniDTO> getPostMiniList(Long id);
+    MeetingDTO getMeeting(Long groupId);
 
-    GroupDetailDTO getGroupDetail(Long id);
+    List<PostMiniDTO> getPostMiniList(Long groupId);
 
+    GroupDetailDTO getGroupDetail(Long groupId);
 
-    Group getGroup(Long gruopId);
+    Group getGroup(Long groupId);
 
     userStateDTO getGroupUserState(Long groupId, Long userId);
 

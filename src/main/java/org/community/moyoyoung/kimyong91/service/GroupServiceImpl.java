@@ -8,12 +8,11 @@ import org.community.moyoyoung.entity.*;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
-import org.community.moyoyoung.repository.MyUserRepository;
+import org.community.moyoyoung.samgak0.services.AuthService;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -24,46 +23,53 @@ import java.util.*;
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
 
-    private static final Logger log = LoggerFactory.getLogger(GroupServiceImpl.class);
     private final ModelMapper modelMapper;
     private final GroupRepository groupRepository;
-    private final GroupImageRepository groupImageRepository;
-    private final MyUserRepository myUserRepository;
     private final CustomFileUtil customFileUtil;
+    private final GroupUserService groupUserService;
+    private final GroupImageRepository groupImageRepository;
+    private final AuthService authService;
 
     @Override
-    public Long register(GroupDTO groupDTO, MyUser myUser) {
+    public Long register(GroupDTO groupDTO) {
+
+        MyUser myUser = authService.getLoginData().orElseThrow();
+
+
+        List<MultipartFile> files = groupDTO.getFile();
+
+        List<String> uploadFileName = customFileUtil.saveFile(files);
+
         Group group = modelMapper.map(groupDTO, Group.class);
         group.setCreateDate(LocalDate.now());
 
-        List<String> uploadFileName = groupDTO.getUploadFileName();
-        if (uploadFileName != null && !uploadFileName.isEmpty()) {
-            for (int i = 0; i < uploadFileName.size(); i++) {
-                String fileName = uploadFileName.get(i);
-                String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
-                GroupImage groupImage = new GroupImage();
-                if (fileName != null) {
-                    groupImage.setFileName(fileName);
-                } else {
-                    groupImage.setFileName(null);
-                }
-                groupImage.setCreateDate(LocalDate.now());
-                groupImage.setUpLoadFileName(upLoadFileName);
-                groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
-                group.setGroupImage(groupImage);
-                group.setOwnUser(groupDTO.getOwnUser());
 
-                groupImageRepository.save(groupImage);
-            }
+        for (int i = 0; i < uploadFileName.size(); i++) {
+            String fileName = uploadFileName.get(i);
+            String upLoadFileName = groupDTO.getFile().get(i).getOriginalFilename();
+            GroupImage groupImage = new GroupImage();
+
+            groupImage.setFileName(fileName);
+            groupImage.setCreateDate(LocalDate.now());
+            groupImage.setUpLoadFileName(upLoadFileName);
+            groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
+            GroupImage savedGroupImage = groupImageRepository.save(groupImage);
+
+            group.setGroupImage(savedGroupImage);
+
+            group.setOwnUser(myUser);
         }
 
+
         Group result = groupRepository.save(group);
+
+        groupUserService.groupJoin(result.getId());
         return result.getId();
     }
 
     @Override
-    public GroupDTO getOne(Long id) {
-        Optional<Group> result = groupRepository.findById(id);
+    public GroupDTO getOne(Long groupId) {
+        Optional<Group> result = groupRepository.findById(groupId);
         Group group = result.orElseThrow();
         GroupDTO groupDTO = modelMapper.map(group, GroupDTO.class);
 
@@ -87,21 +93,37 @@ public class GroupServiceImpl implements GroupService {
 
         if (groupDTO.getGroupImage() != null) {
             group.setGroupImage(groupDTO.getGroupImage());
+            Long imageId = group.getGroupImage().getId();
+//            groupImageRepository.deleteById(imageId);
+            customFileUtil.removeFile(imageId);
+            customFileUtil.saveFile(groupDTO.getFile());
         }
+
+
 
         groupRepository.save(group);
     }
 
     @Override
-    public void remove(Long id) {
-        groupRepository.updateToDelete(id, true);
+    public void updateToRemove(Long groupId) {
+        groupRepository.updateToRemove(groupId, true);
+        Optional<Group> group = groupRepository.findById(groupId);
+        Long imageId = group.orElseThrow().getGroupImage().getId();
+        groupImageRepository.updateToDeleteImage(imageId, true);
+    }
+
+    @Override
+    public void realRemove(Long groupId) {
+        Optional<Group> group = groupRepository.findById(groupId);
+        if (group.orElseThrow().isDelFlag()){
+            groupRepository.deleteById(groupId);
+        }
     }
 
 
     @Override
-    public MeetingDTO getMeeting(Long id) {
-        Optional<Group> result = groupRepository.findById(id);
-
+    public MeetingDTO getMeeting(Long groupId) {
+        Optional<Group> result = groupRepository.findById(groupId);
 
         if (result.isPresent()) {
             Group group = result.get();
@@ -113,19 +135,17 @@ public class GroupServiceImpl implements GroupService {
             }
         }
 
-
         return MeetingDTO.builder().build();
     }
 
     @Override
-    public List<PostMiniDTO> getPostMiniList(Long id) {
+    public List<PostMiniDTO> getPostMiniList(Long groupId) {
 
-        Optional<Group> group = groupRepository.findById(id);
+        Optional<Group> group = groupRepository.findById(groupId);
 
         List<PostMiniDTO> dtoList;
 
         List<Object[]> result = groupRepository.selectList(group.get().getId());
-
 
         if (!group.get().isCheckOnline()) {
             dtoList = result.stream()
@@ -178,20 +198,14 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    public Group getGroup(Long gruopId) {
+    public Group getGroup(Long groupId) {
 
-        Group findGroup = groupRepository.findById(gruopId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + gruopId));
-
-        log.info("findGroup : " + findGroup);
-
-        List<Post> postList = findGroup.getPostList();
-
-        log.info("postList : " + postList);
+        Group findGroup = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 그룹의 아이디를 찾을 수 없습니다. : " + groupId));
 
         return findGroup;
     }
-    
+
     @Override
     public userStateDTO getGroupUserState(Long groupId, Long userId) {
         userStateDTO groupUserStateDTO = groupRepository.groupUserState(groupId, userId);

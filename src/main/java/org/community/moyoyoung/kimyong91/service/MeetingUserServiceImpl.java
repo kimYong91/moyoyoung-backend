@@ -8,12 +8,14 @@ import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.repository.MeetingRepository;
 import org.community.moyoyoung.repository.MeetingUserRepository;
 import org.community.moyoyoung.repository.MyUserRepository;
+import org.community.moyoyoung.samgak0.services.AuthService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 // 김용
 @Service
@@ -26,11 +28,14 @@ public class MeetingUserServiceImpl implements MeetingUserService{
     private final MyUserRepository myUserRepository;
     private final MeetingRepository meetingRepository;
     private final ModelMapper modelMapper;
+    private final AuthService authService;
 
 
 
     @Override
-    public MeetingUserDTO meetingJoin(Long meetingId, Long userId) {
+    public MeetingUserDTO meetingJoin(Long meetingId) {
+        Optional<MyUser> myUserInfo = authService.getLoginData();
+        Long userId = myUserInfo.get().getId();
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow();
 
         MyUser myUser = myUserRepository.findById(userId).orElseThrow();
@@ -47,9 +52,11 @@ public class MeetingUserServiceImpl implements MeetingUserService{
         return MeetingUserDTO;
     }
 
-    @Override
-    public void meetingUserRemove(Long userid) {
-        meetingUserRepository.deleteById(userid);
+    @Override // 정기 모임 탈퇴
+    public void meetingUserSecession() {
+
+        Optional<MyUser> myUser = authService.getLoginData();
+        meetingUserRepository.deleteById(myUser.orElseThrow().getId());
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.community.moyoyoung.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.List;
 @ToString
 @Setter
 @Table(name = "tbl_group")
+@Transactional
 public class Group {
 
     @Id
@@ -40,7 +42,7 @@ public class Group {
     @OneToOne(mappedBy = "group")
     private Meeting meeting;
 
-    @OneToOne
+    @OneToOne(mappedBy = "group", cascade = CascadeType.ALL)
     private GroupImage groupImage;
 
     @JsonIgnore
@@ -51,4 +53,5 @@ public class Group {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id", nullable = false)
     private List<Post> postList = new ArrayList<>();
+
 }

@@ -8,9 +8,9 @@ import java.util.List;
 @Service
 public interface MeetingUserService {
 
-    MeetingUserDTO meetingJoin(Long meetingId, Long userId);
+    MeetingUserDTO meetingJoin(Long meetingId);
 
-    void meetingUserRemove(Long id);
+    void meetingUserSecession(); // 정기 모임 탈퇴
 
     List<MeetingUserDTO> getMeetingUserListAll();
 

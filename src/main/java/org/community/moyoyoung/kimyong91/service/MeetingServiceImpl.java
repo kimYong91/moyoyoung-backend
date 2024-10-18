@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.community.moyoyoung.dto.MeetingDTO;
 import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.Meeting;
+import org.community.moyoyoung.entity.MyUser;
 import org.community.moyoyoung.repository.GroupRepository;
 import org.community.moyoyoung.repository.MeetingRepository;
+import org.community.moyoyoung.samgak0.services.AuthService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,8 @@ public class MeetingServiceImpl implements MeetingService{
     private final ModelMapper modelMapper;
     private final MeetingRepository meetingRepository;
     private final GroupRepository groupRepository;
+    private final AuthService authService;
+    private final MeetingUserService meetingUserService;
 
     @Override
     public MeetingDTO get(Long id) {
@@ -41,6 +46,10 @@ public class MeetingServiceImpl implements MeetingService{
         meeting.setGroup(group);
 
         Meeting result = meetingRepository.save(meeting);
+
+        meetingUserService.meetingJoin(result.getId());
+
+
         return result.getId();
     }
 

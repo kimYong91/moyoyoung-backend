@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.community.moyoyoung.dto.MyUserDTO;
-
 // 김용
 @RestController
 @RequiredArgsConstructor
@@ -32,14 +30,13 @@ public class MeetingUserController {
 
     @PostMapping("/join/{meetingId}")
     public ResponseEntity<Map<String, String>> meetingJoin(@PathVariable(name = "meetingId") Long meetingId) {
-        Optional<MyUser> myUser = authService.getLoginData();
-        meetingUserService.meetingJoin(meetingId, myUser.orElseThrow().getId());
+        meetingUserService.meetingJoin(meetingId);
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> meetingUserRemove(@PathVariable(name = "id") Long id) {
-        meetingUserService.meetingUserRemove(id);
+    @DeleteMapping("/delete")   // 정기 모임 탈퇴
+    public ResponseEntity<Map<String, String>> meetingUserSecession() {
+        meetingUserService.meetingUserSecession();
         return ResponseEntity.ok(Map.of("result", "SUCCESS"));
     }
 

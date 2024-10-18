@@ -8,9 +8,11 @@ import java.util.List;
 @Service
 public interface GroupUserService{
 
-    GroupUserDTO groupJoin(Long groupId, Long userId);
+    GroupUserDTO groupJoin(Long groupId);
 
-    void groupUserRemove(Long userId);
+    void groupUserSecession(); // 그룹 탈퇴
+
+    void groupOwnUserChange(Long newOwnUserId, Long groupId);
 
     List<GroupUserDTO> getGroupUserListAll();
 }

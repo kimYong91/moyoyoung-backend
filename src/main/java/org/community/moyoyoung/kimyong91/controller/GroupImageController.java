@@ -17,27 +17,27 @@ import java.util.Map;
 @RequestMapping("/api/groupImage")
 public class GroupImageController {
 
-    private final GroupImageService groupImageService;
-    private final CustomFileUtil customFileUtil;
-
-
-    @PostMapping("/upload")
-    public ResponseEntity<List<GroupImage>> uploadImage(@RequestParam("image") List<MultipartFile> image) {
-        try {
-
-            List<String> savedNames = customFileUtil.saveFile(image); // 파일 저장 및 저장된 이름 리스트 반환
-            List<GroupImage> savedImages = groupImageService.saveImages(savedNames, image); // 서비스에 저장된 이름과 파일 전달
-            return ResponseEntity.ok(savedImages);
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().body(null);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null); // 잘못된 파일 형식 처리
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, String>> removeImage(@PathVariable(name = "id") Long id) {
-        groupImageService.removeImage(id);
-        return ResponseEntity.ok(Map.of("result", "SUCCESS"));
-    }
+//    private final GroupImageService groupImageService;
+//    private final CustomFileUtil customFileUtil;
+//
+//
+//    @PostMapping("/upload")
+//    public ResponseEntity<List<GroupImage>> uploadImage(@RequestParam("image") List<MultipartFile> image) {
+//        try {
+//
+//            List<String> savedNames = customFileUtil.saveFile(image); // 파일 저장 및 저장된 이름 리스트 반환
+//            List<GroupImage> savedImages = groupImageService.saveImages(savedNames, image); // 서비스에 저장된 이름과 파일 전달
+//            return ResponseEntity.ok(savedImages);
+//        } catch (IOException e) {
+//            return ResponseEntity.internalServerError().body(null);
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.badRequest().body(null); // 잘못된 파일 형식 처리
+//        }
+//    }
+//
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<Map<String, String>> removeImage(@PathVariable(name = "id") Long id) {
+//        groupImageService.removeImage(id);
+//        return ResponseEntity.ok(Map.of("result", "SUCCESS"));
+//    }
 }

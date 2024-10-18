@@ -18,34 +18,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupImageService {
 
-    private final GroupImageRepository groupImageRepository;
-    private final CustomFileUtil customFileUtil;
-
-    public List<GroupImage> saveImages(List<String> savedNames, List<MultipartFile> files) throws IOException {
-        List<GroupImage> groupImages = new ArrayList<>();
-
-        for (int i = 0; i < savedNames.size(); i++) {
-            String originalImageName = files.get(i).getOriginalFilename();
-            String savedName = savedNames.get(i);
-
-            GroupImage groupImage = GroupImage.builder()
-                    .fileName(savedName)
-                    .upLoadFileName(originalImageName)
-                    .mimeType(files.get(i).getContentType())
-                    .createDate(LocalDate.now())
-                    .build();
-
-            groupImages.add(groupImageRepository.save(groupImage));
-        }
-
-        return groupImages;
-    }
-
-    public void removeImage(Long id) {
-        GroupImage groupImage = groupImageRepository.findById(id).orElseThrow();
-
-        customFileUtil.removeFile(groupImage.getFileName());
-
-        groupImageRepository.deleteById(id);
-    }
+//    private final GroupImageRepository groupImageRepository;
+//    private final CustomFileUtil customFileUtil;
+//
+//    public List<GroupImage> saveImages(List<String> savedNames, List<MultipartFile> files) throws IOException {
+//        List<GroupImage> groupImages = new ArrayList<>();
+//
+//        for (int i = 0; i < savedNames.size(); i++) {
+//            String originalImageName = files.get(i).getOriginalFilename();
+//            String savedName = savedNames.get(i);
+//
+//            GroupImage groupImage = GroupImage.builder()
+//                    .fileName(savedName)
+//                    .upLoadFileName(originalImageName)
+//                    .mimeType(files.get(i).getContentType())
+//                    .createDate(LocalDate.now())
+//                    .build();
+//
+//            groupImages.add(groupImageRepository.save(groupImage));
+//        }
+//
+//        return groupImages;
+//    }
+//
+//    public void removeImage(Long id) {
+//        GroupImage groupImage = groupImageRepository.findById(id).orElseThrow();
+//
+//        customFileUtil.removeFile(groupImage.getFileName());
+//
+//        groupImageRepository.deleteById(id);
+//    }
 }

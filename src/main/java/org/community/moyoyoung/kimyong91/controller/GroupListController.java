@@ -26,9 +26,6 @@ public class GroupListController {
     @Autowired
     CustomFileUtil customFileUtil;
 
-    @Autowired
-    GroupRepository groupRepository;
-
     @GetMapping("/")
     public ResponseEntity<GroupListResponseDTO> getGroupList() {
         List<GroupOnlineDTO> onlineGroups = groupListService.getGroupOnlineList();
@@ -42,11 +39,10 @@ public class GroupListController {
     }
 
 
-    @GetMapping("/getImage/{id}")
-    public ResponseEntity<Resource> getImage(@PathVariable(name = "id") Long id) {
+    @GetMapping("/getImage/{groupId}")
+    public ResponseEntity<Resource> getImage(@PathVariable(name = "groupId") Long groupId) {
 
-
-        GroupImage groupImage = groupListService.getGroupImage(id);
+        GroupImage groupImage = groupListService.getGroupImage(groupId);
 
         return customFileUtil.getImage(groupImage);
 

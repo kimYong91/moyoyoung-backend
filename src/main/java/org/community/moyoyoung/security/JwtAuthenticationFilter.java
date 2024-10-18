@@ -31,8 +31,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final List<String> excludedUrls = Arrays.asList(
             "/auth/token",
-            "/auth/token/refresh");
+            "/auth/token/refresh",
+            "/api/group/state/\\d*"
+    );
 
+    private boolean isExcluded(String uri) {
+        return excludedUrls.stream().anyMatch(uri::matches);
+    }
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -52,6 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getJwtFromRequest(request);
         String requestURI = request.getRequestURI();
+
 
         if (excludedUrls.contains(requestURI)) {
             filterChain.doFilter(request, response);

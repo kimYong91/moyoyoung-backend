@@ -112,8 +112,20 @@ public class CustomFileUtil {
     }
 
 
-    public void removeFile(String fileName) {
-        Path filePath = Paths.get(uploadPath, fileName);
+//    public void removeFile(String fileName) {
+//        Path filePath = Paths.get(uploadPath, fileName);
+//
+//        try {
+//            Files.deleteIfExists(filePath);
+//        } catch (IOException e) {
+//            throw new RuntimeException("이미지 삭제 중 오류 발생: " + e.getMessage());
+//        }
+//    }
+
+    public void removeFile(Long id) {
+        Optional<GroupImage> image = groupImageRepository.findById(id);
+
+        Path filePath = Paths.get(uploadPath, image.orElseThrow().getFileName() + "_" + image.orElseThrow().getUpLoadFileName());
 
         try {
             Files.deleteIfExists(filePath);

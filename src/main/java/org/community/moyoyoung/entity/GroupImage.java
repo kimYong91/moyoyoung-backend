@@ -1,6 +1,7 @@
 package org.community.moyoyoung.entity;
 
 import jakarta.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Transactional
 public class GroupImage {
 
     @Id
@@ -23,5 +25,10 @@ public class GroupImage {
     private String upLoadFileName;
     private LocalDate createDate;
     private String mimeType;
+    private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
+
+    @OneToOne
+    private Group group;
+
 
 }

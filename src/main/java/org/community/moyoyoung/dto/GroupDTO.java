@@ -1,6 +1,7 @@
 package org.community.moyoyoung.dto;
 
 import lombok.*;
+import org.community.moyoyoung.entity.Group;
 import org.community.moyoyoung.entity.GroupImage;
 import org.community.moyoyoung.entity.Meeting;
 import org.community.moyoyoung.entity.MyUser;
@@ -30,6 +31,8 @@ public class GroupDTO {
 
     private GroupImage groupImage;
 
+    private Group group;
+
 
     @Builder.Default
     private List<MyUser> member = new ArrayList<>();
@@ -38,8 +41,8 @@ public class GroupDTO {
 
     @Builder.Default
     private List<MultipartFile> file = new ArrayList<>();
-    @Builder.Default
-    private List<String> uploadFileName = new ArrayList<>();
+//    @Builder.Default
+//    private List<String> uploadFileName = new ArrayList<>();
 
 }
 
