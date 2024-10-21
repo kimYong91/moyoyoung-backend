@@ -1,5 +1,6 @@
 package org.community.moyoyoung.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

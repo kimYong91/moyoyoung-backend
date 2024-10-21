@@ -28,7 +28,7 @@ public class GroupImage {
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
     @OneToOne
-    private Group group;
+    private Group group; // group_id
 
 
 }

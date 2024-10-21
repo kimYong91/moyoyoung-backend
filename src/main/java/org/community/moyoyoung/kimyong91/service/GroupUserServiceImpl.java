@@ -49,7 +49,7 @@ public class GroupUserServiceImpl implements GroupUserService{
     }
 
     @Override
-    public void groupUserSecession() {
+    public void groupUserSecession() { // 탈퇴
         MyUser myUser = authService.getLoginData().orElseThrow();
         Long userId = myUser.getId();
         groupUserRepository.deleteById(userId);

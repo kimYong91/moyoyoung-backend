@@ -8,6 +8,7 @@ import org.community.moyoyoung.entity.*;
 import org.community.moyoyoung.kimyong91.CustomFileUtil;
 import org.community.moyoyoung.repository.GroupImageRepository;
 import org.community.moyoyoung.repository.GroupRepository;
+import org.community.moyoyoung.repository.GroupUserRepository;
 import org.community.moyoyoung.samgak0.services.AuthService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -53,10 +54,12 @@ public class GroupServiceImpl implements GroupService {
             groupImage.setCreateDate(LocalDate.now());
             groupImage.setUpLoadFileName(upLoadFileName);
             groupImage.setMimeType(groupDTO.getFile().get(i).getContentType());
-            GroupImage savedGroupImage = groupImageRepository.save(groupImage);
+            groupImage.setGroup(group); // 추가
+//            GroupImage savedGroupImage = groupImageRepository.save(groupImage);
+            groupImageRepository.save(groupImage);
 
-            group.setGroupImage(savedGroupImage);
 
+//            group.setGroupImage(savedGroupImage);
             group.setOwnUser(myUser);
         }
 

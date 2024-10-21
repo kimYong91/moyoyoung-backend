@@ -38,14 +38,13 @@ public class Group {
     private boolean delFlag;  // 삭제 여부 (true일 경우 삭제된 것으로 간주)
 
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "group")
+    @OneToOne(mappedBy = "group", cascade = CascadeType.ALL)
     private Meeting meeting;
 
     @OneToOne(mappedBy = "group", cascade = CascadeType.ALL)
-    private GroupImage groupImage;
+    private GroupImage groupImage; // 컬럼에서 보이지 않음
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private MyUser ownUser;
 
@@ -53,5 +52,8 @@ public class Group {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id", nullable = false)
     private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group")
+    List<GroupUser> groupUsers = new ArrayList<>();
 
 }
