@@ -39,10 +39,12 @@ public class MeetingServiceImpl implements MeetingService{
 
     @Override
     public Long register(MeetingDTO meetingDTO) {
+
         Meeting meeting = modelMapper.map(meetingDTO, Meeting.class);
         meeting.setCreateDate(LocalDate.now());
 
         Group group = groupRepository.findById(meetingDTO.getGroupId()).orElseThrow();
+
         meeting.setGroup(group);
 
         Meeting result = meetingRepository.save(meeting);

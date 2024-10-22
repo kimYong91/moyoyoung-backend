@@ -45,7 +45,6 @@ public class GroupListController {
         GroupImage groupImage = groupListService.getGroupImage(groupId);
 
         return customFileUtil.getImage(groupImage);
-
     }
 
 }

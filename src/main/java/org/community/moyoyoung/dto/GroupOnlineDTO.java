@@ -21,5 +21,4 @@ public class GroupOnlineDTO {
     private String title;
     private LocalDate createDate;
 
-    private Long groupImageId;
 }

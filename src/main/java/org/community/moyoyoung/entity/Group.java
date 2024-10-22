@@ -41,14 +41,15 @@ public class Group {
     @OneToOne(mappedBy = "group", cascade = CascadeType.ALL)
     private Meeting meeting;
 
+
     @OneToOne(mappedBy = "group", cascade = CascadeType.ALL)
     private GroupImage groupImage; // 컬럼에서 보이지 않음
 
-//    @JsonIgnore
+
     @ManyToOne
     private MyUser ownUser;
 
-    @JsonIgnore
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id", nullable = false)
     private List<Post> postList = new ArrayList<>();

@@ -44,6 +44,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/api/group/state/**").permitAll()
                                                 .requestMatchers("/api/groupUser/list").permitAll()
                                                 .requestMatchers("/api/main/getImage/**").permitAll()
+                                                .requestMatchers("/api/search/**").permitAll()
                                                  //.anyRequest().authenticated())
                                                 .anyRequest().permitAll())
                                 .exceptionHandling(exceptionHandling -> exceptionHandling

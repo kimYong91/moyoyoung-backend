@@ -88,14 +88,11 @@ public class GroupListServiceImpl implements GroupListService {
     }
 
     @Override
-
     public GroupImage getGroupImage(Long groupId) {
 
         Optional<Group> group = groupRepository.findById(groupId);
 
         return group.orElseThrow().getGroupImage();
-
-
     }
 
 }

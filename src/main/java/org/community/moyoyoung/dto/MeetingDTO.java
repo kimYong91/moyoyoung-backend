@@ -18,8 +18,8 @@ public class MeetingDTO {
     private String meetingDate;
     private String content;
     private LocalDate createDate;
-    private String ownUserNickname;
-    private String ownUserName;
+//    private String ownUserNickname;
+//    private String ownUserName;
 
     private Long groupId;
 

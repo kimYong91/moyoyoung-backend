@@ -17,9 +17,7 @@ public class MeetingController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Long>> meetingRegister(@RequestBody MeetingDTO meetingDTO) {
-        System.out.println(meetingDTO);
         Long meetingId = meetingService.register(meetingDTO);
-        System.out.println(meetingDTO);
         return ResponseEntity.ok(Map.of("meetingId", meetingId));
     }
 

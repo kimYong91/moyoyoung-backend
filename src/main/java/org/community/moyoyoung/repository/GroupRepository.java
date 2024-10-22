@@ -20,29 +20,19 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
 
     @Query(nativeQuery = true,
-            value = "SELECT *," +
-                    "       (" +
-                    "       SELECT COUNT(1)" +
-                    "         FROM tbl_group_user gu" +
-                    "        WHERE gu.group_id = tg.id" +
-                    "       ) AS cnt" +
+            value = "SELECT *" +
                     "  FROM tbl_group tg" +
                     "  WHERE tg.check_online = 1 AND tg.del_flag = 0" +
-                    " ORDER BY cnt DESC" +
+                    " ORDER BY (SELECT COUNT(1) FROM tbl_group_user gu WHERE gu.group_id = tg.id) DESC" +
                     " LIMIT 5"
     )
     List<Group> getGroupOnlineList();
 
     @Query(nativeQuery = true,
-            value = "SELECT *," +
-                    "       (" +
-                    "       SELECT COUNT(1)" +
-                    "         FROM tbl_group_user gu" +
-                    "        WHERE gu.group_id = tg.id" +
-                    "       ) AS cnt" +
+            value = "SELECT *" +
                     "  FROM tbl_group tg" +
                     "  WHERE tg.check_online = 0 AND tg.del_flag = 0" +
-                    " ORDER BY cnt DESC" +
+                    " ORDER BY (SELECT COUNT(1) FROM tbl_group_user gu WHERE gu.group_id = tg.id) DESC" +
                     " LIMIT 5"
     )
     List<Group>  getGroupOfflineList();
@@ -78,5 +68,48 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("SELECT p, mu FROM Group g JOIN g.postList p LEFT JOIN p.myUser mu WHERE g.id = :id AND p.delFlag = false ORDER BY p.createDate DESC")
     List<Object[]> selectList(@Param("id") Long id);
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM tbl_group tg WHERE tg.check_online='0' AND tg.del_flag='0' AND tg.category= ? ORDER BY (SELECT COUNT(1) FROM tbl_group_user gu WHERE gu.group_id = tg.id) DESC")
+    List<Group> searchCategoryGroupOfflineList(String category);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM tbl_group tg WHERE tg.check_online='1' AND tg.del_flag='0' AND tg.category= ? ORDER BY (SELECT COUNT(1) FROM tbl_group_user gu WHERE gu.group_id = tg.id) DESC")
+    List<Group> searchCategoryGroupOnlineList(String category);
+
+    @Query(nativeQuery = true, value = """
+        SELECT * 
+        FROM tbl_group tg 
+        WHERE tg.check_online = '0' 
+          AND tg.del_flag = '0' 
+          AND (
+              (tg.category LIKE CONCAT('%', ?1, '%') AND ?1 IS NOT NULL) OR
+              (tg.title LIKE CONCAT('%', ?2, '%') AND ?2 IS NOT NULL) OR
+              (tg.country LIKE CONCAT('%', ?3, '%') AND ?3 IS NOT NULL)
+          )
+        ORDER BY (
+            SELECT COUNT(1) 
+            FROM tbl_group_user gu 
+            WHERE gu.group_id = tg.id
+        ) DESC;
+        """)
+    List<Group> searchGroupOnlineList(String category, String title, String country);
+
+    @Query(nativeQuery = true, value = """
+        SELECT * 
+        FROM tbl_group tg 
+        WHERE tg.check_online = '1' 
+          AND tg.del_flag = '0' 
+          AND (
+              (tg.category LIKE CONCAT('%', ?1, '%') AND ?1 IS NOT NULL) OR
+              (tg.title LIKE CONCAT('%', ?2, '%') AND ?2 IS NOT NULL) OR
+              (tg.country LIKE CONCAT('%', ?3, '%') AND ?3 IS NOT NULL)
+          )
+        ORDER BY (
+            SELECT COUNT(1) 
+            FROM tbl_group_user gu 
+            WHERE gu.group_id = tg.id
+        ) DESC;
+        """)
+    List<Group> searchGroupOfflineList(String category, String title, String country);
 
 }

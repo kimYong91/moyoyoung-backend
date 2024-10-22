@@ -29,6 +29,7 @@ public class Meeting {
     private String meetingDate;
     private LocalDate createDate;
 
+    @JsonIgnore
     @OneToOne
     private Group group;
 }

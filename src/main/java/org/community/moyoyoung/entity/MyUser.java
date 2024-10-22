@@ -1,5 +1,6 @@
 package org.community.moyoyoung.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -53,6 +54,7 @@ public class MyUser {
     @Column(nullable = false)
     private Boolean disabled;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "ownUser")
     private List<Group> ownGroup;
 
